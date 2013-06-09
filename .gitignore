@@ -2,3 +2,5 @@
 .actionScriptProperties
 .project
 .settings
+deploy/com
+deploy/jsfl
