@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>CodeAnalyzer</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.apollobuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexide.project.multiplatform.multiplatformasnature</nature>
+		<nature>com.adobe.flexide.project.multiplatform.multiplatformnature</nature>
+		<nature>com.adobe.flexbuilder.project.apollonature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>[source path] Flash-src</name>
+			<type>2</type>
+			<locationURI>FLASHPRO_APPCONFIG/ActionScript%203.0/projects/Flash/src</locationURI>
+		</link>
+		<link>
+			<name>[source path] GreenSock-AS3-src</name>
+			<type>2</type>
+			<location>/Users/stevewarren/Projects/GitHub_Repos/GreenSock-AS3/src</location>
+		</link>
+		<link>
+			<name>[source path] User Interface</name>
+			<type>2</type>
+			<locationURI>FLASHPRO_APPCONFIG/Component%20Source/ActionScript%203.0/User%20Interface</locationURI>
+		</link>
+		<link>
+			<name>[source path] as3corelib-src</name>
+			<type>2</type>
+			<location>/Users/stevewarren/Projects/GitHub_Repos/as3corelib/src</location>
+		</link>
+	</linkedResources>
+</projectDescription>
