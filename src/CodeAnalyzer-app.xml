@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/3.7">
+<application xmlns="http://ns.adobe.com/air/application/3.4">
 	<id>CodeAnalyzer</id>
 	<filename>CodeAnalyzer</filename>
 	<name>CodeAnalyzer</name>
 	<versionNumber>0.0.1</versionNumber>
+	<copyright></copyright>
 	<initialWindow>
-		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
+		<content>codeAnalyzer.swf</content>
         <aspectRatio>landscape</aspectRatio>
         <systemChrome>standard</systemChrome>
         <autoOrients>true</autoOrients>
@@ -13,6 +14,8 @@
         <visible>true</visible>
         <renderMode>gpu</renderMode>
     </initialWindow>
+    <customUpdateUI>false</customUpdateUI>
+    <allowBrowserInvocation>false</allowBrowserInvocation>
     
     <!-- 
 	<icon>
