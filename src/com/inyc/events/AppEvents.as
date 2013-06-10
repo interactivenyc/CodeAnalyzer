@@ -8,6 +8,7 @@ package com.inyc.events {
 		***************************************************/
 		
 		public static var CONFIG_LOADED:String = "CONFIG_LOADED";
+		public static var FILE_LOADED:String = "FILE_LOADED";
 		public static var LOG_MESSAGE:String = "LOG_MESSAGE";
 		
 		public static var SERVICES_READY:String = "SERVICES_READY";
