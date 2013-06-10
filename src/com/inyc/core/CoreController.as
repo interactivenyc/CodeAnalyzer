@@ -14,9 +14,9 @@ package com.inyc.core
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 
-	public class AppController extends CoreMovieClip
+	public class CoreController extends CoreMovieClip
 	{
-		private static var _instance:AppController;
+		private static var _instance:CoreController;
 
 		
 		//Main Views
@@ -36,7 +36,7 @@ package com.inyc.core
 		public static var LOADER_CONTEXT:LoaderContext;
 		public static var LOG_OUTPUT:String = "";
 			
-		public function AppController(){
+		public function CoreController(){
 			
 			LOADER_CONTEXT = new LoaderContext(false,ApplicationDomain.currentDomain,null); //avoids some security sandbox headaches that plague many users.
 			_openModals = new Vector.<CoreModal>;
@@ -50,9 +50,9 @@ package com.inyc.core
 			addChild(_logButton);
 		}
 		
-		public static function getInstance():AppController {
+		public static function getInstance():CoreController {
 			if( _instance == null ) {
-				_instance = new AppController( new SingletonEnforcer() );
+				_instance = new CoreController( new SingletonEnforcer() );
 			}
 			return _instance;
 		}

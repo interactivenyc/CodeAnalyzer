@@ -1,7 +1,7 @@
 package com.inyc.components
 {	
 	import com.adobe.images.PNGEncoder;
-	import com.inyc.core.AppController;
+	import com.inyc.core.CoreController;
 	import com.inyc.utils.debug.Logger;
 	
 	import flash.display.Bitmap;
@@ -59,7 +59,7 @@ package com.inyc.components
 		
 		override public function load(request:URLRequest, context:LoaderContext=null):void{
 			
-			if (AppController.LOAD_FILES_FROM_CACHE == true){
+			if (CoreController.LOAD_FILES_FROM_CACHE == true){
 				
 				requestURLFilename = request.url.substr(request.url.lastIndexOf("/") + 1);
 				requestURLFiletype = request.url.substr(request.url.lastIndexOf("."));
