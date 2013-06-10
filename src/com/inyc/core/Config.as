@@ -1,7 +1,7 @@
 package com.inyc.core
 {
 	 
-	public class AppConfig{
+	public class Config{
 		
 		/*******************************************************/
 		//app version
@@ -12,7 +12,7 @@ package com.inyc.core
 		
 		/*******************************************************/
 		
-		public function AppConfig(){}
+		public function Config(){}
 		
 	}
 }

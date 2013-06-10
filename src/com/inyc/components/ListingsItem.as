@@ -1,6 +1,6 @@
 package com.inyc.components
 {
-	import com.inyc.core.AppController;
+	import com.inyc.core.CoreController;
 	import com.inyc.core.CoreMovieClip;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
@@ -102,7 +102,7 @@ package com.inyc.components
 		
 		
 		protected function onButtonClick(e:GenericDataEvent):void{
-			if (AppController.ANIMATING == true) return;
+			if (CoreController.ANIMATING == true) return;
 			if (e.data.button && e.data.button.parent != this) return;
 			if (_thumbnailLoaded == false) return;
 			_eventDispatcher.dispatchEvent(new GenericDataEvent(LISTINGS_ITEM_DELETE_CLICKED, {listingsItem:this}));
