@@ -1,5 +1,5 @@
 package com.inyc.utils {
-	import com.inyc.components.IGridItem;	import com.inyc.events.LoaderUtilsEvent;	import com.inyc.models.GridItemData;	import com.inyc.utils.debug.Logger;		import flash.display.Loader;	import flash.display.LoaderInfo;	import flash.display.MovieClip;	import flash.events.Event;	import flash.events.EventDispatcher;	import flash.events.IOErrorEvent;	import flash.events.SecurityErrorEvent;	import flash.net.URLLoader;	import flash.net.URLRequest;	import flash.net.URLRequestMethod;	import flash.net.URLVariables;	import flash.system.ApplicationDomain;	import flash.system.LoaderContext;	import flash.system.SecurityDomain;
+	import com.inyc.components.IGridItem;	import com.inyc.events.AppEvents;	import com.inyc.events.CoreEventDispatcher;	import com.inyc.events.GenericDataEvent;	import com.inyc.events.LoaderUtilsEvent;	import com.inyc.models.GridItemData;	import com.inyc.utils.debug.Logger;		import flash.display.Loader;	import flash.display.LoaderInfo;	import flash.display.MovieClip;	import flash.events.Event;	import flash.events.EventDispatcher;	import flash.events.IOErrorEvent;	import flash.events.SecurityErrorEvent;	import flash.net.URLLoader;	import flash.net.URLRequest;	import flash.net.URLRequestMethod;	import flash.net.URLVariables;	import flash.system.ApplicationDomain;	import flash.system.LoaderContext;	import flash.system.SecurityDomain;
 	/**
 	 * @author stevewarren
 	 * THIS NEW CLASS IS A WORK IN PROGRESS!!!
@@ -51,6 +51,20 @@ package com.inyc.utils {
 			if (loaders.length == 0) {
 				dispatchEvent(new LoaderUtilsEvent(LoaderUtilsEvent.ALL_COMPLETE));
 			}
+		}
+		
+		
+		public function readFile(filePath:String):void{
+			log("readFiles");
+			var textLoader:URLLoader = new URLLoader();
+			textLoader.addEventListener(Event.COMPLETE, onFileLoaded);
+			textLoader.load(new URLRequest(filePath));
+		}
+		
+		private function onFileLoaded(e:Event):void {
+			log("onFileLoaded");
+			var fileData:String = e.target.data;
+			dispatchEvent(new GenericDataEvent(LoaderUtilsEvent.FILE_LOADED, {file:fileData}));
 		}
 		
 		private function onIOError(e:IOErrorEvent):void{
