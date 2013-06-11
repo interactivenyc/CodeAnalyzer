@@ -12,7 +12,7 @@ package com.inyc.codeanalyzer.models
 			super();
 		}
 		
-		public function processVariable():void{
+		public function processVariable(declaration:String):void{
 			
 		}
 		
