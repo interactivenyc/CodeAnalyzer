@@ -1,5 +1,6 @@
 package com.inyc.codeanalyzer.models
 {
+	import com.inyc.codeanalyzer.view.ClassView;
 	import com.inyc.core.CoreModel;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
@@ -15,11 +16,18 @@ package com.inyc.codeanalyzer.models
 		{
 			super();
 			
-			_classItems = new Array();
-			var classItem:ClassItem;
 			model = new Object();
+			_classItems = new Array();
+			
+			init(fileArray);
+			
+		}
+		
+		private function init(fileArray:Array):void{
+			var classItem:ClassItem;
 			
 			//for (var i:int=0; i<fileArray.length; i++){
+			
 			for (var i:int=0; i<10; i++){
 				classItem = new ClassItem();
 				classItem.processClass(fileArray[i]);
@@ -29,13 +37,10 @@ package com.inyc.codeanalyzer.models
 				if (classItem != null && classItem.name != null) {
 					model[classItem.name] = classItem;
 					_classItems.push(classItem);
+					
 					classItem.addEventListener(AppEvents.FILE_LOADED, classLoaded);
 				}
-				
 			}
-			
-			
-			
 		}
 		
 		private function classLoaded(e:GenericDataEvent):void{
@@ -43,8 +48,11 @@ package com.inyc.codeanalyzer.models
 			ArrayUtils.removeValueFromArray(_classItems,classItem);
 			log("classes left to load: "+_classItems.length);
 			
+			_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.LAYOUT_ITEM_LOADED, {classView:new ClassView(classItem)}));
+			
 			if (_classItems.length == 0){
-				log(ObjectUtils.getGenericObject(model));
+				//log(ObjectUtils.getGenericObject(model));
+				_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.ALL_LAYOUT_ITEMS_LOADED));
 			}
 		}
 	}
