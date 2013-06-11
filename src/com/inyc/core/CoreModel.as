@@ -4,15 +4,19 @@ package com.inyc.core
 	import com.inyc.utils.debug.Logger;
 	
 	import flash.events.EventDispatcher;
+	
 
 	public class CoreModel extends EventDispatcher
 	{
+		protected var _eventDispatcher:CoreEventDispatcher;
+		
 		public static const PUBLIC:String = "PUBLIC";
 		public static const PRIVATE:String = "PRIVATE";
 		public static const PROTECTED:String = "PROTECTED";
+		
 				
 		public function CoreModel(){
-
+			_eventDispatcher = CoreEventDispatcher.getInstance();
 		}
 		
 		protected function stripChars(input:String):String{

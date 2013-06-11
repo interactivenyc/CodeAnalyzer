@@ -1,4 +1,4 @@
-package com.inyc.events {
+package com.inyc.core {
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.utils.debug.Logger;
 	

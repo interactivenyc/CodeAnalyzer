@@ -79,6 +79,7 @@ package com.inyc.events {
 		public static var LAYOUT_ITEM_DELETED:String = "LAYOUT_ITEM_DELETED";
 		public static var LAYOUT_ITEM_DESELECTED:String = "LAYOUT_ITEM_DESELECTED";
 		public static var LAYOUT_ITEM_LOADED:String = "LAYOUT_ITEM_LOADED";
+		public static var ALL_LAYOUT_ITEMS_LOADED:String = "ALL_LAYOUT_ITEMS_LOADED";
 		
 		/***************************************************
 		* TOOLBAR
