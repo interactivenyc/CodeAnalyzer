@@ -10,7 +10,7 @@ package com.inyc.codeanalyzer.models
 			super();
 		}
 		
-		public function processImport():void{
+		public function processImport(declaration:String):void{
 			
 		}
 		

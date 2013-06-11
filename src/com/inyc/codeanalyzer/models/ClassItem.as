@@ -19,6 +19,9 @@ package com.inyc.codeanalyzer.models
 		private var _loaderUtils:LoaderUtils;
 		
 		public function ClassItem(){
+			imports = new Vector.<ImportItem>;
+			variables = new Vector.<VariableItem>;
+			functions = new Vector.<FunctionItem>;
 		}
 		
 		public function processClass(declaration:String):void{
@@ -51,11 +54,56 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		private function fileDataLoaded(e:GenericDataEvent):void{
-			var fileData:String = e.data.fileData;
+			var fileData:String = e.data.file;
+			var varExp:RegExp = /([private|public|protected]) var/i;
+			var funcExp:RegExp = /([private|public|protected]) function/i;
+			var importExp:RegExp = /import/i;
+			var lineArray:Array = fileData.split(/\n/);
+			var functionItem:FunctionItem;
+			var variableItem:VariableItem;
+			var importItem:ImportItem;
+			
+			
 			
 			try{
-				log("fileData read: "+name);
-				log(e.data);
+				
+				for (var i:int=0; i<lineArray.length; i++){
+					if (lineArray[i].indexOf("//") > 0) continue;
+						
+					if (varExp.test(lineArray[i]) == true){
+						//log(lineArray[i]);
+						variableItem = new VariableItem();
+						variableItem.processVariable(lineArray[i]);
+						variables.push(variableItem);
+					}
+					
+					if (funcExp.test(lineArray[i]) == true){
+						//log(lineArray[i]);
+						functionItem = new FunctionItem();
+						functionItem.processFunction(lineArray[i]);
+						functions.push(functionItem);
+					}
+					
+					if (importExp.test(lineArray[i]) == true){
+						//log(lineArray[i]);
+						importItem = new ImportItem();
+						importItem.processImport(lineArray[i]);
+						imports.push(importItem);
+					}
+						
+				}
+				
+//				log("*********************************");
+//				log("fileData readClass: "+name);
+//				log("*********************************");
+//				log("imports: "+imports.length);
+//				log("--------------------------------");
+//				log("variables: "+variables.length);
+//				log("--------------------------------");
+//				log("functions: "+functions.length);
+//				log("--------------------------------");
+				
+				
 			}catch(e:Error){
 				log("Error: "+e.message);
 			}
