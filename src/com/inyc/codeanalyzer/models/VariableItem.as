@@ -13,7 +13,12 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		public function processVariable(declaration:String):void{
+			var processArray:Array = declaration.split(" ");
+			var arrayIndex:int = processArray.indexOf("var");
+			name = processArray[arrayIndex + 1];
+			name = stripChars(name);
 			
+			//log("VARIABLE name: "+name);
 		}
 		
 		

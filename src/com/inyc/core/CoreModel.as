@@ -1,16 +1,27 @@
 package com.inyc.core
 {
+	import com.adobe.utils.StringUtil;
 	import com.inyc.utils.debug.Logger;
+	
+	import flash.events.EventDispatcher;
 
-	public class CoreModel
+	public class CoreModel extends EventDispatcher
 	{
 		public static const PUBLIC:String = "PUBLIC";
 		public static const PRIVATE:String = "PRIVATE";
 		public static const PROTECTED:String = "PROTECTED";
-		
-		
+				
 		public function CoreModel(){
+
+		}
+		
+		protected function stripChars(input:String):String{
+			input = StringUtil.remove(input, "()");
+			input = StringUtil.remove(input, "{");
+			input = StringUtil.remove(input, "}");
+			input = StringUtil.remove(input, ";");
 			
+			return input;
 		}
 		
 		protected function log(logItem:*, ...args):void{

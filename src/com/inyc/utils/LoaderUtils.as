@@ -17,7 +17,7 @@ package com.inyc.utils {
 		}
 		
 		public function load(url:String, useLoaderContext:Boolean=true):Loader{
-			log("load url:"+url);
+			//log("load url:"+url);
 			var loader:Loader = new Loader();
 			var urlRequest:URLRequest = new URLRequest(url);
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
@@ -55,14 +55,14 @@ package com.inyc.utils {
 		
 		
 		public function readFile(filePath:String):void{
-			log("readFiles");
+			//log("readFiles");
 			var textLoader:URLLoader = new URLLoader();
 			textLoader.addEventListener(Event.COMPLETE, onFileLoaded);
 			textLoader.load(new URLRequest(filePath));
 		}
 		
 		private function onFileLoaded(e:Event):void {
-			log("onFileLoaded");
+			//log("onFileLoaded");
 			var fileData:String = e.target.data;
 			dispatchEvent(new GenericDataEvent(LoaderUtilsEvent.FILE_LOADED, {file:fileData}));
 		}

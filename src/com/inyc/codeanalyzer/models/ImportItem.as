@@ -11,7 +11,17 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		public function processImport(declaration:String):void{
+			var processArray:Array = declaration.split(" ");
+			var wholeImport:String = processArray[processArray.length-1];
+			var packageArray:Array = wholeImport.split(".");
 			
+			importClass = packageArray[packageArray.length -1];
+			importClass = stripChars(importClass);
+			
+			packageArray.pop();
+			importPackage = packageArray.join(".");
+			
+			//log("IMPORT package: "+importPackage+" ::  class: "+importClass);
 		}
 		
 		

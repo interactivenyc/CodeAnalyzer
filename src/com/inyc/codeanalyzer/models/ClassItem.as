@@ -2,9 +2,11 @@ package com.inyc.codeanalyzer.models
 {
 	import com.inyc.core.Config;
 	import com.inyc.core.CoreModel;
+	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.LoaderUtils;
+	import com.inyc.utils.ObjectUtils;
 
 	public class ClassItem extends CoreModel{
 		
@@ -15,6 +17,8 @@ package com.inyc.codeanalyzer.models
 		public var imports:Vector.<ImportItem>;
 		public var variables:Vector.<VariableItem>;
 		public var functions:Vector.<FunctionItem>;
+		
+		public var defObject:Object = new Object();
 		
 		private var _loaderUtils:LoaderUtils;
 		
@@ -31,7 +35,7 @@ package com.inyc.codeanalyzer.models
 			var processArray:Array = new Array();
 			processArray = declaration.split("/");
 			name = processArray[processArray.length - 1];
-			
+			name = stripChars(name);
 			
 			if (name.length < 3) return;
 			
@@ -40,14 +44,14 @@ package com.inyc.codeanalyzer.models
 			packagePath = processArray.join("/");
 			var filePath:String =( Config.ROOT_PATH + "/" + packagePath + "/" + name);
 			
-			log("fileData load: "+filePath);
+			//log("fileData load: "+filePath);
 			
 			try{
 				_loaderUtils = new LoaderUtils();
 				_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
 				_loaderUtils.readFile(filePath);
 			}catch(e:Error){
-				log("Error: "+e.message);
+				//log("Error: "+e.message);
 			}
 			
 			
@@ -64,49 +68,58 @@ package com.inyc.codeanalyzer.models
 			var importItem:ImportItem;
 			
 			
+			defObject.imports = new Object();
+			defObject.variables = new Object();
+			defObject.functions = new Object();
 			
-			try{
+			for (var i:int=0; i<lineArray.length; i++){
+				if (lineArray[i].indexOf("//") > 0) continue;
 				
-				for (var i:int=0; i<lineArray.length; i++){
-					if (lineArray[i].indexOf("//") > 0) continue;
-						
-					if (varExp.test(lineArray[i]) == true){
-						//log(lineArray[i]);
-						variableItem = new VariableItem();
-						variableItem.processVariable(lineArray[i]);
-						variables.push(variableItem);
-					}
+				if (importExp.test(lineArray[i]) == true){
+					//log(lineArray[i]);
+					importItem = new ImportItem();
+					importItem.processImport(lineArray[i]);
+					imports.push(importItem);
 					
-					if (funcExp.test(lineArray[i]) == true){
-						//log(lineArray[i]);
-						functionItem = new FunctionItem();
-						functionItem.processFunction(lineArray[i]);
-						functions.push(functionItem);
-					}
+					defObject.imports[i] = importItem.importClass;
+				}
 					
-					if (importExp.test(lineArray[i]) == true){
-						//log(lineArray[i]);
-						importItem = new ImportItem();
-						importItem.processImport(lineArray[i]);
-						imports.push(importItem);
-					}
-						
+				if (varExp.test(lineArray[i]) == true){
+					//log(lineArray[i]);
+					variableItem = new VariableItem();
+					variableItem.processVariable(lineArray[i]);
+					variables.push(variableItem);
+					
+					defObject.variables[i] = variableItem.name;
 				}
 				
-//				log("*********************************");
-//				log("fileData readClass: "+name);
-//				log("*********************************");
-//				log("imports: "+imports.length);
-//				log("--------------------------------");
-//				log("variables: "+variables.length);
-//				log("--------------------------------");
-//				log("functions: "+functions.length);
-//				log("--------------------------------");
-				
-				
-			}catch(e:Error){
-				log("Error: "+e.message);
+				if (funcExp.test(lineArray[i]) == true){
+					//log(lineArray[i]);
+					functionItem = new FunctionItem();
+					functionItem.processFunction(lineArray[i]);
+					functions.push(functionItem);
+					
+					defObject.functions[i] = functionItem.name;
+				}
+					
 			}
+			
+			dispatchEvent(new GenericDataEvent(AppEvents.FILE_LOADED, {file:this}));
+								
+				
+//			//log(ObjectUtils.getGenericObject(defObject));
+//			
+//			log("*********************************");
+//			log("fileData readClass: "+name);
+//			log("*********************************");
+//			log("imports: "+imports.length);
+//			log("--------------------------------");
+//			log("variables: "+variables.length);
+//			log("--------------------------------");
+//			log("functions: "+functions.length);
+//			log("--------------------------------");
+				
+			
 			
 		}
 		
