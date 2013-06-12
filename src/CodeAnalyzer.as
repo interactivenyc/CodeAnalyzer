@@ -25,8 +25,8 @@ package
 		
 		private var _loaderUtils:LoaderUtils;
 		
-		public static var STAGE_WIDTH:int = 1024;
-		public static var STAGE_HEIGHT:int = 768;
+		public static var STAGE_WIDTH:int = 2048;
+		public static var STAGE_HEIGHT:int = 1536;
 		
 		public function CodeAnalyzer(){
 			super();
