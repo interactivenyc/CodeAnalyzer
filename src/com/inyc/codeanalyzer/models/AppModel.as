@@ -28,11 +28,11 @@ package com.inyc.codeanalyzer.models
 			
 			//for (var i:int=0; i<fileArray.length; i++){
 			
-			for (var i:int=0; i<10; i++){
+			for (var i:int=0; i<100; i++){
 				classItem = new ClassItem();
 				classItem.processClass(fileArray[i]);
 				
-				log(classItem.name);
+				//log(classItem.name);
 				
 				if (classItem != null && classItem.name != null) {
 					model[classItem.name] = classItem;
@@ -46,7 +46,7 @@ package com.inyc.codeanalyzer.models
 		private function classLoaded(e:GenericDataEvent):void{
 			var classItem:ClassItem = e.data.file;
 			ArrayUtils.removeValueFromArray(_classItems,classItem);
-			log("classes left to load: "+_classItems.length);
+			//log("classes left to load: "+_classItems.length);
 			
 			_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.LAYOUT_ITEM_LOADED, {classView:new ClassView(classItem)}));
 			
