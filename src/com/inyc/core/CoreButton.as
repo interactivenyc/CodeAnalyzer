@@ -21,6 +21,7 @@ package com.inyc.core
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			addEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
+			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			addEventListener(MouseEvent.CLICK, onMouseEvent);
 		}
 		
@@ -30,22 +31,16 @@ package com.inyc.core
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
+			removeEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			removeEventListener(MouseEvent.CLICK, onMouseEvent);
 		}
 		
-		public function set downState(down:Boolean):void{
-			//log("set downState: "+down + ", "+this);
-			if (down){
-				TweenLite.to(this, .01, {colorTransform:{tint:0xFFFFFF, tintAmount:0.35}});
-			}else{
-				TweenLite.to(this, .01, {colorTransform:{tint:0xFFFFFF, tintAmount:0}});
-			}
-		}
+		
 		
 		protected function onMouseEvent(e:MouseEvent):void{
 			switch(e.type){
 				case MouseEvent.CLICK:
-					_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.BUTTON_CLICK, {button:this}));
+					dispatchEvent(new GenericDataEvent(AppEvents.BUTTON_CLICK, {button:this}));
 					break;
 			}
 		}
