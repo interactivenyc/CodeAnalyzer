@@ -8,6 +8,11 @@ package
 	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.LoaderUtils;
 	
+	import flash.display.StageAlign;
+	import flash.display.StageQuality;
+	import flash.display.StageScaleMode;
+	
+	[SWF(width=1024,height=768)]
 	public class CodeAnalyzer extends CoreMovieClip{
 		
 		private var _appModel:AppModel;
@@ -15,15 +20,24 @@ package
 		
 		private var _fileData:String;
 		private var _fileArray:Array;
-
 		
 		private var _viewContainer:CoreMovieClip;
 		
 		private var _loaderUtils:LoaderUtils;
 		
+		public static var STAGE_WIDTH:int = 1024;
+		public static var STAGE_HEIGHT:int = 768;
+		
 		public function CodeAnalyzer(){
 			super();
 			log("CodeAnalyzer");
+			
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.SHOW_ALL;
+			stage.quality = StageQuality.MEDIUM; // .HIGH; //
+			stage.stageWidth = STAGE_WIDTH;
+			stage.stageHeight = STAGE_HEIGHT;
+			
 			init();
 			
 		}
