@@ -5,7 +5,9 @@ package com.inyc.codeanalyzer.view
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	
+	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	public class AppView extends CoreMovieClip
 	{
@@ -45,10 +47,19 @@ package com.inyc.codeanalyzer.view
 		
 		private function onItemLoaded(e:GenericDataEvent):void{
 			log("onItemLoaded");
+			var classView:ClassView = e.data.classView;
+			addChild(classView);
+			classView.x = Math.ceil(Math.random()*102);
+			classView.y = Math.ceil(Math.random()*76);
+			classView.addEventListener(MouseEvent.MOUSE_DOWN, sendUp);
 		}
 		
 		private function onAllItemsLoaded(e:GenericDataEvent):void{
 			log("onAllItemsLoaded");
+		}
+		
+		private function sendUp(e:MouseEvent):void{
+			addChild(e.currentTarget as MovieClip);
 		}
 		
 		
