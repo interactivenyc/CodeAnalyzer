@@ -2,8 +2,6 @@ package com.inyc.components
 {	
 	import com.inyc.core.CoreMovieClip;
 	
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.text.TextField;

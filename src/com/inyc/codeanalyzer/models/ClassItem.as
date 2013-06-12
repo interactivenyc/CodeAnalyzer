@@ -36,6 +36,7 @@ package com.inyc.codeanalyzer.models
 			processArray = declaration.split("/");
 			name = processArray[processArray.length - 1];
 			name = stripChars(name);
+			name.replace(".as", "");
 			
 			if (name.length < 3) return;
 			
