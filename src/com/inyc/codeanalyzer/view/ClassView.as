@@ -25,14 +25,13 @@ package com.inyc.codeanalyzer.view
 			
 			_classItem = classItem;
 			_textButtons = new Array();
-			_accordion = new Accordion();
-			addChild(_accordion);
 		}
 		
 		override protected function onAddedToStage(e:Event):void{
 			super.onAddedToStage(e);
 			
 			_accordion = new Accordion();
+			_accordion.headerText = _classItem.name;
 			addChild(_accordion);
 			
 //			var shadow:MovieClip = MovieClipUtils.getFilledMC(WIDTH,HEIGHT,0x000000);
