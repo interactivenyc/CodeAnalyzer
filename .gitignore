@@ -3,6 +3,8 @@
 .actionScriptProperties
 .project
 .settings
+.amateras
+*.ipa
 deploy/com
 deploy/jsfl
 deploy/ComponentShim.fla

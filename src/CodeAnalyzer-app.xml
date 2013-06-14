@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <application xmlns="http://ns.adobe.com/air/application/3.7">
-	<id>com.speakaboos.ipad</id>
+	<id>com.interactivenyc.codeanalyzer</id>
 	<filename>CodeAnalyzer</filename>
 	<name>CodeAnalyzer</name>
 	<versionNumber>1.0.0</versionNumber>
-	<copyright></copyright>
+	<copyright/>
 	<initialWindow>
 		<content>CodeAnalyzer.swf</content>
         <aspectRatio>landscape</aspectRatio>
         <systemChrome>standard</systemChrome>
         <autoOrients>true</autoOrients>
-        <fullScreen>true</fullScreen>
+        <fullScreen>false</fullScreen>
         <visible>true</visible>
         <renderMode>gpu</renderMode>
     </initialWindow>
@@ -22,12 +22,12 @@
         <Entitlements>
 			<![CDATA[
 				<key>application-identifier</key>
-				<string>82HG9NWDTR.com.speakaboos.ipad</string>
+				<string>9YA2T2MWLM.com.interactivenyc.codeanalyzer</string>
 				<key>aps-environment</key>
 				<string>production</string>
 				<key>keychain-access-groups</key>
 				<array>
-					<string>82HG9NWDTR.com.speakaboos.ipad</string>
+					<string>9YA2T2MWLM.com.interactivenyc.codeanalyzer</string>
 				</array>						
 
 			]]></Entitlements>
