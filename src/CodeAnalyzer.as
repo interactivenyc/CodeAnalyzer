@@ -25,18 +25,20 @@ package
 		
 		private var _loaderUtils:LoaderUtils;
 		
-		public static var STAGE_WIDTH:int = 2048;
-		public static var STAGE_HEIGHT:int = 1536;
+		public static var STAGE_WIDTH:int = 1024;
+		public static var STAGE_HEIGHT:int = 768;
+		public static var SCALE_X:Number = 1;
+		public static var SCALE_Y:Number = 1;
 		
 		public function CodeAnalyzer(){
 			super();
 			log("CodeAnalyzer");
 			
-			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.SHOW_ALL;
-			stage.quality = StageQuality.MEDIUM; // .HIGH; //
-			stage.stageWidth = STAGE_WIDTH;
-			stage.stageHeight = STAGE_HEIGHT;
+//			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.EXACT_FIT;
+//			stage.quality = StageQuality.MEDIUM; // .HIGH; //
+//			stage.stageWidth = STAGE_WIDTH;
+//			stage.stageHeight = STAGE_HEIGHT;
 			
 			init();
 			
