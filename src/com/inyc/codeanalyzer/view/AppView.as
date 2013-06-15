@@ -31,10 +31,15 @@ package com.inyc.codeanalyzer.view
 			
 			addEventListeners();
 			
-//			scaleX = .5;
-//			scaleY = .5;
+			scaleX = CodeAnalyzer.SCALE_X;
+			scaleY = CodeAnalyzer.SCALE_Y;
+			var bgWidth:int = CodeAnalyzer.STAGE_WIDTH/scaleX;
+			var bgHeight:int = CodeAnalyzer.STAGE_HEIGHT/scaleY;
 			
-			_bg = MovieClipUtils.getFilledMC(CodeAnalyzer.STAGE_WIDTH-1,CodeAnalyzer.STAGE_HEIGHT-1,0xffffcc, true);
+			
+			
+			
+			_bg = MovieClipUtils.getFilledMC(bgWidth, bgHeight, 0xffffcc, true);
 			addChild(_bg);
 
 			log("stage.width: "+stage.width+", stage.height: "+stage.height);
@@ -63,8 +68,8 @@ package com.inyc.codeanalyzer.view
 			
 			var classView:ClassView = e.data.classView;
 			addChild(classView);
-			classView.x = Math.ceil(Math.random()*(CodeAnalyzer.STAGE_WIDTH-classView.width));
-			classView.y = Math.ceil(Math.random()*(CodeAnalyzer.STAGE_HEIGHT-classView.height));
+			classView.x = Math.ceil(Math.random()*(_bg.width - classView.width));
+			classView.y = Math.ceil(Math.random()*(_bg.height - classView.height));
 			
 			log("classView.x: "+classView.x+", classView.y: "+classView.y);
 			

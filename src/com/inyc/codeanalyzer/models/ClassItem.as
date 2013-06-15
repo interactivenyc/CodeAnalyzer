@@ -70,7 +70,7 @@ package com.inyc.codeanalyzer.models
 			var variableItem:VariableItem;
 			var importItem:ImportItem;
 			
-			log("fileDataLoaded: "+fileData);
+			//log("fileDataLoaded: "+fileData);
 			
 			
 			defObject.imports = new Object();
