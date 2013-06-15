@@ -1,5 +1,5 @@
 package com.inyc.modules.playback {
-	import com.greensock.TweenLite;
+	import com.greensock.TweenMax;
 	
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -78,8 +78,8 @@ package com.inyc.modules.playback {
 			var st:SoundTransform = new SoundTransform(0);
 			var sc:SoundChannel = sound.play(startTime,loops,st);
 			
-			var tween = TweenLite.to(st, fadeTime, {volume:_volume, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:removeTween, onCompleteParams:[tween]});
-			//var tween = TweenLite.to(st, fadeTime, {volume:_volume, onComplete:function(){log("tweenComplete")}});
+			var tween = TweenMax.to(st, fadeTime, {volume:_volume, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:removeTween, onCompleteParams:[tween]});
+			//var tween = TweenMax.to(st, fadeTime, {volume:_volume, onComplete:function(){log("tweenComplete")}});
 			
 			_soundChannels.push(sc);
 			_soundNames.push(soundName);
@@ -109,7 +109,7 @@ package com.inyc.modules.playback {
 			var sc:SoundChannel = _soundChannels[_soundNames.lastIndexOf(soundName)];
 			var st:SoundTransform = new SoundTransform(_volume);
 			
-			var tween = TweenLite.to(st, fadeTime, {volume:0, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:stopSoundAfterTween, onCompleteParams:[soundName, tween]});
+			var tween = TweenMax.to(st, fadeTime, {volume:0, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:stopSoundAfterTween, onCompleteParams:[soundName, tween]});
 			
 			_tweenArray.push(tween);
 		}
@@ -125,13 +125,13 @@ package com.inyc.modules.playback {
 			sc.soundTransform = st;
 		}
 		
-		private function removeTween(t:TweenLite){
+		private function removeTween(t:TweenMax){
 			//if (t) t.complete();
 		}
 		
 		public function killTweens(){
 			while (_tweenArray.length > 0){
-				var tween:TweenLite = _tweenArray.shift();
+				var tween:TweenMax = _tweenArray.shift();
 				//tween.complete();
 				//tween = null;
 			}
@@ -197,7 +197,7 @@ package com.inyc.modules.playback {
 			}
 		}
 		
-		private function stopSoundAfterTween(soundName:String, tween:TweenLite){
+		private function stopSoundAfterTween(soundName:String, tween:TweenMax){
 			//log("stopSoundAfterTween() soundName:"+soundName);
 			
 			removeSoundByName(soundName);

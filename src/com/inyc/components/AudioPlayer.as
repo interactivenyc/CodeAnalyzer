@@ -1,5 +1,5 @@
 package com.inyc.components {
-	import com.greensock.TweenLite;		import flash.events.Event;	import flash.media.Sound;	import flash.media.SoundChannel;	import flash.media.SoundLoaderContext;	import flash.media.SoundMixer;	import flash.media.SoundTransform;	import flash.net.URLRequest;	import flash.utils.ByteArray;	import flash.utils.getDefinitionByName;		/**
+	import com.greensock.TweenMax;		import flash.events.Event;	import flash.media.Sound;	import flash.media.SoundChannel;	import flash.media.SoundLoaderContext;	import flash.media.SoundMixer;	import flash.media.SoundTransform;	import flash.net.URLRequest;	import flash.utils.ByteArray;	import flash.utils.getDefinitionByName;		/**
 	 * @author stevewarren
 	 */
 	public class AudioPlayer {
@@ -59,8 +59,8 @@ package com.inyc.components {
 			var st:SoundTransform = new SoundTransform(0);
 			var sc:SoundChannel = sound.play(10,loops,st);
 			
-			var tween = TweenLite.to(st, fadeTime, {volume:_volume, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:removeTween, onCompleteParams:[tween]});
-			//var tween = TweenLite.to(st, fadeTime, {volume:_volume, onComplete:function(){log("tweenComplete")}});
+			var tween = TweenMax.to(st, fadeTime, {volume:_volume, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:removeTween, onCompleteParams:[tween]});
+			//var tween = TweenMax.to(st, fadeTime, {volume:_volume, onComplete:function(){log("tweenComplete")}});
 			
 			_soundChannels.push(sc);
 			_soundNames.push(soundName);
@@ -79,8 +79,8 @@ package com.inyc.components {
 			
 			var st:SoundTransform = new SoundTransform(_volume);
 			
-			var tween = TweenLite.to(st, fadeTime, {volume:0, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:stopSoundAfterTween, onCompleteParams:[soundName, tween]});
-			//var tween = TweenLite.to(st, fadeTime, {volume:0, onComplete:stopSoundAfterTween(soundName)});
+			var tween = TweenMax.to(st, fadeTime, {volume:0, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:stopSoundAfterTween, onCompleteParams:[soundName, tween]});
+			//var tween = TweenMax.to(st, fadeTime, {volume:0, onComplete:stopSoundAfterTween(soundName)});
 			
 			_tweenArray.push(tween);
 			
@@ -106,11 +106,11 @@ package com.inyc.components {
 			
 			for(var i:int = 0; i<tempint; i++){
 				sc = _soundChannels[i];
-				var tween  = TweenLite.to(st, time, {volume:0, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:stopSoundAfterTween, onCompleteParams:[sc, tween]});
+				var tween  = TweenMax.to(st, time, {volume:0, onUpdate:fadeSound, onUpdateParams:[sc,st], onComplete:stopSoundAfterTween, onCompleteParams:[sc, tween]});
 				_tweenArray.push(tween);
 			};
 			
-			//var tween = TweenLite.to(st, fadeTime, {volume:0, onComplete:stopSoundAfterTween(soundName)});
+			//var tween = TweenMax.to(st, fadeTime, {volume:0, onComplete:stopSoundAfterTween(soundName)});
 			
 			
 			
@@ -122,7 +122,7 @@ package com.inyc.components {
 			sc.soundTransform = st;
 		}
 		
-		private function removeTween(t:TweenLite){
+		private function removeTween(t:TweenMax){
 			//log("removeTween:"+t);
 			
 			//if (t) t.complete();
@@ -131,7 +131,7 @@ package com.inyc.components {
 		
 		public function killTweens(){
 			while (_tweenArray.length > 0){
-				var tween:TweenLite = _tweenArray.shift();
+				var tween:TweenMax = _tweenArray.shift();
 				//tween.complete();
 				//tween = null;
 			}
@@ -201,7 +201,7 @@ package com.inyc.components {
 			}
 		}
 		
-		private function stopSoundAfterTween(sc:SoundChannel, tween:TweenLite){
+		private function stopSoundAfterTween(sc:SoundChannel, tween:TweenMax){
 			//log("stopSoundAfterTween() soundName:"+soundName);
 			
 			removeSoundByChannel(sc);

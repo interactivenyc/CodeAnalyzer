@@ -1,6 +1,5 @@
 package com.inyc.core
 {
-	import com.greensock.TweenLite;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	
@@ -21,7 +20,7 @@ package com.inyc.core
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			addEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
-			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
+//			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			addEventListener(MouseEvent.CLICK, onMouseEvent);
 		}
 		
@@ -31,7 +30,7 @@ package com.inyc.core
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
-			removeEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
+//			removeEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			removeEventListener(MouseEvent.CLICK, onMouseEvent);
 		}
 		
