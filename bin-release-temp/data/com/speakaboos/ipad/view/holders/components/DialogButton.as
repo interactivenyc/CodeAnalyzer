@@ -1,1 +1,0 @@
-﻿package com.speakaboos.ipad.view.holders.components{	public class DialogButton extends DialogButtonBase	{		public function DialogButton(pButtonText:String = "", pCallback:Function = null)		{			super(new DialogButtonMC(), pButtonText, pCallback);		}	}}

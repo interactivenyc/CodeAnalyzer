@@ -31,8 +31,8 @@ package com.inyc.codeanalyzer.view
 			
 			addEventListeners();
 			
-			scaleX = .5;
-			scaleY = .5;
+//			scaleX = .5;
+//			scaleY = .5;
 			
 			_bg = MovieClipUtils.getFilledMC(CodeAnalyzer.STAGE_WIDTH-1,CodeAnalyzer.STAGE_HEIGHT-1,0xffffcc, true);
 			addChild(_bg);
