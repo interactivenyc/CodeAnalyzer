@@ -64,7 +64,6 @@ package com.inyc.codeanalyzer.view
 		
 		private function onItemLoaded(e:GenericDataEvent=null):void{
 			log("onItemLoaded");
-			log(e);
 			
 			var classView:ClassView = e.data.classView;
 			addChild(classView);

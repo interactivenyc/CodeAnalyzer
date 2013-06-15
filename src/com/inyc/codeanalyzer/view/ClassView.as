@@ -1,11 +1,12 @@
 package com.inyc.codeanalyzer.view
 {
 	import com.inyc.codeanalyzer.models.ClassItem;
-	import com.inyc.components.Accordion;
+	import com.inyc.components.mini_accordion.MiniAccordion;
 	import com.inyc.components.MCButton;
 	import com.inyc.components.TextButton;
 	import com.inyc.core.CoreMovieClip;
 	
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -14,7 +15,7 @@ package com.inyc.codeanalyzer.view
 		private var _classItem:ClassItem;
 		private var _textButtons:Array;
 		
-		private var _accordion:Accordion;
+		private var _accordion:MiniAccordion;
 		
 		private const WIDTH:int = 180;
 		private const HEIGHT:int = 120;
@@ -30,34 +31,15 @@ package com.inyc.codeanalyzer.view
 		override protected function onAddedToStage(e:Event):void{
 			super.onAddedToStage(e);
 			
-			_accordion = new Accordion();
+			_accordion = new MiniAccordion();
 			_accordion.headerText = _classItem.name;
 			addChild(_accordion);
 			
-//			var shadow:MovieClip = MovieClipUtils.getFilledMC(WIDTH,HEIGHT,0x000000);
-//			shadow.alpha = .7;
-//			shadow.x += 2;
-//			shadow.y += 3;
-//			addChild(shadow);
-//			
-//			var bg:MovieClip = MovieClipUtils.getFilledMC(WIDTH,HEIGHT,0xff6600, true);
-//			addChild(bg);
-//			
-//			var textButton:TextButton = new TextButton(_classItem.name,0xff6600,WIDTH,20);
-//			addChild(textButton);
-//			_textButtons.push(textButton);
-//			
-//			var imports:Vector.<ImportItem> = _classItem.imports;
-//			
-//			for (var i:int=0; i<imports.length; i++){
-//				textButton = new TextButton(imports[i].importClass,0xffff66,WIDTH,16);
-//				var fmt:TextFormat = new TextFormat();
-//				fmt.size = 10;
-//				fmt.align = "left";
-//				fmt.font = "_sans";
-//				textButton.textFormat = fmt;
-//				addTextButton(textButton);
-//			}
+			_accordion.addSection("imports");
+			_accordion.addSection("variables");
+			_accordion.addSection("functions");
+			
+			
 			
 		}
 		

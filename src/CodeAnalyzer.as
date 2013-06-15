@@ -12,7 +12,7 @@ package
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	
-	[SWF(width=1024,height=768)]
+	[SWF(width=2048,height=1536)]
 	public class CodeAnalyzer extends CoreMovieClip{
 		
 		private var _appModel:AppModel;
@@ -25,10 +25,10 @@ package
 		
 		private var _loaderUtils:LoaderUtils;
 		
-		public static var STAGE_WIDTH:int = 1024;
-		public static var STAGE_HEIGHT:int = 768;
-		public static var SCALE_X:Number = 1;
-		public static var SCALE_Y:Number = 1;
+		public static var STAGE_WIDTH:int = 2048;
+		public static var STAGE_HEIGHT:int = 1536;
+		public static var SCALE_X:Number = 2;
+		public static var SCALE_Y:Number = 2;
 		
 		public function CodeAnalyzer(){
 			super();
