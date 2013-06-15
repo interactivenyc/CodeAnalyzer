@@ -1,7 +1,7 @@
 package com.inyc.codeanalyzer.view
 {
 	import com.inyc.codeanalyzer.models.ClassItem;
-	import com.inyc.components.mini_accordion.MiniAccordion;
+	import com.inyc.components.accordion.Accordion;
 	import com.inyc.components.MCButton;
 	import com.inyc.components.TextButton;
 	import com.inyc.core.CoreMovieClip;
@@ -15,7 +15,7 @@ package com.inyc.codeanalyzer.view
 		private var _classItem:ClassItem;
 		private var _textButtons:Array;
 		
-		private var _accordion:MiniAccordion;
+		private var _accordion:Accordion;
 		
 		private const WIDTH:int = 180;
 		private const HEIGHT:int = 120;
@@ -31,7 +31,7 @@ package com.inyc.codeanalyzer.view
 		override protected function onAddedToStage(e:Event):void{
 			super.onAddedToStage(e);
 			
-			_accordion = new MiniAccordion();
+			_accordion = new Accordion();
 			_accordion.headerText = _classItem.name;
 			addChild(_accordion);
 			
