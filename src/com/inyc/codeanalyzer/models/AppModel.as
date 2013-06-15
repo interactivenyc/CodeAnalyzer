@@ -5,7 +5,6 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.utils.ArrayUtils;
-	import com.inyc.utils.ObjectUtils;
 	
 	public class AppModel extends CoreModel
 	{
@@ -15,6 +14,7 @@ package com.inyc.codeanalyzer.models
 		public function AppModel(fileArray:Array)
 		{
 			super();
+			log("constructor");
 			
 			model = new Object();
 			_classItems = new Array();
@@ -24,11 +24,12 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		private function init(fileArray:Array):void{
+			log("init");
 			var classItem:ClassItem;
 			
 			//for (var i:int=0; i<fileArray.length; i++){
 			
-			for (var i:int=0; i<100; i++){
+			for (var i:int=0; i<10; i++){
 				classItem = new ClassItem();
 				classItem.processClass(fileArray[i]);
 				
@@ -44,7 +45,11 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		private function classLoaded(e:GenericDataEvent):void{
+			
 			var classItem:ClassItem = e.data.file;
+			
+			log("classLoaded: "+classItem.name);
+			
 			ArrayUtils.removeValueFromArray(_classItems,classItem);
 			//log("classes left to load: "+_classItems.length);
 			
