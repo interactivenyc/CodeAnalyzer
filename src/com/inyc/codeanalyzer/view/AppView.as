@@ -23,7 +23,7 @@ package com.inyc.codeanalyzer.view
 			init();
 		}
 		
-		private function init():void{
+		override protected function init():void{
 			
 		}
 		
