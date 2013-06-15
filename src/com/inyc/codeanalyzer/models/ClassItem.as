@@ -32,6 +32,8 @@ package com.inyc.codeanalyzer.models
 			
 			if (declaration == null || declaration.length < 2) return;
 			
+			log("processClass: "+declaration);
+			
 			var processArray:Array = new Array();
 			processArray = declaration.split("/");
 			name = processArray[processArray.length - 1];
@@ -45,14 +47,14 @@ package com.inyc.codeanalyzer.models
 			packagePath = processArray.join("/");
 			var filePath:String =( Config.ROOT_PATH + "/" + packagePath + "/" + name);
 			
-			//log("fileData load: "+filePath);
+			log("fileData load: "+filePath);
 			
 			try{
 				_loaderUtils = new LoaderUtils();
 				_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
 				_loaderUtils.readFile(filePath);
 			}catch(e:Error){
-				//log("Error: "+e.message);
+				log("Error: "+e.message);
 			}
 			
 			
@@ -67,6 +69,8 @@ package com.inyc.codeanalyzer.models
 			var functionItem:FunctionItem;
 			var variableItem:VariableItem;
 			var importItem:ImportItem;
+			
+			log("fileDataLoaded: "+fileData);
 			
 			
 			defObject.imports = new Object();

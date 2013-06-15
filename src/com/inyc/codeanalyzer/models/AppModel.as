@@ -33,7 +33,7 @@ package com.inyc.codeanalyzer.models
 				classItem = new ClassItem();
 				classItem.processClass(fileArray[i]);
 				
-				//log(classItem.name);
+				log(classItem.name);
 				
 				if (classItem != null && classItem.name != null) {
 					model[classItem.name] = classItem;

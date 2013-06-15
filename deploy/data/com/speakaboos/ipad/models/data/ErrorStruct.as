@@ -1,1 +1,0 @@
-﻿package com.speakaboos.ipad.models.data{		public class ErrorStruct	{				private var _error:String = "";		private var _code:int = 0;				public function ErrorStruct(error:String="", code:int=0)		{			_error = error;			_code = code;		}				public function get error():String{			return _error;		}				public function get code():int{			return _code;		}			}}
