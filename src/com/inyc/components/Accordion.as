@@ -1,6 +1,5 @@
 package com.inyc.components
 {
-	import com.inyc.core.CoreButton;
 	import com.inyc.core.CoreMovieClip;
 	
 	import flash.events.MouseEvent;

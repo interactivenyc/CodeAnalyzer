@@ -18,21 +18,21 @@ package com.inyc.codeanalyzer.view
 		public function AppView(appModel:AppModel)
 		{
 			super();
+			log("constructor");
+			
 			_appModel = appModel;
 			
-			init();
 		}
 		
-		override protected function init():void{
-			
-		}
 		
 		override protected function onAddedToStage(e:Event):void{
 			super.onAddedToStage(e);
+			log("onAddedToStage");
+			
 			addEventListeners();
 			
-			//scaleX = .5;
-			//scaleY = .5;
+			scaleX = .5;
+			scaleY = .5;
 			
 			_bg = MovieClipUtils.getFilledMC(CodeAnalyzer.STAGE_WIDTH-1,CodeAnalyzer.STAGE_HEIGHT-1,0xffffcc, true);
 			addChild(_bg);
@@ -47,6 +47,7 @@ package com.inyc.codeanalyzer.view
 		}
 		
 		private function addEventListeners():void{
+			log("addEventListeners");
 			_eventDispatcher.addEventListener(AppEvents.LAYOUT_ITEM_LOADED, onItemLoaded);
 			_eventDispatcher.addEventListener(AppEvents.ALL_LAYOUT_ITEMS_LOADED, onAllItemsLoaded);
 		}
@@ -56,8 +57,9 @@ package com.inyc.codeanalyzer.view
 			_eventDispatcher.removeEventListener(AppEvents.ALL_LAYOUT_ITEMS_LOADED, onAllItemsLoaded);
 		}
 		
-		private function onItemLoaded(e:GenericDataEvent):void{
-			//log("onItemLoaded");
+		private function onItemLoaded(e:GenericDataEvent=null):void{
+			log("onItemLoaded");
+			log(e);
 			
 			var classView:ClassView = e.data.classView;
 			addChild(classView);
@@ -69,12 +71,26 @@ package com.inyc.codeanalyzer.view
 			classView.addEventListener(MouseEvent.MOUSE_DOWN, sendUp);
 		}
 		
-		private function onAllItemsLoaded(e:GenericDataEvent):void{
+		private function onAllItemsLoaded(e:GenericDataEvent=null):void{
 			log("onAllItemsLoaded");
 		}
 		
 		private function sendUp(e:MouseEvent):void{
 			addChild(e.currentTarget as MovieClip);
+		}
+		
+		private function onEventReceived(e:GenericDataEvent):void{
+			log("onEventReceived: "+e.type)
+			
+			switch(e.type){
+				case AppEvents.LAYOUT_ITEM_LOADED:
+					onItemLoaded(e);
+					break;
+				case AppEvents.ALL_LAYOUT_ITEMS_LOADED:
+					onAllItemsLoaded();
+					break;
+				
+			}
 		}
 		
 		
