@@ -1,12 +1,12 @@
- <?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <application xmlns="http://ns.adobe.com/air/application/3.7">
-	<id>CodeAnalyzer</id>
+	<id>com.speakaboos.ipad.debug</id>
 	<filename>CodeAnalyzer</filename>
-	<name>CodeAnalyzer</name>
-	<versionNumber>0.0.1</versionNumber>
-	<copyright></copyright>
+	<name>CodeAnalyzer-debug</name>
+	<versionNumber>1.0.0</versionNumber>
+	<copyright/>
 	<initialWindow>
-		<content>codeAnalyzer.swf</content>
+		<content>CodeAnalyzer.swf</content>
         <aspectRatio>landscape</aspectRatio>
         <systemChrome>standard</systemChrome>
         <autoOrients>true</autoOrients>
@@ -16,45 +16,20 @@
     </initialWindow>
     <customUpdateUI>false</customUpdateUI>
     <allowBrowserInvocation>false</allowBrowserInvocation>
-    
-    <!-- 
-	<icon>
-        <image48x48>AppIconsForPublish/Icon-48.png</image48x48>
-        <image72x72>AppIconsForPublish/Icon-72.png</image72x72>
-        <image50x50>AppIconsForPublish/Icon-Small-50.png</image50x50>
-        <image512x512>AppIconsForPublish/Icon-512.png</image512x512>
-        <image144x144>AppIconsForPublish/Icon-144.png</image144x144>
-    </icon>
-    -->
-    
-    <iPhone>
-        <InfoAdditions><![CDATA[
-			<key>UIDeviceFamily</key>
-			<array>
-				<string>1</string>
-				<string>2</string>
-			</array>
-		]]></InfoAdditions>
-        <requestedDisplayResolution>high</requestedDisplayResolution>
-    </iPhone>
-    
-    <!-- 
-    <InfoAdditions><![CDATA[<key>UIDeviceFamily</key><array><string>1</string><string>2</string></array><key>FacebookAppID</key><string>211032669024829</string><key>CFBundleURLTypes</key><array><dict><key>CFBundleURLSchemes</key><array><string>fb211032669024829</string></array></dict></array><key>UIPrerenderedIcon</key><true/>]]></InfoAdditions>
+     <iPhone>
+        <InfoAdditions><![CDATA[<key>UIDeviceFamily</key><array><string>1</string><string>2</string></array><key>FacebookAppID</key><string>211032669024829</string><key>CFBundleURLTypes</key><array><dict><key>CFBundleURLSchemes</key><array><string>fb211032669024829</string></array></dict></array><key>UIPrerenderedIcon</key><true/>]]></InfoAdditions>
         <requestedDisplayResolution>high</requestedDisplayResolution>
         <Entitlements>
-	            <!---IMPORTANT!!! -->
-	            <!-- CHANGE aps-environment to 'production' when using the distribution certificate or publishing to App Store-->
-	            <!--- YOU MUST CHANGE DEVELOPMENT TO PRODUCTION WHEN PUBLISHING TO THE APP STORE.  -->
-	            <!-- YOU MUST REMOVE THE GET TASK ALLOW KEY AND TRUE BELOW IT BEFORE PUBLISHING TO THE APP STORE -->
-	        <!-- <![CDATA[
-			<key>application-identifier</key>
-			<string>82HG9NWDTR.com.speakaboos.ipad</string>
-			<key>aps-environment</key>
-			<string>production</string>
-			<key>keychain-access-groups</key>
-			<array>
+			<![CDATA[
+				<key>application-identifier</key>
 				<string>82HG9NWDTR.com.speakaboos.ipad</string>
-			</array>						
-		 ]]></Entitlements>
-         -->
+				<key>aps-environment</key>
+				<string>production</string>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>82HG9NWDTR.com.speakaboos.ipad</string>
+				</array>						
+
+			]]></Entitlements>
+    </iPhone>
 </application>
