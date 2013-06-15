@@ -35,7 +35,7 @@ package
 			log("CodeAnalyzer");
 			
 //			stage.align = StageAlign.TOP_LEFT;
-//			stage.scaleMode = StageScaleMode.EXACT_FIT;
+			stage.scaleMode = StageScaleMode.EXACT_FIT;
 //			stage.quality = StageQuality.MEDIUM; // .HIGH; //
 //			stage.stageWidth = STAGE_WIDTH;
 //			stage.stageHeight = STAGE_HEIGHT;

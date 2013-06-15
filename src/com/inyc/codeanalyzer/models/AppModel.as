@@ -27,9 +27,8 @@ package com.inyc.codeanalyzer.models
 			log("init");
 			var classItem:ClassItem;
 			
-			//for (var i:int=0; i<fileArray.length; i++){
-			
-			for (var i:int=0; i<10; i++){
+			for (var i:int=0; i<fileArray.length; i++){
+			//for (var i:int=0; i<10; i++){
 				classItem = new ClassItem();
 				classItem.processClass(fileArray[i]);
 				
