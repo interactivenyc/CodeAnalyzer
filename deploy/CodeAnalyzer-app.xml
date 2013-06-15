@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <application xmlns="http://ns.adobe.com/air/application/3.7">
-	<id>com.interactivenyc.codeanalyzer</id>
-	<filename>CodeAnalyzer</filename>
-	<name>CodeAnalyzer-debug</name>
-	<versionNumber>1.0.0</versionNumber>
-	<copyright/>
-	<initialWindow>
-		<content>CodeAnalyzer.swf</content>
+    <id>com.interactivenyc.codeanalyzer</id>
+    <filename>CodeAnalyzer</filename>
+    <name>CodeAnalyzer-debug</name>
+    <versionNumber>1.0.0</versionNumber>
+    <copyright></copyright>
+    <initialWindow>
+        <content>CodeAnalyzer.swf</content>
         <aspectRatio>landscape</aspectRatio>
         <systemChrome>standard</systemChrome>
         <autoOrients>true</autoOrients>
@@ -16,11 +16,10 @@
     </initialWindow>
     <customUpdateUI>false</customUpdateUI>
     <allowBrowserInvocation>false</allowBrowserInvocation>
-     <iPhone>
+    <iPhone>
         <InfoAdditions><![CDATA[<key>UIDeviceFamily</key><array><string>1</string><string>2</string></array><key>FacebookAppID</key><string>211032669024829</string><key>CFBundleURLTypes</key><array><dict><key>CFBundleURLSchemes</key><array><string>fb211032669024829</string></array></dict></array><key>UIPrerenderedIcon</key><true/>]]></InfoAdditions>
         <requestedDisplayResolution>high</requestedDisplayResolution>
-        <Entitlements>
-			<![CDATA[
+        <Entitlements><![CDATA[
 				<key>keychain-access-groups</key>
 				<array>
 					<string>9YA2T2MWLM.com.interactivenyc.codeanalyzer</string>

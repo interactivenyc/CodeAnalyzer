@@ -1,6 +1,6 @@
 package com.inyc.components
 {
-	import com.greensock.TweenLite;
+	import com.greensock.TweenMax;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.VideoEvents;
 	
@@ -146,12 +146,12 @@ package com.inyc.components
 			{
 				pauseScreen.alpha = 0;
 				addChild(pauseScreen);
-				TweenLite.to(pauseScreen, .5, {alpha:1});
+				TweenMax.to(pauseScreen, .5, {alpha:1});
 				ns.pause();
 			}
 			else
 			{
-				TweenLite.to(pauseScreen, .5, {alpha:0, onComplete:function():void{removeChild(pauseScreen)}});
+				TweenMax.to(pauseScreen, .5, {alpha:0, onComplete:function():void{removeChild(pauseScreen)}});
 				ns.resume();
 			}
 			
