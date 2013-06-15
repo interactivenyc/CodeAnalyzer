@@ -1,4 +1,4 @@
-package com.inyc.components.mini_accordion
+package com.inyc.components.accordion
 {
 	import com.inyc.components.MCButton;
 	import com.inyc.core.CoreMovieClip;
@@ -6,45 +6,45 @@ package com.inyc.components.mini_accordion
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
-	public class MiniAccordion extends CoreMovieClip
+	public class Accordion extends CoreMovieClip
 	{
-		public var accordion:MiniAccordion_MC;
+		public var accordion:Accordion_MC;
 		public var indicator:MCButton;
 		public var bg:MovieClip;
 		private var sections:Array = new Array();
 		private var _cellPadding:int = 2;
 		
-		public function MiniAccordion()
+		public function Accordion()
 		{
 			super();
-			accordion = new MiniAccordion_MC();
-			//accordion.bottom.y = accordion.top.y + accordion.top.height;
+			accordion = new Accordion_MC();
+			//accordion.bottom.y = accordion.header.y + accordion.header.height;
 			
-			indicator = accordion.top.indicator as MCButton;
+			indicator = accordion.header.indicator as MCButton;
 			indicator.addEventListener(MouseEvent.CLICK, onMouseEvent);
 			
-			bg = accordion.top.bg as MovieClip;
+			bg = accordion.header.bg as MovieClip;
 			bg.addEventListener(MouseEvent.CLICK, onMouseEvent);
 			bg.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			bg.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			bg.addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			
-			accordion.top.tf.mouseEnabled = false;
-			accordion.top.tf.mouseChildren = false;
+			accordion.header.tf.mouseEnabled = false;
+			accordion.header.tf.mouseChildren = false;
 			
 			addChild(accordion);
 		}
 		
 		public function set headerText(text:String):void{
-			accordion.top.tf.label.text = text;
+			accordion.header.tf.label.text = text;
 		}
 		
 		public function addSection(sectionName:String):void{
-			var section:MiniAccordion_Section = new MiniAccordion_Section();
+			var section:Accordion_Section = new Accordion_Section();
 			section.tf.label.text = sectionName;
 			
-			section.x = accordion.top.x;
-			section.y = (accordion.top.height + _cellPadding) + (sections.length * (18 + _cellPadding));
+			section.x = accordion.header.x;
+			section.y = (accordion.header.height + _cellPadding) + (sections.length * (18 + _cellPadding));
 			
 			log(sectionName + ".y: "+ section.y);
 			
@@ -52,7 +52,7 @@ package com.inyc.components.mini_accordion
 			addChild(section);
 			
 			accordion.bottom.y = section.y + section.height + _cellPadding;
-			accordion.bg.height = accordion.bottom.y + accordion.bottom.height;
+			accordion.bg.height = accordion.bottom.y + accordion.bottom.height + 4;
 		}
 		
 		protected function onMouseEvent(e:MouseEvent):void{
