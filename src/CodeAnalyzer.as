@@ -42,7 +42,7 @@ package
 			
 		}
 		
-		private function init():void{
+		override protected function init():void{
 			_viewContainer = new CoreMovieClip();
 			addChild(_viewContainer);
 			_loaderUtils = new LoaderUtils();
