@@ -9,6 +9,7 @@ package com.inyc.codeanalyzer.view
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TransformGestureEvent;
 	
 	public class AppView extends CoreMovieClip
 	{
@@ -33,11 +34,9 @@ package com.inyc.codeanalyzer.view
 			
 			scaleX = CodeAnalyzer.SCALE_X;
 			scaleY = CodeAnalyzer.SCALE_Y;
+			
 			var bgWidth:int = CodeAnalyzer.STAGE_WIDTH/scaleX;
 			var bgHeight:int = CodeAnalyzer.STAGE_HEIGHT/scaleY;
-			
-			
-			
 			
 			_bg = MovieClipUtils.getFilledMC(bgWidth, bgHeight, 0xffffcc, true);
 			addChild(_bg);
@@ -55,6 +54,7 @@ package com.inyc.codeanalyzer.view
 			log("addEventListeners");
 			_eventDispatcher.addEventListener(AppEvents.LAYOUT_ITEM_LOADED, onItemLoaded);
 			_eventDispatcher.addEventListener(AppEvents.ALL_LAYOUT_ITEMS_LOADED, onAllItemsLoaded);
+			stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
 		}
 		
 		private function removeEventListeners():void{
@@ -81,6 +81,21 @@ package com.inyc.codeanalyzer.view
 		
 		private function sendUp(e:MouseEvent):void{
 			addChild(e.currentTarget as MovieClip);
+		}
+		
+		private function onZoom(e:TransformGestureEvent):void{
+			log("onZoom: "+e.scaleX);
+			scaleX *= e.scaleX;
+			scaleY *= e.scaleX;
+			if (scaleX < 1) {
+				scaleX = 1;
+				scaleY = 1;
+			}
+			if (scaleX > 5) {
+				scaleX = 5;
+				scaleY = 5;
+			}
+			
 		}
 		
 		private function onEventReceived(e:GenericDataEvent):void{
