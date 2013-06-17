@@ -27,8 +27,8 @@ package com.inyc.codeanalyzer.models
 			log("init");
 			var classItem:ClassItem;
 			
-			for (var i:int=0; i<fileArray.length; i++){
-			//for (var i:int=0; i<10; i++){
+			//for (var i:int=0; i<fileArray.length; i++){
+			for (var i:int=0; i<10; i++){
 				classItem = new ClassItem();
 				classItem.processClass(fileArray[i]);
 				
@@ -47,7 +47,7 @@ package com.inyc.codeanalyzer.models
 			
 			var classItem:ClassItem = e.data.file;
 			
-			log("classLoaded: "+classItem.name);
+			//log("classLoaded: "+classItem.name);
 			
 			ArrayUtils.removeValueFromArray(_classItems,classItem);
 			//log("classes left to load: "+_classItems.length);

@@ -20,7 +20,7 @@ package com.inyc.core
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			addEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
-//			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
+			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			addEventListener(MouseEvent.CLICK, onMouseEvent);
 		}
 		
@@ -30,7 +30,7 @@ package com.inyc.core
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_OUT, onMouseEvent);
-//			removeEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
+			removeEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			removeEventListener(MouseEvent.CLICK, onMouseEvent);
 		}
 		
@@ -38,9 +38,17 @@ package com.inyc.core
 		
 		protected function onMouseEvent(e:MouseEvent):void{
 			switch(e.type){
-				case MouseEvent.CLICK:
-					dispatchEvent(new GenericDataEvent(AppEvents.BUTTON_CLICK, {button:this}));
+				case MouseEvent.MOUSE_DOWN:
 					break;
+				case MouseEvent.MOUSE_UP:
+					break;
+				case MouseEvent.MOUSE_OUT:
+					break;
+				case MouseEvent.RELEASE_OUTSIDE:
+					break;
+				case MouseEvent.CLICK:
+					break;
+				
 			}
 		}
 		
