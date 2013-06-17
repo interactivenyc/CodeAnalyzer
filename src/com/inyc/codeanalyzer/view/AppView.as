@@ -1,7 +1,7 @@
 package com.inyc.codeanalyzer.view
 {
 	import com.inyc.codeanalyzer.models.AppModel;
-	import com.inyc.core.CoreMovieClip;
+	import com.inyc.components.IOSImageView;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.utils.MovieClipUtils;
@@ -11,7 +11,7 @@ package com.inyc.codeanalyzer.view
 	import flash.events.MouseEvent;
 	import flash.events.TransformGestureEvent;
 	
-	public class AppView extends CoreMovieClip
+	public class AppView extends IOSImageView
 	{
 		private var _appModel:AppModel;
 		private var _bg:MovieClip;
@@ -54,7 +54,6 @@ package com.inyc.codeanalyzer.view
 			log("addEventListeners");
 			_eventDispatcher.addEventListener(AppEvents.LAYOUT_ITEM_LOADED, onItemLoaded);
 			_eventDispatcher.addEventListener(AppEvents.ALL_LAYOUT_ITEMS_LOADED, onAllItemsLoaded);
-			stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
 		}
 		
 		private function removeEventListeners():void{
@@ -83,20 +82,9 @@ package com.inyc.codeanalyzer.view
 			addChild(e.currentTarget as MovieClip);
 		}
 		
-		private function onZoom(e:TransformGestureEvent):void{
-			log("onZoom: "+e.scaleX);
-			scaleX *= e.scaleX;
-			scaleY *= e.scaleX;
-			if (scaleX < 1) {
-				scaleX = 1;
-				scaleY = 1;
-			}
-			if (scaleX > 5) {
-				scaleX = 5;
-				scaleY = 5;
-			}
-			
-		}
+
+		
+		
 		
 		private function onEventReceived(e:GenericDataEvent):void{
 			log("onEventReceived: "+e.type)

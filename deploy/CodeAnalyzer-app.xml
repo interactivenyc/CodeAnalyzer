@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <application xmlns="http://ns.adobe.com/air/application/3.7">
     <id>com.interactivenyc.codeanalyzer</id>
-    <filename>CodeAnalyzer</filename>
+    <filename>CodeAnalyzer-debug</filename>
     <name>CodeAnalyzer-debug</name>
     <versionNumber>1.0.0</versionNumber>
     <copyright></copyright>
@@ -10,7 +10,7 @@
         <aspectRatio>landscape</aspectRatio>
         <systemChrome>standard</systemChrome>
         <autoOrients>true</autoOrients>
-        <fullScreen>false</fullScreen>
+        <fullScreen>true</fullScreen>
         <visible>true</visible>
         <renderMode>gpu</renderMode>
     </initialWindow>

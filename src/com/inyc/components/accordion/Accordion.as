@@ -33,6 +33,8 @@ package com.inyc.components.accordion
 			accordion.header.tf.mouseChildren = false;
 			
 			addChild(accordion);
+			
+			cacheAsBitmap = true;
 		}
 		
 		public function set headerText(text:String):void{
