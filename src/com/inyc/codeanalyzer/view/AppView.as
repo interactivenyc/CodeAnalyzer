@@ -2,6 +2,7 @@ package com.inyc.codeanalyzer.view
 {
 	import com.inyc.codeanalyzer.models.AppModel;
 	import com.inyc.components.IOSImageView;
+	import com.inyc.components.Toolbar;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.utils.MovieClipUtils;
@@ -9,12 +10,12 @@ package com.inyc.codeanalyzer.view
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.TransformGestureEvent;
 	
 	public class AppView extends IOSImageView
 	{
 		private var _appModel:AppModel;
 		private var _bg:MovieClip;
+		private var _toolbar:Toolbar;
 		
 		public function AppView(appModel:AppModel)
 		{
@@ -42,6 +43,8 @@ package com.inyc.codeanalyzer.view
 			addChild(_bg);
 
 			log("stage.width: "+stage.width+", stage.height: "+stage.height);
+			
+			
 
 		}
 		
@@ -62,20 +65,23 @@ package com.inyc.codeanalyzer.view
 		}
 		
 		private function onItemLoaded(e:GenericDataEvent=null):void{
-			log("onItemLoaded");
+			//log("onItemLoaded");
 			
 			var classView:ClassView = e.data.classView;
 			addChild(classView);
 			classView.x = Math.ceil(Math.random()*(_bg.width - classView.width));
 			classView.y = Math.ceil(Math.random()*(_bg.height - classView.height));
 			
-			log("classView.x: "+classView.x+", classView.y: "+classView.y);
+			//log("classView.x: "+classView.x+", classView.y: "+classView.y);
 			
 			classView.addEventListener(MouseEvent.MOUSE_DOWN, sendUp);
 		}
 		
 		private function onAllItemsLoaded(e:GenericDataEvent=null):void{
 			log("onAllItemsLoaded");
+			
+			_toolbar = new Toolbar();
+			addChild(_toolbar);
 		}
 		
 		private function sendUp(e:MouseEvent):void{

@@ -20,7 +20,10 @@ package com.inyc.components.accordion
 			accordion = new Accordion_MC();
 			//accordion.bottom.y = accordion.header.y + accordion.header.height;
 			
-			indicator = accordion.header.indicator as MCButton;
+			//indicator = accordion.header.indicator as MCButton;
+			
+			indicator = new MCButton();
+			indicator.addChild(accordion.header.indicator);
 			indicator.addEventListener(MouseEvent.CLICK, onMouseEvent);
 			
 			bg = accordion.header.bg as MovieClip;
@@ -47,8 +50,6 @@ package com.inyc.components.accordion
 			
 			section.x = accordion.header.x;
 			section.y = (accordion.header.height + _cellPadding) + (sections.length * (18 + _cellPadding));
-			
-			log(sectionName + ".y: "+ section.y);
 			
 			sections.push(section);
 			addChild(section);
