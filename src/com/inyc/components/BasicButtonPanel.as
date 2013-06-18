@@ -6,7 +6,7 @@ package com.inyc.components
 	
 	public class BasicButtonPanel extends CoreMovieClip
 	{
-		protected var _buttons:Array = new Array();
+		protected var _buttons:Vector.<BasicButton> = new Vector.<BasicButton>();
 		
 		
 		public function BasicButtonPanel(){
@@ -20,9 +20,9 @@ package com.inyc.components
 		
 		protected function onMouseEvent(e:MouseEvent):void{
 			for (var i:int=0; i<_buttons.length; i++){
-				(_buttons[i] as BasicButton).selected = false;
-				(e.target as BasicButton).selected = true;
+				_buttons[i].selected = false;
 			}
+			e.target.selected = true;
 		}
 	}
 }
