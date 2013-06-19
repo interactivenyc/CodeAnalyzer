@@ -18,9 +18,6 @@ package com.inyc.components.accordion
 		{
 			super();
 			accordion = new Accordion_MC();
-			//accordion.bottom.y = accordion.header.y + accordion.header.height;
-			
-			//indicator = accordion.header.indicator as MCButton;
 			
 			indicator = new MCButton();
 			indicator.addChild(accordion.header.indicator);
@@ -36,6 +33,7 @@ package com.inyc.components.accordion
 			accordion.header.tf.mouseChildren = false;
 			
 			addChild(accordion);
+			addChild(indicator);
 			
 			cacheAsBitmap = true;
 		}
