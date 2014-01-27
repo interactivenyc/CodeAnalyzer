@@ -112,8 +112,8 @@ package com.inyc.codeanalyzer.models
 			dispatchEvent(new GenericDataEvent(AppEvents.FILE_LOADED, {file:this}));
 								
 				
-//			//log(ObjectUtils.getGenericObject(defObject));
-//			
+			//log(ObjectUtils.getGenericObject(defObject));
+			
 //			log("*********************************");
 //			log("fileData readClass: "+name);
 //			log("*********************************");

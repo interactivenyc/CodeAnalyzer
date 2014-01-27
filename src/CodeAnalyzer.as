@@ -7,12 +7,11 @@ package
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.LoaderUtils;
+	import com.inyc.utils.MovieClipUtils;
 	
-	import flash.display.StageAlign;
-	import flash.display.StageQuality;
-	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	
-	[SWF(width=1024,height=768)]
+	[SWF(width=1900,height=1100)]
 	public class CodeAnalyzer extends CoreMovieClip{
 		
 		private var _appModel:AppModel;
@@ -25,28 +24,34 @@ package
 		
 		private var _loaderUtils:LoaderUtils;
 		
-		public static var STAGE_WIDTH:int = 1024;
-		public static var STAGE_HEIGHT:int = 768;
+		public static var STAGE_WIDTH:int = 1900;
+		public static var STAGE_HEIGHT:int = 1100;
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
 		
 		public function CodeAnalyzer(){
-			super();
 			log("CodeAnalyzer");
-			
-//			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.EXACT_FIT;
-//			stage.quality = StageQuality.MEDIUM; // .HIGH; //
-//			stage.stageWidth = STAGE_WIDTH;
-//			stage.stageHeight = STAGE_HEIGHT;
-			
-			init();
-			
+			super();
 		}
 		
+		
+		override protected function onAddedToStage(e:Event):void{
+			log("onAddedToStage");
+			super.onAddedToStage(e);
+			STAGE_WIDTH = stage.stageWidth;
+			STAGE_HEIGHT = stage.stageHeight;
+		}
+		
+		
+		override protected function onRemovedFromStage(e:Event):void{
+			log("onRemovedFromStage");
+			super.onRemovedFromStage(e);
+		}
+		
+		
 		override protected function init():void{
-			_viewContainer = new CoreMovieClip();
-			addChild(_viewContainer);
+			log("init");
+			
 			_loaderUtils = new LoaderUtils();
 			_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
 			_loaderUtils.readFile(Config.ROOT_PATH + "/files.txt");
@@ -58,11 +63,22 @@ package
 			_loaderUtils.removeEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
 			_fileData = e.data.file;
 			//log(_fileData);
+			
 			_fileArray = _fileData.split(/\n/);
 			_appModel = new AppModel(_fileArray);
 			_appView = new AppView(_appModel);
+			
+			setupViewContainer();
 			_viewContainer.addChild(_appView);
 		}
+		
+		private function setupViewContainer():void {
+			log("setupViewContainer: ("+stage.stageWidth+", "+stage.stageHeight+")");
+			_viewContainer = new CoreMovieClip();
+			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height));
+			addChild(_viewContainer);
+		}
+
 		
 	}
 }

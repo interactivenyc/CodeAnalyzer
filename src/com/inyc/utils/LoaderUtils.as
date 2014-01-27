@@ -1,5 +1,5 @@
 package com.inyc.utils {
-	import com.inyc.components.IGridItem;	import com.inyc.events.GenericDataEvent;	import com.inyc.events.LoaderUtilsEvent;	import com.inyc.models.GridItemData;	import com.inyc.utils.debug.Logger;		import flash.display.Loader;	import flash.display.LoaderInfo;	import flash.display.MovieClip;	import flash.events.Event;	import flash.events.EventDispatcher;	import flash.events.IOErrorEvent;	import flash.events.SecurityErrorEvent;	import flash.net.URLLoader;	import flash.net.URLRequest;	import flash.net.URLRequestMethod;	import flash.net.URLVariables;	import flash.system.ApplicationDomain;	import flash.system.LoaderContext;	import flash.system.SecurityDomain;
+	import com.inyc.components.IGridItem;	import com.inyc.events.GenericDataEvent;	import com.inyc.events.LoaderUtilsEvent;	import com.inyc.models.GridItemData;	import com.inyc.utils.debug.Logger;		import flash.display.Loader;	import flash.display.LoaderInfo;	import flash.display.MovieClip;	import flash.events.Event;	import flash.events.EventDispatcher;	import flash.events.IOErrorEvent;	import flash.events.SecurityErrorEvent;	import flash.events.TimerEvent;	import flash.net.URLLoader;	import flash.net.URLRequest;	import flash.net.URLRequestMethod;	import flash.net.URLVariables;	import flash.system.ApplicationDomain;	import flash.system.LoaderContext;	import flash.system.SecurityDomain;	import flash.utils.Timer;
 	/**
 	 * @author stevewarren
 	 * THIS NEW CLASS IS A WORK IN PROGRESS!!!
@@ -8,16 +8,18 @@ package com.inyc.utils {
 		private var loaders:Array = new Array();
 		private var ldrContext:LoaderContext;
 		private var serviceLoader:URLLoader;
+		private var loadTimer:Timer;
 		
 		public static var LOADER_EVENT:String = "LOADER_EVENT";
 
 		
 		public function LoaderUtils() {
+			log("constructor");
 			ldrContext = new LoaderContext(false, ApplicationDomain.currentDomain, SecurityDomain.currentDomain);
 		}
 		
 		public function load(url:String, useLoaderContext:Boolean=true):Loader{
-			//log("load url:"+url);
+			log("load url:"+url);
 			var loader:Loader = new Loader();
 			var urlRequest:URLRequest = new URLRequest(url);
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
@@ -42,7 +44,7 @@ package com.inyc.utils {
 		}
 		
 		protected function onLoadComplete(e:Event):void{
-			//log("onLoadComplete:"+e.target.url);
+			log("onLoadComplete:"+e.target.url);
 			dispatchEvent(e);
 			dispatchEvent(new LoaderUtilsEvent(LoaderUtilsEvent.COMPLETE));
 			var loader:Loader = (e.target as LoaderInfo).loader;
@@ -55,14 +57,34 @@ package com.inyc.utils {
 		
 		
 		public function readFile(filePath:String):void{
-			//log("readFiles");
+			log("readFile: "+filePath);
 			var textLoader:URLLoader = new URLLoader();
+			
+			loadTimer = new Timer(100);
+			loadTimer.addEventListener(TimerEvent.TIMER, checkLoader);
+			loadTimer.start();
+			
+			log("loadTimer set");
+			
+			//TODO: Add removeEventListeners
 			textLoader.addEventListener(Event.COMPLETE, onFileLoaded);
+			textLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+			textLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+			
 			textLoader.load(new URLRequest(filePath));
 		}
 		
+		private function checkLoader(e:TimerEvent):void {
+			log("checkLoader");
+		}
+		
 		private function onFileLoaded(e:Event):void {
-			//log("onFileLoaded");
+			log("onFileLoaded");
+			
+			if (loadTimer && loadTimer.running){
+				loadTimer.stop();
+			}
+			
 			var fileData:String = e.target.data;
 			dispatchEvent(new GenericDataEvent(LoaderUtilsEvent.FILE_LOADED, {file:fileData}));
 		}
