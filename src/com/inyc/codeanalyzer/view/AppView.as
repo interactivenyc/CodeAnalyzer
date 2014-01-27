@@ -42,7 +42,7 @@ package com.inyc.codeanalyzer.view
 			_bg = MovieClipUtils.getFilledMC(bgWidth, bgHeight, 0xffffcc, true);
 			addChild(_bg);
 
-			log("stage.width: "+stage.width+", stage.height: "+stage.height);
+			log("stage.width: "+stage.stageWidth+", stage.height: "+stage.stageHeight);
 			
 			
 
