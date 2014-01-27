@@ -164,6 +164,16 @@ package com.inyc.utils {
 			return returnStr;
 		}
 		
+		public static function trimtabs(str:String):String {
+			
+			var returnStr:String = str;
+			
+			while (returnStr.charAt(0) == "\t") {
+				returnStr = returnStr.slice(1,returnStr.length);
+			}
+			return returnStr;
+		}
+		
 		
 		public static function replaceChars(origStr:String, replace:String, withStr:String):String {
 			while(origStr.indexOf(replace) > -1){
