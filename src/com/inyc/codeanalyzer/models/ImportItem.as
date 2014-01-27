@@ -10,7 +10,7 @@ package com.inyc.codeanalyzer.models
 			super();
 		}
 		
-		public function processImport(declaration:String):void{
+		public function processImport(declaration:String):String{
 			var processArray:Array = declaration.split(" ");
 			var wholeImport:String = processArray[processArray.length-1];
 			var packageArray:Array = wholeImport.split(".");
@@ -21,6 +21,7 @@ package com.inyc.codeanalyzer.models
 			packageArray.pop();
 			importPackage = packageArray.join(".");
 			
+			return importPackage;
 			//log("IMPORT package: "+importPackage+" ::  class: "+importClass);
 		}
 		

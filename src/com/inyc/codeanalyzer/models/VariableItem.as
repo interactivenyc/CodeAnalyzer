@@ -17,6 +17,7 @@ package com.inyc.codeanalyzer.models
 			var arrayIndex:int = processArray.indexOf("var");
 			name = processArray[arrayIndex + 1];
 			name = stripChars(name);
+			name = prefixSymbols(declaration, name);
 			
 			//log("VARIABLE name: "+name);
 		}

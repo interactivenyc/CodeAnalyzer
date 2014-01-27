@@ -7,6 +7,7 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.LoaderUtils;
 	import com.inyc.utils.ObjectUtils;
+	import com.inyc.utils.TextUtil;
 
 	public class ClassItem extends CoreModel{
 		
@@ -65,46 +66,60 @@ package com.inyc.codeanalyzer.models
 			var varExp:RegExp = /([private|public|protected]) var/i;
 			var funcExp:RegExp = /([private|public|protected]) function/i;
 			var importExp:RegExp = /import/i;
+			
+			// HANDLE DIFFERENT KINDS OF LINE BREAKS (NEWLINE, RETURN)			
+			fileData = TextUtil.replaceChars(fileData, "\r", "\n");
 			var lineArray:Array = fileData.split(/\n/);
+			
 			var functionItem:FunctionItem;
 			var variableItem:VariableItem;
 			var importItem:ImportItem;
 			
-			//log("fileDataLoaded: "+fileData);
-			
+			log("*******************************************************");
+			log("fileDataLoaded: "+name);
+			log("lineArray.length: "+lineArray.length);
+			log("*******************************************************");
 			
 			defObject.imports = new Object();
 			defObject.variables = new Object();
 			defObject.functions = new Object();
 			
+			
+			var prependLine:String = "";
+			
 			for (var i:int=0; i<lineArray.length; i++){
-				if (lineArray[i].indexOf("//") > 0) continue;
+				//prependLine = "line "+i+": ";
+				
+				//skip commented lines
+				if (lineArray[i].indexOf("//") > -1) continue;
+				if (lineArray[i].indexOf("/*") > -1) continue;
 				
 				if (importExp.test(lineArray[i]) == true){
-					//log(lineArray[i]);
 					importItem = new ImportItem();
 					importItem.processImport(lineArray[i]);
 					imports.push(importItem);
 					
 					defObject.imports[i] = importItem.importClass;
+					//trace(prependLine + "import: " +  importItem.importClass);
 				}
 					
 				if (varExp.test(lineArray[i]) == true){
-					//log(lineArray[i]);
 					variableItem = new VariableItem();
 					variableItem.processVariable(lineArray[i]);
 					variables.push(variableItem);
 					
 					defObject.variables[i] = variableItem.name;
+					//trace(prependLine + "var: " +  variableItem.name);
 				}
 				
 				if (funcExp.test(lineArray[i]) == true){
-					//log(lineArray[i]);
+					
 					functionItem = new FunctionItem();
 					functionItem.processFunction(lineArray[i]);
 					functions.push(functionItem);
 					
 					defObject.functions[i] = functionItem.name;
+					//trace(prependLine + "function: " + functionItem.name);
 				}
 					
 			}
@@ -117,12 +132,31 @@ package com.inyc.codeanalyzer.models
 //			log("*********************************");
 //			log("fileData readClass: "+name);
 //			log("*********************************");
-//			log("imports: "+imports.length);
-//			log("--------------------------------");
-//			log("variables: "+variables.length);
-//			log("--------------------------------");
-//			log("functions: "+functions.length);
-//			log("--------------------------------");
+			
+			log("--------------------------------");
+			log("imports: "+imports.length);
+			log("--------------------------------");
+					for (i=0; i<imports.length; i++){
+						log(imports[i].importPackage +"."+imports[i].importClass);
+					}
+			log("--------------------------------");
+			log("variables: "+variables.length);
+			log("--------------------------------");
+					for (i=0; i<variables.length; i++){
+						log(variables[i].name);
+					}
+			log("--------------------------------");
+			log("functions: "+functions.length);
+			log("--------------------------------");
+					for (i=0; i<functions.length; i++){
+						log(functions[i].name);
+					}
+			log("--------------------------------");
+			
+			
+			
+			
+			
 				
 			
 			
