@@ -32,7 +32,7 @@ package com.inyc.codeanalyzer.models
 			
 			if (declaration == null || declaration.length < 2) return;
 			
-			log("processClass: "+declaration);
+			//log("processClass: "+declaration);
 			
 			var processArray:Array = new Array();
 			processArray = declaration.split("/");
@@ -47,7 +47,7 @@ package com.inyc.codeanalyzer.models
 			packagePath = processArray.join("/");
 			var filePath:String =( Config.ROOT_PATH + "/" + packagePath + "/" + name);
 			
-			log("fileData load: "+filePath);
+			//log("fileData load: "+filePath);
 			
 			try{
 				_loaderUtils = new LoaderUtils();

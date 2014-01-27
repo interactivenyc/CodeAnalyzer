@@ -22,7 +22,9 @@ package com.inyc.components
 			for (var i:int=0; i<_buttons.length; i++){
 				_buttons[i].selected = false;
 			}
-			e.target.selected = true;
+			
+			log(e.currentTarget);
+			e.currentTarget.selected = true;
 		}
 	}
 }
