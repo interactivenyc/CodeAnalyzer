@@ -33,15 +33,15 @@ package com.inyc.core
 		protected function prefixSymbols(declaration:String, name:String):String{
 			var prefix:String = "";
 			
-			if (declaration.indexOf("final") > -1){
-				prefix = "F" + prefix
-			}
-			if (declaration.indexOf("static") > -1){
-				prefix = "S" + prefix
-			}
-			if (declaration.indexOf("override") > -1){
-				prefix = "O" + prefix
-			}
+//			if (declaration.indexOf("final") > -1){
+//				prefix = "F" + prefix
+//			}
+//			if (declaration.indexOf("static") > -1){
+//				prefix = "S" + prefix
+//			}
+//			if (declaration.indexOf("override") > -1){
+//				prefix = "O" + prefix
+//			}
 			
 			if (declaration.indexOf("public") > -1){
 				prefix = "+" + prefix

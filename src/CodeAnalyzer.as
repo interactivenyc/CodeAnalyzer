@@ -16,7 +16,6 @@ package
 	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.net.FileFilter;
-	import flash.net.FileReference;
 	
 	
 	public class CodeAnalyzer extends CoreMovieClip{

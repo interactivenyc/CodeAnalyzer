@@ -158,20 +158,20 @@ package com.inyc.codeanalyzer.models
 			log("--------------------------------");
 			log("imports: "+imports.length);
 			log("--------------------------------");
-					for (i=0; i<imports.length; i++){
-						trace(imports[i].name);
-					}
+//					for (i=0; i<imports.length; i++){
+//						trace("\t"+imports[i].name);
+//					}
 			log("--------------------------------");
 			log("variables: "+variables.length);
 			log("--------------------------------");
 					for (i=0; i<variables.length; i++){
-						trace(variables[i].name);
+						trace("\t"+variables[i].name);
 					}
 			log("--------------------------------");
 			log("functions: "+functions.length);
 			log("--------------------------------");
 					for (i=0; i<functions.length; i++){
-						trace(functions[i].name);
+						trace("\t"+functions[i].name);
 					}
 			log("--------------------------------");
 			
