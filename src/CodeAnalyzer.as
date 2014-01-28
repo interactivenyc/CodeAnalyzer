@@ -14,6 +14,9 @@ package
 	import com.inyc.utils.MovieClipUtils;
 	
 	import flash.events.Event;
+	import flash.filesystem.File;
+	import flash.net.FileFilter;
+	import flash.net.FileReference;
 	
 	
 	public class CodeAnalyzer extends CoreMovieClip{
@@ -33,6 +36,8 @@ package
 		
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
+		
+		public var fileToOpen:File = File.documentsDirectory;
 		
 		public function CodeAnalyzer(){
 			log("CodeAnalyzer");
@@ -80,7 +85,27 @@ package
 		
 		private function showFileBrowser():void {
 			log("showFileBrowser");
+			
+			selectTextFile(fileToOpen);
 		}
+		
+		private function selectTextFile(root:File):void { 
+			var txtFilter:FileFilter = new FileFilter("Text", "*.as;*.css;*.html;*.txt;*.xml"); 
+			root.browseForOpen("Open", [txtFilter]); 
+			root.addEventListener(Event.SELECT, fileSelected); 
+		} 
+		
+		private function fileSelected(event:Event):void{ 
+			trace(fileToOpen.nativePath); 
+
+			_fileArray = new Array();
+			_fileArray.push(fileToOpen.nativePath);
+			
+			_appModel = new AppModel(_fileArray);
+			_appView = new AppView(_appModel);
+			setView(_appView);
+			
+		} 
 		
 		
 		private function loadFilesFromManifest():void {
@@ -98,6 +123,7 @@ package
 			//log(_fileData);
 			
 			_fileArray = _fileData.split(/\n/);
+			
 			_appModel = new AppModel(_fileArray);
 			_appView = new AppView(_appModel);
 			setView(_appView);
