@@ -11,8 +11,8 @@ package com.inyc.codeanalyzer.view
 		private var _classItem:ClassItem;
 		private var _accordion:Accordion;
 		
-		private const WIDTH:int = 180;
-		private const HEIGHT:int = 120;
+		public static const WIDTH:int = 180;
+		public static const HEIGHT:int = 120;
 		
 		public function ClassView(classItem:ClassItem){
 			super();
@@ -34,7 +34,7 @@ package com.inyc.codeanalyzer.view
 			_accordion.headerText = _classItem.name;
 			addChild(_accordion);
 			
-			_accordion.addSection("imports", _classItem.getImportsArray());
+			//_accordion.addSection("imports", _classItem.getImportsArray());
 			_accordion.addSection("variables", _classItem.getVariablesArray());
 			_accordion.addSection("functions", _classItem.getFunctionsArray());
 

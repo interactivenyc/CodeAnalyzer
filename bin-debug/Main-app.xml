@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/3.9">
-	<id>com.speakaboos.codeanalyzer</id>
+<application xmlns="http://ns.adobe.com/air/application/4.0">
+	<id>com.inyc.codeanalyzer</id>
 	<filename>Main</filename>
-	<name>Main-debug</name>
+	<name>Main</name>
 	<versionNumber>0.0.0</versionNumber>
 	
 	<initialWindow>

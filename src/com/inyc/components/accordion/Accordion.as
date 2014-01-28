@@ -52,20 +52,27 @@ package com.inyc.components.accordion
 				section.tf_count.label.text = "0";
 			}
 			
+			var nextSectionY:int = accordion.header.height + _cellPadding;
+			if (sections.length > 0){
+				var previousSection:Accordion_Section = sections[sections.length-1];
+				nextSectionY = nextSectionY + previousSection.y + previousSection.height;
+			}
+			
 			section.x = accordion.header.x;
-			section.y = (accordion.header.height + _cellPadding) + (sections.length * (18 + _cellPadding));
+			section.y = nextSectionY;
 			
 			
-//			var sectionBody:MovieClip = new MovieClip();
-//			sectionBody.y = bg.y + bg.height;
-//			section.addChild(sectionBody);
-//			
-//			for (var i:int = 0; i < sectionItems.length; i++){
-//				var ai:Accordion_Item = new Accordion_Item();
-//				ai.tf.label.text = sectionItems[i] || "null";
-//				ai.y = i*(ai.height + _cellPadding);
-//				sectionBody.addChild(ai);
-//			}
+			var sectionBody:MovieClip = new MovieClip();
+			sectionBody.y = bg.y + bg.height;
+			section.addChild(sectionBody);
+			
+			for (var i:int = 0; i < sectionItems.length; i++){
+				var ai:Accordion_Item = new Accordion_Item();
+				ai.tf.label.text = sectionItems[i] || "null";
+				ai.y = i*(ai.height + _cellPadding);
+				ai.indicator.addEventListener(MouseEvent.CLICK, itemClicked);
+				sectionBody.addChild(ai);
+			}
 			
 			sections.push(section);
 			addChild(section);
@@ -95,6 +102,12 @@ package com.inyc.components.accordion
 			}
 			
 			
+		}
+		
+		protected function itemClicked(e:MouseEvent):void{
+			log(e.target + ", " +e.currentTarget.parent);
+			var ai:Accordion_Item = e.currentTarget.parent as Accordion_Item;
+			log(ai.tf.label.text);
 		}
 		
 		

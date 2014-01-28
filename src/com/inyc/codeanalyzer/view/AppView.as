@@ -14,6 +14,7 @@ package com.inyc.codeanalyzer.view
 	{
 		private var _appModel:AppModel;
 		private var _toolbar:Toolbar;
+		private var _classViews:Vector.<ClassView>;
 		
 		public function AppView(appModel:AppModel)
 		{
@@ -21,6 +22,7 @@ package com.inyc.codeanalyzer.view
 			log("constructor");
 			
 			_appModel = appModel;
+			_classViews = new Vector.<ClassView>;
 			
 		}
 		
@@ -51,10 +53,19 @@ package com.inyc.codeanalyzer.view
 		private function onItemLoaded(e:GenericDataEvent=null):void{
 			//log("onItemLoaded");
 			
+			var nextX:int = 50;
+			if (_classViews.length > 0){
+				var previousClassView:ClassView = _classViews[_classViews.length-1];
+				nextX = nextX + previousClassView.x + ClassView.WIDTH;
+			}
+			
 			var classView:ClassView = e.data.classView;
+			
+			_classViews.push(classView);
+			
 			addChild(classView);
-			classView.x = Math.ceil(Math.random()*(_bg.width - classView.width));
-			classView.y = Math.ceil(Math.random()*(_bg.height - classView.height));
+			classView.x = nextX;
+			classView.y = 10
 			
 			//log("classView.x: "+classView.x+", classView.y: "+classView.y);
 			
