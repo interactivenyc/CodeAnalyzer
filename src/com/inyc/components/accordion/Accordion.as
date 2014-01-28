@@ -42,12 +42,30 @@ package com.inyc.components.accordion
 			accordion.header.tf.label.text = text;
 		}
 		
-		public function addSection(sectionName:String):void{
+		public function addSection(sectionName:String, sectionItems:Array = null):void{
 			var section:Accordion_Section = new Accordion_Section();
-			section.tf.label.text = sectionName;
+			section.tf_title.label.text = sectionName;
+			
+			if (sectionItems && sectionItems.length > 0) {
+				section.tf_count.label.text = String(sectionItems.length);
+			}else{
+				section.tf_count.label.text = "0";
+			}
 			
 			section.x = accordion.header.x;
 			section.y = (accordion.header.height + _cellPadding) + (sections.length * (18 + _cellPadding));
+			
+			
+//			var sectionBody:MovieClip = new MovieClip();
+//			sectionBody.y = bg.y + bg.height;
+//			section.addChild(sectionBody);
+//			
+//			for (var i:int = 0; i < sectionItems.length; i++){
+//				var ai:Accordion_Item = new Accordion_Item();
+//				ai.tf.label.text = sectionItems[i] || "null";
+//				ai.y = i*(ai.height + _cellPadding);
+//				sectionBody.addChild(ai);
+//			}
 			
 			sections.push(section);
 			addChild(section);
