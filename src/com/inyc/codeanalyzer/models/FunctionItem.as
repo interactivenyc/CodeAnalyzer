@@ -51,7 +51,7 @@ package com.inyc.codeanalyzer.models
 				name = stripChars(name);
 				name = prefixSymbols(declaration, name);
 				
-				log("FUNCTION name: "+name);
+				//log("FUNCTION name: "+name);
 			}
 			
 			

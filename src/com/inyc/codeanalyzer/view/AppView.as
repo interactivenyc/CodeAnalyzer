@@ -59,6 +59,7 @@ package com.inyc.codeanalyzer.view
 			//log("classView.x: "+classView.x+", classView.y: "+classView.y);
 			
 			classView.addEventListener(MouseEvent.MOUSE_DOWN, sendUp);
+			
 		}
 		
 		private function onAllItemsLoaded(e:GenericDataEvent=null):void{

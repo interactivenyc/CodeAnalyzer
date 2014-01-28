@@ -57,8 +57,8 @@ package
 			log("onAddedToStage stage.stageWidth: "+stage.stageWidth);
 			super.onAddedToStage(e);
 			setupViewContainer();
-			showMenu();
-			//loadFilesFromManifest();
+			//showMenu();
+			loadFilesFromManifest();
 			
 		}
 		
