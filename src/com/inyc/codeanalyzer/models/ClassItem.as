@@ -6,12 +6,7 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.LoaderUtils;
-	import com.inyc.utils.ObjectUtils;
 	import com.inyc.utils.TextUtil;
-	
-	import flash.display.Loader;
-	import flash.display.LoaderInfo;
-	import flash.events.IOErrorEvent;
 
 	public class ClassItem extends CoreModel{
 		
@@ -164,7 +159,7 @@ package com.inyc.codeanalyzer.models
 			log("imports: "+imports.length);
 			log("--------------------------------");
 					for (i=0; i<imports.length; i++){
-						log(imports[i].importPackage +"."+imports[i].importClass);
+						log(imports[i].name);
 					}
 			log("--------------------------------");
 			log("variables: "+variables.length);
@@ -180,13 +175,31 @@ package com.inyc.codeanalyzer.models
 					}
 			log("--------------------------------");
 			
-			
-			
-			
-			
-				
-			
-			
+		}
+		
+		public function getImportsArray():Array{
+			var importsArray:Array = [];
+			for each (var elem:ImportItem in imports) {
+				importsArray.push(elem.name);
+				 
+			}
+			return importsArray;
+		}
+		
+		public function getVariablesArray():Array{
+			var variablesArray:Array = [];
+			for each (var elem:VariableItem in variables) {
+				variablesArray.push(elem.name);
+			}
+			return variablesArray;
+		}
+		
+		public function getFunctionsArray():Array{
+			var functionsArray:Array = [];
+			for each (var elem:FunctionItem in functions) {
+				functionsArray.push(elem.name);
+			}
+			return functionsArray;
 		}
 		
 		

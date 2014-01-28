@@ -1,9 +1,9 @@
 package com.inyc.codeanalyzer.view
 {
 	import com.inyc.codeanalyzer.models.ClassItem;
-	import com.inyc.components.accordion.Accordion;
 	import com.inyc.components.MCButton;
 	import com.inyc.components.TextButton;
+	import com.inyc.components.accordion.Accordion;
 	import com.inyc.core.CoreMovieClip;
 	
 	import flash.display.MovieClip;
@@ -35,12 +35,9 @@ package com.inyc.codeanalyzer.view
 			_accordion.headerText = _classItem.name;
 			addChild(_accordion);
 			
-			_accordion.addSection("imports");
-			_accordion.addSection("variables");
-			_accordion.addSection("functions");
-			
-			
-			
+			_accordion.addSection("imports", _classItem.getImportsArray());
+			_accordion.addSection("variables", _classItem.getVariablesArray());
+			_accordion.addSection("functions", _classItem.getFunctionsArray());
 		}
 		
 		private function addTextButton(textButton:TextButton):void{

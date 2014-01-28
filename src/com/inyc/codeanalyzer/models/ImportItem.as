@@ -25,6 +25,10 @@ package com.inyc.codeanalyzer.models
 			//log("IMPORT package: "+importPackage+" ::  class: "+importClass);
 		}
 		
+		public function get name():String{
+			return importPackage + "." + importClass;
+		}
+		
 		
 	}
 }
