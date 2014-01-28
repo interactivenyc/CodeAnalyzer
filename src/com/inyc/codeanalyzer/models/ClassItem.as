@@ -8,6 +8,10 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.utils.LoaderUtils;
 	import com.inyc.utils.ObjectUtils;
 	import com.inyc.utils.TextUtil;
+	
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
+	import flash.events.IOErrorEvent;
 
 	public class ClassItem extends CoreModel{
 		
@@ -33,35 +37,58 @@ package com.inyc.codeanalyzer.models
 			
 			if (declaration == null || declaration.length < 2) return;
 			
-			//log("processClass: "+declaration);
+			log("processClass: "+declaration);
 			
-			var processArray:Array = new Array();
-			processArray = declaration.split("/");
-			name = processArray[processArray.length - 1];
-			name = stripChars(name);
-			name.replace(".as", "");
+			var filePath:String;
+			if (declaration.charAt(0) == "/"){
+				filePath = declaration;
+			}else{
+				var processArray:Array = new Array();
+				processArray = declaration.split("/");
+				name = processArray[processArray.length - 1];
+				name = stripChars(name);
+				name.replace(".as", "");
+				
+				if (name.length < 3) return;
+				
+				processArray.pop();
+				processArray.shift();
+				packagePath = processArray.join("/");
+				filePath =( Config.ROOT_PATH + "/" + packagePath + "/" + name);
+			}
 			
-			if (name.length < 3) return;
-			
-			processArray.pop();
-			processArray.shift();
-			packagePath = processArray.join("/");
-			var filePath:String =( Config.ROOT_PATH + "/" + packagePath + "/" + name);
-			
-			//log("fileData load: "+filePath);
+			log("fileData load: "+filePath);
 			
 			try{
 				_loaderUtils = new LoaderUtils();
-				_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
+				addLoadListeners();
 				_loaderUtils.readFile(filePath);
 			}catch(e:Error){
 				log("Error: "+e.message);
 			}
 			
+		}
+		
+		private function addLoadListeners():void{
+			_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
+			_loaderUtils.addEventListener(LoaderUtilsEvent.IO_ERROR, onLoadError);
+			_loaderUtils.addEventListener(LoaderUtilsEvent.SECURITY_ERROR, onLoadError);
+		}
+		
+		private function removeLoadListeners():void{
+			_loaderUtils.removeEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
+			_loaderUtils.removeEventListener(LoaderUtilsEvent.IO_ERROR, onLoadError);
+			_loaderUtils.removeEventListener(LoaderUtilsEvent.SECURITY_ERROR, onLoadError);
+		}
+		
+		private function onLoadError(e:LoaderUtilsEvent):void{
+			log("onLoadError");
+			removeLoadListeners();
 			
 		}
 		
 		private function fileDataLoaded(e:GenericDataEvent):void{
+			removeLoadListeners();
 			var fileData:String = e.data.file;
 			var varExp:RegExp = /([private|public|protected]) var/i;
 			var funcExp:RegExp = /([private|public|protected]) function/i;
