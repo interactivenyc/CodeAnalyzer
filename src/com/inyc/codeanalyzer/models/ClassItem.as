@@ -158,21 +158,21 @@ package com.inyc.codeanalyzer.models
 			log("--------------------------------");
 			log("imports: "+imports.length);
 			log("--------------------------------");
-//					for (i=0; i<imports.length; i++){
-//						log(imports[i].name);
-//					}
+					for (i=0; i<imports.length; i++){
+						trace(imports[i].name);
+					}
 			log("--------------------------------");
 			log("variables: "+variables.length);
 			log("--------------------------------");
-//					for (i=0; i<variables.length; i++){
-//						log(variables[i].name);
-//					}
+					for (i=0; i<variables.length; i++){
+						trace(variables[i].name);
+					}
 			log("--------------------------------");
 			log("functions: "+functions.length);
 			log("--------------------------------");
-//					for (i=0; i<functions.length; i++){
-//						log(functions[i].name);
-//					}
+					for (i=0; i<functions.length; i++){
+						trace(functions[i].name);
+					}
 			log("--------------------------------");
 			
 		}

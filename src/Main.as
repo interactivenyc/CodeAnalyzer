@@ -1,7 +1,6 @@
 package
 {
 	import com.inyc.core.CoreMovieClip;
-	import com.speakaboos.core.controller.StartupController;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
