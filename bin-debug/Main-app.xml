@@ -2,7 +2,7 @@
 <application xmlns="http://ns.adobe.com/air/application/3.9">
 	<id>com.speakaboos.codeanalyzer</id>
 	<filename>Main</filename>
-	<name>Main</name>
+	<name>Main-debug</name>
 	<versionNumber>0.0.0</versionNumber>
 	
 	<initialWindow>

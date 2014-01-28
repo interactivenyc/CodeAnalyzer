@@ -5,7 +5,6 @@ package com.inyc.codeanalyzer.view
 	import com.inyc.components.Toolbar;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
-	import com.inyc.utils.MovieClipUtils;
 	
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -14,7 +13,6 @@ package com.inyc.codeanalyzer.view
 	public class AppView extends IOSImageView
 	{
 		private var _appModel:AppModel;
-		private var _bg:MovieClip;
 		private var _toolbar:Toolbar;
 		
 		public function AppView(appModel:AppModel)
@@ -32,20 +30,6 @@ package com.inyc.codeanalyzer.view
 			log("onAddedToStage");
 			
 			addEventListeners();
-			
-			scaleX = CodeAnalyzer.SCALE_X;
-			scaleY = CodeAnalyzer.SCALE_Y;
-			
-			var bgWidth:int = CodeAnalyzer.STAGE_WIDTH/scaleX;
-			var bgHeight:int = CodeAnalyzer.STAGE_HEIGHT/scaleY;
-			
-			_bg = MovieClipUtils.getFilledMC(bgWidth, bgHeight, 0xffffcc, true);
-			addChild(_bg);
-
-			log("stage.width: "+stage.stageWidth+", stage.height: "+stage.stageHeight);
-			
-			
-
 		}
 		
 		override protected function onRemovedFromStage(e:Event):void{

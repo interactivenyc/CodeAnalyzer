@@ -2,6 +2,8 @@ package
 {
 	import com.inyc.codeanalyzer.models.AppModel;
 	import com.inyc.codeanalyzer.view.AppView;
+	import com.inyc.codeanalyzer.view.MenuView;
+	import com.inyc.components.IOSImageView;
 	import com.inyc.core.Config;
 	import com.inyc.core.CoreMovieClip;
 	import com.inyc.events.GenericDataEvent;
@@ -11,11 +13,12 @@ package
 	
 	import flash.events.Event;
 	
-	[SWF(width=1900,height=1100)]
+	
 	public class CodeAnalyzer extends CoreMovieClip{
 		
 		private var _appModel:AppModel;
 		private var _appView:AppView;
+		private var _currentView:IOSImageView;
 		
 		private var _fileData:String;
 		private var _fileArray:Array;
@@ -24,8 +27,6 @@ package
 		
 		private var _loaderUtils:LoaderUtils;
 		
-		public static var STAGE_WIDTH:int = 1900;
-		public static var STAGE_HEIGHT:int = 1100;
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
 		
@@ -34,12 +35,19 @@ package
 			super();
 		}
 		
+		override protected function init():void{
+			super.init();
+			log("init");
+		}
+		
 		
 		override protected function onAddedToStage(e:Event):void{
-			log("onAddedToStage");
+			log("onAddedToStage stage.stageWidth: "+stage.stageWidth);
 			super.onAddedToStage(e);
-			STAGE_WIDTH = stage.stageWidth;
-			STAGE_HEIGHT = stage.stageHeight;
+			setupViewContainer();
+			//showMenu();
+			loadFilesFromManifest();
+			
 		}
 		
 		
@@ -49,9 +57,22 @@ package
 		}
 		
 		
-		override protected function init():void{
-			log("init");
-			
+		
+		
+		private function showMenu():void {
+			setView(new MenuView());
+		}
+		
+		private function setView(view:IOSImageView):void{
+			if(_currentView && _viewContainer.contains(_currentView)){
+				_viewContainer.removeChild(_currentView);
+			}
+			_currentView = view;
+			_viewContainer.addChild(view);
+		}
+		
+		
+		private function loadFilesFromManifest():void {
 			_loaderUtils = new LoaderUtils();
 			_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
 			_loaderUtils.readFile(Config.ROOT_PATH + "/files.txt");
@@ -67,9 +88,7 @@ package
 			_fileArray = _fileData.split(/\n/);
 			_appModel = new AppModel(_fileArray);
 			_appView = new AppView(_appModel);
-			
-			setupViewContainer();
-			_viewContainer.addChild(_appView);
+			setView(_appView);
 		}
 		
 		private function setupViewContainer():void {
