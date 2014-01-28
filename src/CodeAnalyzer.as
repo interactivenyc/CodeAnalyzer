@@ -1,10 +1,12 @@
 package 
 {
+	import com.inyc.codeanalyzer.events.CodeAnalyzerEvents;
 	import com.inyc.codeanalyzer.models.AppModel;
 	import com.inyc.codeanalyzer.view.AppView;
 	import com.inyc.codeanalyzer.view.MenuView;
 	import com.inyc.components.IOSImageView;
 	import com.inyc.core.Config;
+	import com.inyc.core.CoreEventDispatcher;
 	import com.inyc.core.CoreMovieClip;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.LoaderUtilsEvent;
@@ -27,6 +29,8 @@ package
 		
 		private var _loaderUtils:LoaderUtils;
 		
+		private var _eventDispatcher:CoreEventDispatcher;
+		
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
 		
@@ -38,6 +42,9 @@ package
 		override protected function init():void{
 			super.init();
 			log("init");
+			_eventDispatcher = CoreEventDispatcher.getInstance();
+			_eventDispatcher.addEventListener(CodeAnalyzerEvents.SHOW_FILE_BROWSER, receiveEvent);
+			_eventDispatcher.addEventListener(CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST, receiveEvent);
 		}
 		
 		
@@ -45,8 +52,8 @@ package
 			log("onAddedToStage stage.stageWidth: "+stage.stageWidth);
 			super.onAddedToStage(e);
 			setupViewContainer();
-			//showMenu();
-			loadFilesFromManifest();
+			showMenu();
+			//loadFilesFromManifest();
 			
 		}
 		
@@ -71,8 +78,13 @@ package
 			_viewContainer.addChild(view);
 		}
 		
+		private function showFileBrowser():void {
+			log("showFileBrowser");
+		}
+		
 		
 		private function loadFilesFromManifest():void {
+			log("loadFilesFromManifest");
 			_loaderUtils = new LoaderUtils();
 			_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
 			_loaderUtils.readFile(Config.ROOT_PATH + "/files.txt");
@@ -96,6 +108,21 @@ package
 			_viewContainer = new CoreMovieClip();
 			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height));
 			addChild(_viewContainer);
+		}
+		
+		
+		private function receiveEvent(e:GenericDataEvent):void{
+			log("receiveEvent e.type: "+e.type);
+			switch(e.type){
+				case CodeAnalyzerEvents.SHOW_FILE_BROWSER:
+					showFileBrowser();
+					break;
+				case CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST:
+					loadFilesFromManifest();
+					break;
+				
+			}
+			
 		}
 
 		

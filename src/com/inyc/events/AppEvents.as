@@ -120,23 +120,5 @@ package com.inyc.events {
 		public static var TOUCH_OBJECT_START_ROTATE:String = "TOUCH_OBJECT_START_ROTATE";
 		public static var TOUCH_OBJECT_SWIPE:String = "TOUCH_OBJECT_SWIPE";
 		
-		
-		/***************************************************
-		* SCHNEIDER EVENTS
-		***************************************************/
-		
-		public static var CONTENT_NEXT:String = "CONTENT_NEXT";
-		public static var CONTENT_PREVIOUS:String = "CONTENT_PREVIOUS";
-		public static var CONTENT_CLOSE:String = "CONTENT_CLOSE";
-		public static var CONTENT_SEEIT:String = "CONTENT_SEEIT";
-		
-		public static var SHOW_EMAIL_FORM:String = "SHOW_EMAIL_FORM";
-		
-		public static var CONTACT_FIELD_1_SELECTED:String = "CONTACT_FIELD_1_SELECTED";
-		public static var CONTACT_FIELD_2_SELECTED:String = "CONTACT_FIELD_2_SELECTED";
-		public static var CONTACT_FIELD_3_SELECTED:String = "CONTACT_FIELD_3_SELECTED";
-		public static var CONTACT_SUBMIT:String = "CONTACT_SUBMIT";
-		public static var CONTACT_CLOSE:String = "CONTACT_CLOSE";
-		
 	}
 }

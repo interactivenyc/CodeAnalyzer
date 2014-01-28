@@ -18,8 +18,9 @@ package com.inyc.components
 		protected var _width:int;
 		protected var _height:int;
 		
+		public var eventString:String;
 		
-		public function TextButton(text:String, bgColor:int=0xff6600, width:int=120, height:int=48)
+		public function TextButton(text:String, bgColor:int=0xcccccc, width:int=200, height:int=20)
 		{
 			super();
 			_text = text;
@@ -33,7 +34,7 @@ package com.inyc.components
 		
 		override protected function onAddedToStage(e:Event):void{
 			super.onAddedToStage(e);
-			_bg = MovieClipUtils.getFilledMC(_width,_height,_bgColor,true);
+			_bg = MovieClipUtils.getFilledMC(_width,_height,_bgColor,false);
 			addChild(_bg);
 			
 			_tf = new TextField();
