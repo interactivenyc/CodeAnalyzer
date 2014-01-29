@@ -9,7 +9,7 @@ package
 	import flash.events.Event;
 	
 	[SWF(width=800,height=600)]
-	public class Main extends CoreMovieClip
+	public class Main extends MovieClip
 	{
 		private var _codeAnalyzer:CodeAnalyzer;
 		
@@ -37,7 +37,7 @@ package
 			stage.addEventListener(Event.RESIZE, handleResize);
 			stage.addEventListener(Event.RESIZE, initCodeAnalyzer);
 			
-			log("constructor");
+			trace("constructor");
 			
 		}
 		

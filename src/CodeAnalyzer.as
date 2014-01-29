@@ -35,8 +35,6 @@ package
 		
 		private var _loaderUtils:LoaderUtils;
 		
-		private var _eventDispatcher:CoreEventDispatcher;
-		
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
 		
