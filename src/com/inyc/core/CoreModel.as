@@ -49,6 +49,9 @@ package com.inyc.core
 				prefix = "-" + prefix
 			}else if (declaration.indexOf("protected") > -1){
 				prefix = "*" + prefix
+			}else if (declaration.indexOf("category") > -1){
+				prefix = "*****" + prefix
+					return "----- "+name+"-----";
 			}
 			
 			return "["+prefix+"] " +name;

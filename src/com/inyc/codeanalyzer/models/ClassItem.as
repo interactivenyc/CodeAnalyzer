@@ -87,6 +87,7 @@ package com.inyc.codeanalyzer.models
 			var fileData:String = e.data.file;
 			var varExp:RegExp = /([private|public|protected]) var/i;
 			var funcExp:RegExp = /([private|public|protected]) function/i;
+			var categoryExp:RegExp = /@category/i;
 			var importExp:RegExp = /import/i;
 			
 			// HANDLE DIFFERENT KINDS OF LINE BREAKS (NEWLINE, RETURN)			
@@ -133,6 +134,15 @@ package com.inyc.codeanalyzer.models
 					
 					functionItem = new FunctionItem();
 					functionItem.processFunction(lineArray[i]);
+					functions.push(functionItem);
+					
+					defObject.functions[i] = functionItem.name;
+				}
+				
+				if (categoryExp.test(lineArray[i]) == true){
+					
+					functionItem = new FunctionItem();
+					functionItem.processCategory(lineArray[i]);
 					functions.push(functionItem);
 					
 					defObject.functions[i] = functionItem.name;
