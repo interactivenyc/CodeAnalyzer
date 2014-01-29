@@ -51,7 +51,7 @@ package com.inyc.core
 				prefix = "*" + prefix
 			}else if (declaration.indexOf("category") > -1){
 				prefix = "*****" + prefix
-					return "----- "+name+"-----";
+					return "----- "+name+" -----";
 			}
 			
 			return "["+prefix+"] " +name;

@@ -16,10 +16,14 @@ package com.inyc.codeanalyzer.models
 			var processArray:Array = declaration.split(" ");
 			var arrayIndex:int = processArray.indexOf("var");
 			name = processArray[arrayIndex + 1];
-			name = stripChars(name);
+			var colon:RegExp = /:/g;
+			name = name.split(colon)[0];
+			//name = stripChars(name);
 			name = prefixSymbols(declaration, name);
 			
 			//log("VARIABLE name: "+name);
+			//var colon:RegExp = /:/g;
+			//name = name.split(colon).join(" : ");
 		}
 		
 		

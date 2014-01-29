@@ -175,7 +175,7 @@ package com.inyc.utils {
 		}
 		
 		
-		public static function replaceChars(origStr:String, replace:String, withStr:String):String {
+		public static function replaceChars(origStr:String, replace:*, withStr:String):String {
 			while(origStr.indexOf(replace) > -1){
 				origStr = origStr.replace(replace, withStr);
 			}
