@@ -86,12 +86,12 @@ package com.inyc.codeanalyzer.models
 			removeLoadListeners();
 			var fileData:String = e.data.file;
 			var varExp:RegExp = /([private|public|protected]) var/i;
-			var funcExp:RegExp = /([private|public|protected]) function/i;
+			var funcExp:RegExp = /([private|public|protected]) function/;
 			var categoryExp:RegExp = /@category/i;
 			var importExp:RegExp = /import/i;
 			
 			// HANDLE DIFFERENT KINDS OF LINE BREAKS (NEWLINE, RETURN)			
-			fileData = TextUtil.replaceChars(fileData, "\r", "\n");
+			fileData = TextUtil.replaceChars(fileData, "\r", "\n");		
 			var lineArray:Array = fileData.split(/\n/);
 			
 			var functionItem:FunctionItem;

@@ -1,6 +1,7 @@
 package com.inyc.codeanalyzer.models
 {
 	import com.inyc.core.CoreModel;
+	import com.inyc.utils.TextUtil;
 
 	public class FunctionItem extends CoreModel{
 		
@@ -17,10 +18,13 @@ package com.inyc.codeanalyzer.models
 			if (declaration.indexOf("function") > -1){
 				var varExp:RegExp = new RegExp("(?<=function)(.*)");
 				name = varExp.exec(declaration)[0];
-				name = stripChars(name);
+				name = name.substring(0, name.indexOf("(")) + "()";
+				//name = stripChars(name);
 				name = prefixSymbols(declaration, name);
 				
 				//log("FUNCTION name: "+name);
+				//var colon:RegExp = /:/g;
+				//name = name.split(colon).join(" : ");
 			}
 			
 			return name;

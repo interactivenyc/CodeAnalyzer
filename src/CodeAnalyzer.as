@@ -143,8 +143,7 @@ package
 			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height));
 			addChild(_viewContainer);
 			
-			_toolbar = new Toolbar();
-			addChild(_toolbar);
+			
 		}
 		
 		
@@ -159,7 +158,11 @@ package
 					break;
 				case AppEvents.FILE_LOADED:
 					break;
-				case AppEvents.ALL_FILES_LOADED:					
+				case AppEvents.ALL_FILES_LOADED:
+					
+					_toolbar = new Toolbar();
+					addChild(_toolbar);
+					
 					break;
 				case AppEvents.TOOLBAR_SELECT:					
 					break;
