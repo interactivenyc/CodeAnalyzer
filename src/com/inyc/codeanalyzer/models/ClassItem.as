@@ -165,19 +165,19 @@ package com.inyc.codeanalyzer.models
 			log("imports: "+imports.length);
 			log("--------------------------------");
 //					for (i=0; i<imports.length; i++){
-//						trace("\t"+imports[i].name);
+//						trace(imports[i].name);
 //					}
 			log("--------------------------------");
 			log("variables: "+variables.length);
 			log("--------------------------------");
 				for (var i:int = 0; i<variables.length; i++){
-					trace("\t"+variables[i].name);
+					trace(variables[i].name);
 				}
 			log("--------------------------------");
 			log("functions: "+functions.length);
 			log("--------------------------------");
 				for (i=0; i<functions.length; i++){
-					trace("\t"+functions[i].name);
+					trace(functions[i].name);
 				}
 			log("--------------------------------");
 		}

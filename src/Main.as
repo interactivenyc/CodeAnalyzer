@@ -13,8 +13,8 @@ package
 	{
 		private var _codeAnalyzer:CodeAnalyzer;
 		
-		private var _sprite:Sprite;
-		private var _mainMC:MovieClip;
+		//private var _sprite:Sprite;
+		//private var _mainMC:MovieClip;
 		
 		//public static const STAGE_WIDTH:int = 1600;
 		//public static const STAGE_HEIGHT:int = 900;
