@@ -47,16 +47,16 @@ package com.inyc.codeanalyzer.models
 			
 			var classItem:ClassItem = e.data.file;
 			
-			//log("classLoaded: "+classItem.name);
+			log("classLoaded: "+classItem.name);
 			
 			ArrayUtils.removeValueFromArray(_classItems,classItem);
-			//log("classes left to load: "+_classItems.length);
+			log("classes left to load: "+_classItems.length);
 			
-			_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.LAYOUT_ITEM_LOADED, {classView:new ClassView(classItem)}));
+			_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.FILE_LOADED, {classView:new ClassView(classItem)}));
 			
 			if (_classItems.length == 0){
 				//log(ObjectUtils.getGenericObject(model));
-				_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.ALL_LAYOUT_ITEMS_LOADED));
+				_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.ALL_FILES_LOADED));
 			}
 		}
 	}

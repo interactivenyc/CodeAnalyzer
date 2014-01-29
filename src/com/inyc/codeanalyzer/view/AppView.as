@@ -13,7 +13,7 @@ package com.inyc.codeanalyzer.view
 	public class AppView extends IOSImageView
 	{
 		private var _appModel:AppModel;
-		private var _toolbar:Toolbar;
+		
 		private var _classViews:Vector.<ClassView>;
 		
 		public function AppView(appModel:AppModel)
@@ -41,13 +41,13 @@ package com.inyc.codeanalyzer.view
 		
 		private function addEventListeners():void{
 			log("addEventListeners");
-			_eventDispatcher.addEventListener(AppEvents.LAYOUT_ITEM_LOADED, onItemLoaded);
-			_eventDispatcher.addEventListener(AppEvents.ALL_LAYOUT_ITEMS_LOADED, onAllItemsLoaded);
+			_eventDispatcher.addEventListener(AppEvents.FILE_LOADED, onItemLoaded);
+			_eventDispatcher.addEventListener(AppEvents.ALL_FILES_LOADED, onAllItemsLoaded);
 		}
 		
 		private function removeEventListeners():void{
-			_eventDispatcher.removeEventListener(AppEvents.LAYOUT_ITEM_LOADED, onItemLoaded);
-			_eventDispatcher.removeEventListener(AppEvents.ALL_LAYOUT_ITEMS_LOADED, onAllItemsLoaded);
+			_eventDispatcher.removeEventListener(AppEvents.FILE_LOADED, onItemLoaded);
+			_eventDispatcher.removeEventListener(AppEvents.ALL_FILES_LOADED, onAllItemsLoaded);
 		}
 		
 		private function onItemLoaded(e:GenericDataEvent=null):void{
@@ -75,9 +75,7 @@ package com.inyc.codeanalyzer.view
 		
 		private function onAllItemsLoaded(e:GenericDataEvent=null):void{
 			log("onAllItemsLoaded");
-			
-			_toolbar = new Toolbar();
-			addChild(_toolbar);
+			log("view size: "+width + ", "+height);
 		}
 		
 		private function sendUp(e:MouseEvent):void{
@@ -92,10 +90,10 @@ package com.inyc.codeanalyzer.view
 			log("onEventReceived: "+e.type)
 			
 			switch(e.type){
-				case AppEvents.LAYOUT_ITEM_LOADED:
+				case AppEvents.FILE_LOADED:
 					onItemLoaded(e);
 					break;
-				case AppEvents.ALL_LAYOUT_ITEMS_LOADED:
+				case AppEvents.ALL_FILES_LOADED:
 					onAllItemsLoaded();
 					break;
 				

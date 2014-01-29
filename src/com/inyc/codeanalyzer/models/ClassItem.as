@@ -107,10 +107,7 @@ package com.inyc.codeanalyzer.models
 			defObject.functions = new Object();
 			
 			
-			var prependLine:String = "";
-			
 			for (var i:int=0; i<lineArray.length; i++){
-				//prependLine = "line "+i+": ";
 				
 				//skip commented lines
 				if (lineArray[i].indexOf("//") > -1) continue;
@@ -122,7 +119,6 @@ package com.inyc.codeanalyzer.models
 					imports.push(importItem);
 					
 					defObject.imports[i] = importItem.importClass;
-					//trace(prependLine + "import: " +  importItem.importClass);
 				}
 					
 				if (varExp.test(lineArray[i]) == true){
@@ -131,7 +127,6 @@ package com.inyc.codeanalyzer.models
 					variables.push(variableItem);
 					
 					defObject.variables[i] = variableItem.name;
-					//trace(prependLine + "var: " +  variableItem.name);
 				}
 				
 				if (funcExp.test(lineArray[i]) == true){
@@ -141,14 +136,15 @@ package com.inyc.codeanalyzer.models
 					functions.push(functionItem);
 					
 					defObject.functions[i] = functionItem.name;
-					//trace(prependLine + "function: " + functionItem.name);
 				}
-					
-			}
-			
-			dispatchEvent(new GenericDataEvent(AppEvents.FILE_LOADED, {file:this}));
-								
+			}		
 				
+			traceElements();
+			dispatchEvent(new GenericDataEvent(AppEvents.FILE_LOADED, {file:this}));
+			
+		}
+		
+		private function traceElements():void{
 			//log(ObjectUtils.getGenericObject(defObject));
 			
 //			log("*********************************");
@@ -164,17 +160,16 @@ package com.inyc.codeanalyzer.models
 			log("--------------------------------");
 			log("variables: "+variables.length);
 			log("--------------------------------");
-					for (i=0; i<variables.length; i++){
-						trace("\t"+variables[i].name);
-					}
+				for (var i:int = 0; i<variables.length; i++){
+					trace("\t"+variables[i].name);
+				}
 			log("--------------------------------");
 			log("functions: "+functions.length);
 			log("--------------------------------");
-					for (i=0; i<functions.length; i++){
-						trace("\t"+functions[i].name);
-					}
+				for (i=0; i<functions.length; i++){
+					trace("\t"+functions[i].name);
+				}
 			log("--------------------------------");
-			
 		}
 		
 		public function getImportsArray():Array{

@@ -5,9 +5,11 @@ package
 	import com.inyc.codeanalyzer.view.AppView;
 	import com.inyc.codeanalyzer.view.MenuView;
 	import com.inyc.components.IOSImageView;
+	import com.inyc.components.Toolbar;
 	import com.inyc.core.Config;
 	import com.inyc.core.CoreEventDispatcher;
 	import com.inyc.core.CoreMovieClip;
+	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.LoaderUtils;
@@ -23,6 +25,8 @@ package
 		private var _appModel:AppModel;
 		private var _appView:AppView;
 		private var _currentView:IOSImageView;
+		
+		private var _toolbar:Toolbar;
 		
 		private var _fileData:String;
 		private var _fileArray:Array;
@@ -49,6 +53,13 @@ package
 			_eventDispatcher = CoreEventDispatcher.getInstance();
 			_eventDispatcher.addEventListener(CodeAnalyzerEvents.SHOW_FILE_BROWSER, receiveEvent);
 			_eventDispatcher.addEventListener(CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST, receiveEvent);
+			_eventDispatcher.addEventListener(AppEvents.FILE_LOADED, receiveEvent);
+			_eventDispatcher.addEventListener(AppEvents.ALL_FILES_LOADED, receiveEvent);
+			
+			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_SELECT, receiveEvent);
+			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_MOVE, receiveEvent);
+			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_ZOOM_IN, receiveEvent);
+			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_ZOOM_OUT, receiveEvent);
 		}
 		
 		
@@ -133,6 +144,9 @@ package
 			_viewContainer = new CoreMovieClip();
 			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height));
 			addChild(_viewContainer);
+			
+			_toolbar = new Toolbar();
+			addChild(_toolbar);
 		}
 		
 		
@@ -145,7 +159,20 @@ package
 				case CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST:
 					loadFilesFromManifest();
 					break;
-				
+				case AppEvents.FILE_LOADED:
+					break;
+				case AppEvents.ALL_FILES_LOADED:					
+					break;
+				case AppEvents.TOOLBAR_SELECT:					
+					break;
+				case AppEvents.TOOLBAR_MOVE:					
+					break;
+				case AppEvents.TOOLBAR_ZOOM_IN:		
+					_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX * 1.25);
+					break;
+				case AppEvents.TOOLBAR_ZOOM_OUT:	
+					_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX / 1.25);
+					break;
 			}
 			
 		}

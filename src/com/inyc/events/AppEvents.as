@@ -9,6 +9,7 @@ package com.inyc.events {
 		
 		public static var CONFIG_LOADED:String = "CONFIG_LOADED";
 		public static var FILE_LOADED:String = "FILE_LOADED";
+		public static var ALL_FILES_LOADED:String = "ALL_FILES_LOADED";
 		public static var LOG_MESSAGE:String = "LOG_MESSAGE";
 		
 		public static var SERVICES_READY:String = "SERVICES_READY";
@@ -85,6 +86,11 @@ package com.inyc.events {
 		* TOOLBAR
 		***************************************************/
 		
+		public static var TOOLBAR_SELECT:String = "TOOLBAR_SELECT";
+		public static var TOOLBAR_MOVE:String = "TOOLBAR_MOVE";
+		public static var TOOLBAR_ZOOM_IN:String = "TOOLBAR_ZOOM_IN";
+		public static var TOOLBAR_ZOOM_OUT:String = "TOOLBAR_ZOOM_OUT";
+		
 		public static var SHAPE_CHANGE:String = "SHAPE_CHANGE";
 		public static var SHAPE_FILTERS:String = "SHAPE_FILTERS";
 		public static var SHAPE_GROW:String = "SHAPE_GROW";
@@ -96,6 +102,8 @@ package com.inyc.events {
 		public static var SHAPE_FORWARD:String = "SHAPE_FORWARD";
 		public static var SHAPE_BACKWARD:String = "SHAPE_BACKWARD";
 		public static var SHAPE_TRASH:String = "SHAPE_TRASH";
+		
+		
 		
 		/***************************************************
 		* COMPONENT EVENTS
