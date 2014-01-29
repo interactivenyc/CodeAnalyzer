@@ -12,7 +12,7 @@ package com.inyc.components.accordion
 		public var indicator:MCButton;
 		public var bg:MovieClip;
 		private var sections:Array = new Array();
-		private var _cellPadding:int = 2;
+		private var _cellPadding:int = 0;
 		
 		public function Accordion()
 		{
@@ -52,7 +52,7 @@ package com.inyc.components.accordion
 				section.tf_count.label.text = "0";
 			}
 			
-			var nextSectionY:int = accordion.header.height + _cellPadding;
+			var nextSectionY:int = accordion.header.height -2;
 			if (sections.length > 0){
 				var previousSection:Accordion_Section = sections[sections.length-1];
 				nextSectionY = nextSectionY + previousSection.y + previousSection.height;
