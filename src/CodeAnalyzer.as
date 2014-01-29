@@ -16,8 +16,8 @@ package
 	import com.inyc.utils.MovieClipUtils;
 	
 	import flash.events.Event;
-	import flash.filesystem.File;
-	import flash.net.FileFilter;
+	//import flash.filesystem.File;
+	//import flash.net.FileFilter;
 	
 	
 	public class CodeAnalyzer extends CoreMovieClip{
@@ -38,7 +38,7 @@ package
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
 		
-		public var fileToOpen:File = File.documentsDirectory;
+		//public var fileToOpen:File = File.documentsDirectory;
 		
 		public function CodeAnalyzer(){
 			log("CodeAnalyzer");
@@ -91,29 +91,29 @@ package
 			_viewContainer.addChild(view);
 		}
 		
-		private function showFileBrowser():void {
-			log("showFileBrowser");
-			
-			selectTextFile(fileToOpen);
-		}
-		
-		private function selectTextFile(root:File):void { 
-			var txtFilter:FileFilter = new FileFilter("Text", "*.as;*.css;*.html;*.txt;*.xml"); 
-			root.browseForOpen("Open", [txtFilter]); 
-			root.addEventListener(Event.SELECT, fileSelected); 
-		} 
-		
-		private function fileSelected(event:Event):void{ 
-			trace(fileToOpen.nativePath); 
-
-			_fileArray = new Array();
-			_fileArray.push(fileToOpen.nativePath);
-			
-			_appModel = new AppModel(_fileArray);
-			_appView = new AppView(_appModel);
-			setView(_appView);
-			
-		} 
+//		private function showFileBrowser():void {
+//			log("showFileBrowser");
+//			
+//			selectTextFile(fileToOpen);
+//		}
+//		
+//		private function selectTextFile(root:File):void { 
+//			var txtFilter:FileFilter = new FileFilter("Text", "*.as;*.css;*.html;*.txt;*.xml"); 
+//			root.browseForOpen("Open", [txtFilter]); 
+//			root.addEventListener(Event.SELECT, fileSelected); 
+//		} 
+//		
+//		private function fileSelected(event:Event):void{ 
+//			trace(fileToOpen.nativePath); 
+//
+//			_fileArray = new Array();
+//			_fileArray.push(fileToOpen.nativePath);
+//			
+//			_appModel = new AppModel(_fileArray);
+//			_appView = new AppView(_appModel);
+//			setView(_appView);
+//			
+//		} 
 		
 		
 		private function loadFilesFromManifest():void {
@@ -140,7 +140,7 @@ package
 		private function setupViewContainer():void {
 			log("setupViewContainer: ("+stage.stageWidth+", "+stage.stageHeight+")");
 			_viewContainer = new CoreMovieClip();
-			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height));
+			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height, 0x996666));
 			addChild(_viewContainer);
 			
 			
@@ -151,7 +151,7 @@ package
 			log("receiveEvent e.type: "+e.type);
 			switch(e.type){
 				case CodeAnalyzerEvents.SHOW_FILE_BROWSER:
-					showFileBrowser();
+					//showFileBrowser();
 					break;
 				case CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST:
 					loadFilesFromManifest();
