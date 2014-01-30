@@ -1,0 +1,1 @@
+﻿package// As the sprite class is static, we use this extension to add the// panelNumber property that AccordionComponent is looking for.// Alan Gruskoff - Digital Showcase{	import flash.display.Sprite;		public class PanelSprite extends Sprite    {        public var panelNumber:Number;    }}
