@@ -50,9 +50,12 @@
             attributes.id = "${application}";
             attributes.name = "${application}";
             attributes.align = "middle";
+            
+            //"${width}", "${height}", 
+            
             swfobject.embedSWF(
                 "${swf}.swf", "flashContent", 
-                "${width}", "${height}", 
+                "100%", "100%", 
                 swfVersionStr, xiSwfUrlStr, 
                 flashvars, params, attributes);
             // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.

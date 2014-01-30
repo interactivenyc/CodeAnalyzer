@@ -28,8 +28,8 @@ package
 			super();
 			
 			// support autoOrients
-			//stage.align = StageAlign.TOP_LEFT;
-			//stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			//stage.addEventListener(Event.RESIZE, handleResize);
 			//stage.addEventListener(Event.RESIZE, initCodeAnalyzer);
