@@ -5,7 +5,7 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
-	[SWF(width=800,height=600)]
+	[SWF(width=1200,height=800)]
 	public class Main extends MovieClip
 	{
 		private var _codeAnalyzer:CodeAnalyzer;
