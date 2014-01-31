@@ -1,0 +1,10 @@
+data/com/inyc/codeanalyzer/CodeAnalyzer.as
+data/com/inyc/codeanalyzer/events/CodeAnalyzerEvents.as
+data/com/inyc/codeanalyzer/models/AppModel.as
+data/com/inyc/codeanalyzer/models/ClassItem.as
+data/com/inyc/codeanalyzer/models/FunctionItem.as
+data/com/inyc/codeanalyzer/models/ImportItem.as
+data/com/inyc/codeanalyzer/models/VariableItem.as
+data/com/inyc/codeanalyzer/view/AppView.as
+data/com/inyc/codeanalyzer/view/ClassView.as
+data/com/inyc/codeanalyzer/view/MenuView.as
