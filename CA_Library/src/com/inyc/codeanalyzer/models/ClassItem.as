@@ -5,6 +5,7 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.LoaderUtilsEvent;
+	import com.inyc.utils.FileUtils;
 	import com.inyc.utils.LoaderUtils;
 	import com.inyc.utils.TextUtil;
 	
@@ -12,6 +13,7 @@ package com.inyc.codeanalyzer.models
 
 	public class ClassItem extends CoreModel{
 		
+		public var classFile:File;
 		public var name:String;
 		public var packagePath:String;
 		public var extendsClass:String;
@@ -30,27 +32,18 @@ package com.inyc.codeanalyzer.models
 			functions = new Vector.<FunctionItem>;
 		}
 		
-		public function processClass(declaration:String):void{
+		public function processClass(file:File):void{
+			log("processClass: "+file.nativePath);
 			
-			if (declaration == null || declaration.length < 2) return;
+			classFile = file;
 			
-			log("processClass: "+declaration);
-			
-			var file:File;
-			var processArray:Array = new Array();
-			
-			file = File.applicationDirectory.resolvePath("data/" + declaration);
-			processArray = declaration.split("/");
-			
-			name = processArray.pop();			
-			packagePath = processArray.join("/");
+			name = FileUtils.getFilename(file);	
+			//packagePath = FileUtils.getPackage(file);	
 				
 			try{
 				_loaderUtils = new LoaderUtils();
 				addLoadListeners();
-				
-				var localFilePath:String = "data"+file.nativePath.split("data")[1];
-				_loaderUtils.readFile(localFilePath);
+				_loaderUtils.readFile(file.url);
 				
 			}catch(e:Error){
 				log("Error: "+e.message);
@@ -82,7 +75,10 @@ package com.inyc.codeanalyzer.models
 			var varExp:RegExp = /([private|public|protected]) var/i;
 			var funcExp:RegExp = /([private|public|protected]) function/;
 			var categoryExp:RegExp = /@category/i;
+			var packageExp:RegExp = /package/i;
 			var importExp:RegExp = /import/i;
+			
+			
 			
 			// HANDLE DIFFERENT KINDS OF LINE BREAKS (NEWLINE, RETURN)			
 			fileData = TextUtil.replaceChars(fileData, "\r", "\n");		
@@ -107,6 +103,10 @@ package com.inyc.codeanalyzer.models
 				//skip commented lines
 				if (lineArray[i].indexOf("//") > -1) continue;
 				if (lineArray[i].indexOf("/*") > -1) continue;
+				
+				if (packageExp.test(lineArray[i]) == true){
+					packagePath = packageExp.exec(lineArray[i]);
+				}
 				
 				if (importExp.test(lineArray[i]) == true){
 					importItem = new ImportItem();

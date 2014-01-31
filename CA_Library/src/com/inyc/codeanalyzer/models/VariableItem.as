@@ -3,6 +3,7 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.core.CoreModel;
 
 	public class VariableItem extends CoreModel{
+		public var declaration:String;
 		
 		public var name:String;
 		public var access:String;
@@ -13,6 +14,8 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		public function processVariable(declaration:String):void{
+			declaration = declaration;
+			
 			var processArray:Array = declaration.split(" ");
 			var arrayIndex:int = processArray.indexOf("var");
 			name = processArray[arrayIndex + 1];

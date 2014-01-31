@@ -3,14 +3,20 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.core.CoreModel;
 
 	public class ImportItem extends CoreModel{
+		public var declaration:String;
+		
 		public var importClass:String;
 		public var importPackage:String;
 		
 		public function ImportItem(){
 			super();
+			
+			
 		}
 		
 		public function processImport(declaration:String):String{
+			declaration = declaration;
+			
 			var processArray:Array = declaration.split(" ");
 			var wholeImport:String = processArray[processArray.length-1];
 			var packageArray:Array = wholeImport.split(".");

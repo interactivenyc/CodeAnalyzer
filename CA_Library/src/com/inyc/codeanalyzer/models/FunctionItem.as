@@ -1,9 +1,9 @@
 package com.inyc.codeanalyzer.models
 {
 	import com.inyc.core.CoreModel;
-	import com.inyc.utils.TextUtil;
 
 	public class FunctionItem extends CoreModel{
+		public var declaration:String;
 		
 		public var name:String;
 		public var access:String;
@@ -14,6 +14,7 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		public function processFunction(declaration:String):String{
+			declaration = declaration;
 			
 			if (declaration.indexOf("function") > -1){
 				var varExp:RegExp = new RegExp("(?<=function)(.*)");

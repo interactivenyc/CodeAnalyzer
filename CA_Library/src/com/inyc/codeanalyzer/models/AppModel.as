@@ -6,12 +6,14 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.utils.ArrayUtils;
 	
+	import flash.filesystem.File;
+	
 	public class AppModel extends CoreModel
 	{
 		public var model:Object;
 		private var _classItems:Array;
 		
-		public function AppModel(fileArray:Array)
+		public function AppModel(fileArray:Vector.<File>)
 		{
 			super();
 			log("constructor");
@@ -23,7 +25,7 @@ package com.inyc.codeanalyzer.models
 			
 		}
 		
-		private function init(fileArray:Array):void{
+		private function init(fileArray:Vector.<File>):void{
 			log("init");
 			var classItem:ClassItem;
 			

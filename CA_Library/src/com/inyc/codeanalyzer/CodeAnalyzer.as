@@ -12,11 +12,14 @@ package com.inyc.codeanalyzer
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
 	import com.inyc.events.LoaderUtilsEvent;
+	import com.inyc.utils.FileUtils;
 	import com.inyc.utils.LoaderUtils;
 	import com.inyc.utils.MovieClipUtils;
+	import com.inyc.utils.TextUtil;
 	
 	import flash.events.Event;
 	import flash.filesystem.File;
+	import flash.net.FileFilter;
 
 	//import flash.filesystem.File;
 	//import flash.net.FileFilter;
@@ -37,10 +40,11 @@ package com.inyc.codeanalyzer
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
 		
-		//public var fileToOpen:File = File.documentsDirectory;
+		private var _sourceDir:File;
+		private var _sourceFiles:Vector.<File>;
 		
 		public function CodeAnalyzer(){
-			log("CodeAnalyzer DESKTOP");
+			log("CodeAnalyzer");
 			super();
 		}
 		
@@ -68,7 +72,7 @@ package com.inyc.codeanalyzer
 			
 			//showMenu();
 			//loadFilesFromManifest();
-			autoLoadFiles();
+			browseForSourceDir();
 			
 		}
 		
@@ -81,9 +85,102 @@ package com.inyc.codeanalyzer
 		
 		
 		
+		/****************************************************
+		 * @category Create Model
+		 **************************************************/
+		
+		private function browseForSourceDir():void {
+			log("browseForSourceDir");
+			
+			_sourceDir = new File();
+			_sourceDir.browseForDirectory("Choose SRC Folder");
+			_sourceDir.addEventListener(Event.SELECT, onSourceDirSelected); 
+		}
+		
+		private function onSourceDirSelected(event:Event = null):void{
+			_sourceDir.removeEventListener(Event.SELECT, onSourceDirSelected); 
+			
+			readSourceDir(_sourceDir);
+		}
+		
+		private function useManifestToLoadFiles():void{
+			_sourceDir =  File.applicationDirectory.resolvePath("data");
+			readSourceDir(_sourceDir);
+		}
+		
+		private function readSourceDir(sourceDir:File):void{ 
+			log("readSourceDir: "+_sourceDir.nativePath); 
+			
+			_sourceFiles = new Vector.<File>
+			getFilesFromDirectory(_sourceDir);
+			
+			for (var i:int=0; i<_sourceFiles.length; i++){
+				log("_sourceFiles["+i+"] "+_sourceFiles[i]);
+			}
+			
+			createModelAndViews(_sourceFiles);
+		} 
+		
+		
+		private function getFilesFromDirectory(file:File):void{
+			log("processDirectory package.name: "+FileUtils.getFilename(file));
+			
+			var processFiles:Array = file.getDirectoryListing();
+			var currentFile:File;
+			var localFilePath:String;
+			
+			for (var i:int=0; i<processFiles.length; i++){
+				
+				currentFile = processFiles[i] as File;
+				
+				
+				if (currentFile.nativePath.indexOf(_sourceDir.nativePath) > -1){
+					//From Browse for Source Dir
+					localFilePath = TextUtil.replaceChars(currentFile.nativePath, _sourceDir.nativePath, "");
+				}else{
+					//From Manifest
+					localFilePath = currentFile.nativePath.split("data/")[1];
+				}
+				
+				
+				if (currentFile.isDirectory){
+					log("i:"+i+" :: processDirectory: "+currentFile.name);
+					getFilesFromDirectory(currentFile);
+				}else{
+					if (currentFile.name.indexOf(".as") > -1){
+						log("i:"+i+" :: addFile: "+currentFile.name);
+						_sourceFiles.push(currentFile);
+					}
+				}
+				
+			}
+			
+		}
+
+		
+		
+//		private function fileDataLoaded(e:GenericDataEvent):void {
+//			log("fileDataLoaded");
+//			_loaderUtils.removeEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
+//			var fileData:String = e.data.file;
+//			//log(_fileData);
+//			
+//			var fileArray:Array = fileData.split(/\n/);
+//			createModelAndViews(fileArray);
+//			
+//		}
+		
+		
+		
+		/****************************************************
+		 * @category Create View
+		 **************************************************/
+		
+		
 		private function showMenu():void {
 			setView(new MenuView());
 		}
+		
 		
 		private function setView(view:IOSImageView):void{
 			if(_currentView && _viewContainer.contains(_currentView)){
@@ -93,98 +190,10 @@ package com.inyc.codeanalyzer
 			_viewContainer.addChild(view);
 		}
 		
-//		private function showFileBrowser():void {
-//			log("showFileBrowser");
-//			
-//			selectTextFile(fileToOpen);
-//		}
-//		
-//		private function selectTextFile(root:File):void { 
-//			var txtFilter:FileFilter = new FileFilter("Text", "*.as;*.css;*.html;*.txt;*.xml"); 
-//			root.browseForOpen("Open", [txtFilter]); 
-//			root.addEventListener(Event.SELECT, fileSelected); 
-//		} 
-//		
-//		private function fileSelected(event:Event):void{ 
-//			trace(fileToOpen.nativePath); 
-//
-//			_fileArray = new Array();
-//			_fileArray.push(fileToOpen.nativePath);
-//			
-//			_appModel = new AppModel(_fileArray);
-//			_appView = new AppView(_appModel);
-//			setView(_appView);
-//			
-//		} 
 		
-		private function autoLoadFiles():void {
-			log("autoLoadFiles");
+		private function createModelAndViews(fileArray:Vector.<File>):void{
+			log("createModelAndViews");
 			
-			var file:File = File.applicationDirectory.resolvePath("data");
-			var fileArray:Array = new Array();
-			
-			log("autoLoadFiles READ FROM: "+file.nativePath);
-			
-			getFilesFromDirectory(file, fileArray);
-			
-			for (var i:int=0; i<fileArray.length; i++){
-				log("fileArray["+i+"] "+fileArray[i]);
-			}
-			
-			createModelAndViews(fileArray);
-		}
-		
-		private function getFilesFromDirectory(file:File, fileArray:Array):void{
-			log("processDirectory file.name: "+file.nativePath.split("data/")[1]);
-			
-			var processFiles:Array = file.getDirectoryListing();
-			var currentFile:File;
-			var localFilePath:String;
-			
-			for (var i:int=0; i<processFiles.length; i++){
-				
-				currentFile = processFiles[i] as File;
-				localFilePath = currentFile.nativePath.split("data/")[1];
-				
-				if (currentFile.isDirectory){
-					log("i:"+i+" :: processDirectory: "+currentFile.name);
-					getFilesFromDirectory(currentFile, fileArray);
-				}else{
-					if (currentFile.name.indexOf(".as") > -1){
-						log("i:"+i+" :: addFile: "+currentFile.name);
-						fileArray.push(localFilePath);
-					}
-				}
-			}
-			
-		}
-
-		
-		
-//		private function loadFilesFromManifest():void {
-//			log("loadFilesFromManifest");
-//			_loaderUtils = new LoaderUtils();
-//			_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
-//			
-//			var manifestURL:String = Config.DATA_PATH + "/files.txt";
-//			log("manifestURL: "+manifestURL);
-//			
-//			_loaderUtils.readFile(manifestURL);
-//		}
-		
-		
-		private function fileDataLoaded(e:GenericDataEvent):void {
-			log("fileDataLoaded");
-			_loaderUtils.removeEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
-			var fileData:String = e.data.file;
-			//log(_fileData);
-			
-			var fileArray:Array = fileData.split(/\n/);
-			createModelAndViews(fileArray);
-			
-		}
-		
-		private function createModelAndViews(fileArray:Array):void{
 			_appModel = new AppModel(fileArray);
 			_appView = new AppView(_appModel);
 			setView(_appView);
@@ -195,8 +204,6 @@ package com.inyc.codeanalyzer
 			_viewContainer = new CoreMovieClip();
 			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height, 0x996666));
 			addChild(_viewContainer);
-			
-			
 		}
 		
 		
@@ -204,10 +211,10 @@ package com.inyc.codeanalyzer
 			log("receiveEvent e.type: "+e.type);
 			switch(e.type){
 				case CodeAnalyzerEvents.SHOW_FILE_BROWSER:
-					//showFileBrowser();
+					browseForSourceDir();
 					break;
 				case CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST:
-//					loadFilesFromManifest();
+					useManifestToLoadFiles();
 					break;
 				case AppEvents.FILE_LOADED:
 					break;
@@ -228,7 +235,6 @@ package com.inyc.codeanalyzer
 					_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX / 1.25);
 					break;
 			}
-			
 		}
 
 		

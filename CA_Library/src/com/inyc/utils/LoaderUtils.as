@@ -85,7 +85,9 @@ package com.inyc.utils {
 			textLoader.addEventListener(Event.COMPLETE, onFileLoaded);
 			textLoader.addEventListener(IOErrorEvent.IO_ERROR, onTextIOError);
 			
-			textLoader.load(new URLRequest(filePath));
+			var urlRequest:URLRequest = new URLRequest(filePath);
+			
+			textLoader.load(urlRequest);
 		}
 		
 		private function onFileLoaded(e:Event):void {
