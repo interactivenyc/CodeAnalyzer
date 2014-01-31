@@ -1,5 +1,6 @@
 package com.inyc.core
 {
+	
 	 
 	public class Config{
 		
@@ -9,11 +10,13 @@ package com.inyc.core
 		
 		//Log data and show debug features in app
 		public static const DEBUG_MODE:Boolean = true;
-		public static const ROOT_PATH:String = "./data";
+		//public static var DATA_PATH:String;
 		
 		/*******************************************************/
 		
-		public function Config(){}
+		public function Config(){
+
+		}
 		
 	}
 }

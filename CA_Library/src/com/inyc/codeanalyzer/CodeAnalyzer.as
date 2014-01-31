@@ -16,6 +16,8 @@ package com.inyc.codeanalyzer
 	import com.inyc.utils.MovieClipUtils;
 	
 	import flash.events.Event;
+	import flash.filesystem.File;
+
 	//import flash.filesystem.File;
 	//import flash.net.FileFilter;
 	
@@ -27,9 +29,6 @@ package com.inyc.codeanalyzer
 		private var _currentView:IOSImageView;
 		
 		private var _toolbar:Toolbar;
-		
-		private var _fileData:String;
-		private var _fileArray:Array;
 		
 		private var _viewContainer:CoreMovieClip;
 		
@@ -48,6 +47,7 @@ package com.inyc.codeanalyzer
 		override protected function init():void{
 			super.init();
 			log("init");
+			
 			_eventDispatcher = CoreEventDispatcher.getInstance();
 			_eventDispatcher.addEventListener(CodeAnalyzerEvents.SHOW_FILE_BROWSER, receiveEvent);
 			_eventDispatcher.addEventListener(CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST, receiveEvent);
@@ -65,8 +65,10 @@ package com.inyc.codeanalyzer
 			log("onAddedToStage stage.stageWidth: "+stage.stageWidth);
 			super.onAddedToStage(e);
 			setupViewContainer();
+			
 			//showMenu();
-			loadFilesFromManifest();
+			//loadFilesFromManifest();
+			autoLoadFiles();
 			
 		}
 		
@@ -115,28 +117,75 @@ package com.inyc.codeanalyzer
 //			
 //		} 
 		
-		
-		private function loadFilesFromManifest():void {
-			log("loadFilesFromManifest");
-			_loaderUtils = new LoaderUtils();
-			_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
+		private function autoLoadFiles():void {
+			log("autoLoadFiles");
 			
-			var manifestURL:String = Config.ROOT_PATH + "/files.txt";
-			log("manifestURL: "+manifestURL);
+			var file:File = File.applicationDirectory.resolvePath("data");
+			var fileArray:Array = new Array();
 			
-			_loaderUtils.readFile(manifestURL);
+			log("autoLoadFiles READ FROM: "+file.nativePath);
+			
+			getFilesFromDirectory(file, fileArray);
+			
+			for (var i:int=0; i<fileArray.length; i++){
+				log("fileArray["+i+"] "+fileArray[i]);
+			}
+			
+			createModelAndViews(fileArray);
 		}
+		
+		private function getFilesFromDirectory(file:File, fileArray:Array):void{
+			log("processDirectory file.name: "+file.nativePath.split("data/")[1]);
+			
+			var processFiles:Array = file.getDirectoryListing();
+			var currentFile:File;
+			var localFilePath:String;
+			
+			for (var i:int=0; i<processFiles.length; i++){
+				
+				currentFile = processFiles[i] as File;
+				localFilePath = currentFile.nativePath.split("data/")[1];
+				
+				if (currentFile.isDirectory){
+					log("i:"+i+" :: processDirectory: "+currentFile.name);
+					getFilesFromDirectory(currentFile, fileArray);
+				}else{
+					if (currentFile.name.indexOf(".as") > -1){
+						log("i:"+i+" :: addFile: "+currentFile.name);
+						fileArray.push(localFilePath);
+					}
+				}
+			}
+			
+		}
+
+		
+		
+//		private function loadFilesFromManifest():void {
+//			log("loadFilesFromManifest");
+//			_loaderUtils = new LoaderUtils();
+//			_loaderUtils.addEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
+//			
+//			var manifestURL:String = Config.DATA_PATH + "/files.txt";
+//			log("manifestURL: "+manifestURL);
+//			
+//			_loaderUtils.readFile(manifestURL);
+//		}
 		
 		
 		private function fileDataLoaded(e:GenericDataEvent):void {
 			log("fileDataLoaded");
 			_loaderUtils.removeEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
-			_fileData = e.data.file;
+			var fileData:String = e.data.file;
 			//log(_fileData);
 			
-			_fileArray = _fileData.split(/\n/);
+			var fileArray:Array = fileData.split(/\n/);
+			createModelAndViews(fileArray);
 			
-			_appModel = new AppModel(_fileArray);
+		}
+		
+		private function createModelAndViews(fileArray:Array):void{
+			_appModel = new AppModel(fileArray);
 			_appView = new AppView(_appModel);
 			setView(_appView);
 		}
@@ -158,7 +207,7 @@ package com.inyc.codeanalyzer
 					//showFileBrowser();
 					break;
 				case CodeAnalyzerEvents.LOAD_FILES_FROM_MANIFEST:
-					loadFilesFromManifest();
+//					loadFilesFromManifest();
 					break;
 				case AppEvents.FILE_LOADED:
 					break;

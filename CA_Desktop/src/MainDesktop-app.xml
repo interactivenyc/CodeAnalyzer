@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <application xmlns="http://ns.adobe.com/air/application/4.0">
 	<id>com.inyc.codeanalyzer.desktop</id>
-	<filename>Main</filename>
-	<name>Main</name>
+	<filename>MainDesktop</filename>
+	<name>Code Analyzer</name>
 	<versionNumber>0.0.0</versionNumber>
 	
 	<initialWindow>
-        <content>Main.swf</content>
+        <content>MainDesktop.swf</content>
         <aspectRatio>landscape</aspectRatio>
         <systemChrome>standard</systemChrome>
         <autoOrients>true</autoOrients>

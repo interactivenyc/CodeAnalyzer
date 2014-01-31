@@ -28,6 +28,7 @@ package com.inyc.utils {
 		private var loaders:Array = new Array();
 		private var ldrContext:LoaderContext;
 		private var serviceLoader:URLLoader;
+		private var textLoader:URLLoader;
 		
 		public static var LOADER_EVENT:String = "LOADER_EVENT";
 		
@@ -38,11 +39,14 @@ package com.inyc.utils {
 		
 		public function load(url:String, useLoaderContext:Boolean=true):Loader{
 			//log("load url:"+url);
+			
 			var loader:Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
+				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+				loader.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+			
 			var urlRequest:URLRequest = new URLRequest(url);
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
-			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
-			loader.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+				
 			if (useLoaderContext){
 				loader.load(urlRequest, ldrContext);
 			}else{
@@ -75,9 +79,12 @@ package com.inyc.utils {
 		
 		
 		public function readFile(filePath:String):void{
-			log("readFiles");
-			var textLoader:URLLoader = new URLLoader();
+			log("readFile filePath: "+filePath);
+			
+			textLoader = new URLLoader();
 			textLoader.addEventListener(Event.COMPLETE, onFileLoaded);
+			textLoader.addEventListener(IOErrorEvent.IO_ERROR, onTextIOError);
+			
 			textLoader.load(new URLRequest(filePath));
 		}
 		
@@ -85,6 +92,13 @@ package com.inyc.utils {
 			log("onFileLoaded");
 			var fileData:String = e.target.data;
 			dispatchEvent(new GenericDataEvent(LoaderUtilsEvent.FILE_LOADED, {file:fileData}));
+		}
+		
+		private function onTextIOError(e:IOErrorEvent):void{
+			log("onTextIOError:"+e.text);
+			textLoader.removeEventListener(Event.COMPLETE, onFileLoaded);
+			textLoader.removeEventListener(IOErrorEvent.IO_ERROR, onTextIOError);
+			
 		}
 		
 		private function onIOError(e:IOErrorEvent):void{

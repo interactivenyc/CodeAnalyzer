@@ -7,6 +7,8 @@ package com.inyc.codeanalyzer.models
 	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.LoaderUtils;
 	import com.inyc.utils.TextUtil;
+	
+	import flash.filesystem.File;
 
 	public class ClassItem extends CoreModel{
 		
@@ -34,30 +36,22 @@ package com.inyc.codeanalyzer.models
 			
 			log("processClass: "+declaration);
 			
-			var filePath:String;
-			if (declaration.charAt(0) == "/"){
-				filePath = declaration;
-			}else{
-				var processArray:Array = new Array();
-				processArray = declaration.split("/");
-				name = processArray[processArray.length - 1];
-				name = stripChars(name);
-				name.replace(".as", "");
-				
-				if (name.length < 3) return;
-				
-				processArray.pop();
-				processArray.shift();
-				packagePath = processArray.join("/");
-				filePath =( Config.ROOT_PATH + "/" + packagePath + "/" + name);
-			}
+			var file:File;
+			var processArray:Array = new Array();
 			
-			log("fileData load: "+filePath);
+			file = File.applicationDirectory.resolvePath("data/" + declaration);
+			processArray = declaration.split("/");
 			
+			name = processArray.pop();			
+			packagePath = processArray.join("/");
+				
 			try{
 				_loaderUtils = new LoaderUtils();
 				addLoadListeners();
-				_loaderUtils.readFile(filePath);
+				
+				var localFilePath:String = "data"+file.nativePath.split("data")[1];
+				_loaderUtils.readFile(localFilePath);
+				
 			}catch(e:Error){
 				log("Error: "+e.message);
 			}
