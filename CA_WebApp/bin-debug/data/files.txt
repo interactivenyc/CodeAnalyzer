@@ -1,5 +1,0 @@
-data/com/speakaboos/core/controller/AppController.as
-data/com/speakaboos/core/controller/LoginController.as
-data/com/speakaboos/core/controller/ModalController.as
-data/com/speakaboos/core/controller/StartupController.as
-data/com/speakaboos/core/controller/SubscriptionController.as
