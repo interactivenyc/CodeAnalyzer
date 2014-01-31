@@ -1,4 +1,4 @@
-package  
+package com.inyc.codeanalyzer  
 {
 	import com.inyc.codeanalyzer.events.CodeAnalyzerEvents;
 	import com.inyc.codeanalyzer.models.AppModel;
