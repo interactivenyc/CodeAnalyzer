@@ -78,7 +78,13 @@ package com.inyc.components
 		}
 		
 		private function zoom(value:int=1):void{
-			_scalingContainer.scaleX = _scalingContainer.scaleY = (_scalingContainer.scaleX * 1.25 * value);
+			log("zoom: "+value);
+			
+			if (value > 0){
+				_scalingContainer.scaleX = _scalingContainer.scaleY = (_scalingContainer.scaleX * (1.25*value));
+			}else{
+				_scalingContainer.scaleX = _scalingContainer.scaleY = (_scalingContainer.scaleX / -(1.25*value));
+			}
 			
 			_currentView.x = -(_currentView.mouseX) + (_scalingContainer.mouseX);
 			_currentView.y = -(_currentView.mouseY) + (_scalingContainer.mouseY);
@@ -87,10 +93,11 @@ package com.inyc.components
 		
 		
 		private function onKeyEvent(e:KeyboardEvent):void{
-			if (_keyObject.isDown(flash.ui.Keyboard.SPACE)){
-				log("SPACE isDown");
-			}else{
-				log("SPACE NOT DOWN");
+			log("onKeyEvent");
+			if (_keyObject.isDown(flash.ui.Keyboard.COMMAND)){
+				if (_keyObject.isDown(flash.ui.Keyboard.NUMPAD_ADD)) zoom(1);
+				if (_keyObject.isDown(flash.ui.Keyboard.NUMPAD_SUBTRACT)) zoom(-1);
+				
 			}
 		}
 		
@@ -99,7 +106,6 @@ package com.inyc.components
 			
 			switch(e.type){
 				case MouseEvent.MOUSE_DOWN:
-					
 					if (_keyObject.isDown(flash.ui.Keyboard.SPACE) && _keyObject.isDown(flash.ui.Keyboard.SHIFT)){
 						if (_keyObject.isDown(flash.ui.Keyboard.ALTERNATE)){
 							zoom(-1);
