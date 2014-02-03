@@ -4,7 +4,8 @@ package com.inyc.codeanalyzer
 	import com.inyc.codeanalyzer.models.AppModel;
 	import com.inyc.codeanalyzer.view.AppView;
 	import com.inyc.codeanalyzer.view.MenuView;
-	import com.inyc.components.IOSImageView;
+	import com.inyc.components.DynamicLayoutContainer;
+	import com.inyc.components.DynamicLayoutView;
 	import com.inyc.components.Toolbar;
 	import com.inyc.core.CoreEventDispatcher;
 	import com.inyc.core.CoreMovieClip;
@@ -27,11 +28,11 @@ package com.inyc.codeanalyzer
 		
 		private var _appModel:AppModel;
 		private var _appView:AppView;
-		private var _currentView:IOSImageView;
 		
 		private var _toolbar:Toolbar;
 		
-		private var _viewContainer:CoreMovieClip;
+		private var _currentView:DynamicLayoutView;
+		private var _viewContainer:DynamicLayoutContainer;
 		
 		private var _loaderUtils:LoaderUtils;
 		
@@ -171,7 +172,7 @@ package com.inyc.codeanalyzer
 		}
 		
 		
-		private function setView(view:IOSImageView):void{
+		private function setView(view:DynamicLayoutView):void{
 			if(_currentView && _viewContainer.contains(_currentView)){
 				_viewContainer.removeChild(_currentView);
 			}
@@ -216,15 +217,24 @@ package com.inyc.codeanalyzer
 				case MouseEvent.MOUSE_UP:
 					if (_viewMode == VIEW_MODE_NAVIGATE){
 						_currentView.stopDrag();
+						log("_currentView loc ("+_currentView.x + ","+_currentView.y+")");
 					}
 					break;
 				case MouseEvent.CLICK:
+					log("clickLoc: ("+_currentView.mouseX + ","+_currentView.mouseY+")");
+					
 					switch(_viewMode){
 						case VIEW_MODE_ZOOM_IN:
 							_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX * 1.25);
+							
+							_currentView.x = -(_currentView.mouseX * _currentView.scaleX);
+							_currentView.y = -(_currentView.mouseY * _currentView.scaleY);
 							break;
 						case VIEW_MODE_ZOOM_OUT:
 							_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX / 1.25);
+							
+							_currentView.x = -(_currentView.mouseX * _currentView.scaleX);
+							_currentView.y = -(_currentView.mouseY * _currentView.scaleY);
 							break;
 					}
 					break;

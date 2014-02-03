@@ -1,14 +1,14 @@
 package com.inyc.codeanalyzer.view
 {
 	import com.inyc.codeanalyzer.events.CodeAnalyzerEvents;
-	import com.inyc.components.IOSImageView;
+	import com.inyc.components.DynamicLayoutView;
 	import com.inyc.components.TextButton;
 	import com.inyc.events.GenericDataEvent;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
-	public class MenuView extends IOSImageView
+	public class MenuView extends DynamicLayoutView
 	{
 		public function MenuView(){
 			

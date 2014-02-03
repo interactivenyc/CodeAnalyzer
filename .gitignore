@@ -4,6 +4,7 @@
 .project
 .settings
 .amateras
+.flexLibProperties
 *.ipa
 deploy/com
 deploy/jsfl

@@ -1,7 +1,7 @@
 package com.inyc.codeanalyzer.view
 {
 	import com.inyc.codeanalyzer.models.AppModel;
-	import com.inyc.components.IOSImageView;
+	import com.inyc.components.DynamicLayoutView;
 	import com.inyc.components.Toolbar;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
@@ -10,7 +10,7 @@ package com.inyc.codeanalyzer.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	public class AppView extends IOSImageView
+	public class AppView extends DynamicLayoutView
 	{
 		private var _appModel:AppModel;
 		
