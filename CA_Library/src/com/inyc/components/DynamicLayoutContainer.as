@@ -3,13 +3,22 @@ package com.inyc.components
 	import com.inyc.core.CoreMovieClip;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
+	import com.inyc.utils.KeyObject;
 	import com.inyc.utils.MovieClipUtils;
 	
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Keyboard;
 	
 	public class DynamicLayoutContainer extends CoreMovieClip
 	{
 		private var _currentView:DynamicLayoutView;
+		private var _scalingContainer:MovieClip;
+		private var _keyObject:KeyObject;
+		
+		private var _dragging:Boolean = false;
 		
 		public var viewMode:String;
 		public static var VIEW_MODE_SELECT:String = "VIEW_MODE_SELECT";
@@ -26,57 +35,102 @@ package com.inyc.components
 			addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseEvent);
 			
+			
 			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_SELECT, receiveEvent);
 			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_MOVE, receiveEvent);
 			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_ZOOM_IN, receiveEvent);
 			_eventDispatcher.addEventListener(AppEvents.TOOLBAR_ZOOM_OUT, receiveEvent);
+			
+			
+		}
+		
+		override protected function onAddedToStage(e:Event):void{
+			super.onAddedToStage(e);
+			
+			_keyObject = new KeyObject(stage);
+//			_keyObject.addEventListener(KeyboardEvent.KEY_DOWN, onKeyEvent);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyEvent);
+			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyEvent);
+			createContainer();
+		}
+		
+		private function createContainer():void{
+			log("createContainer");
+			
+			_scalingContainer = new MovieClip();
+			_scalingContainer.x = stage.stageWidth/2;
+			_scalingContainer.y = stage.stageHeight/2;
+			addChild(_scalingContainer);
 		}
 		
 		public function addView(view:DynamicLayoutView):void{
 			log("addView");
 			_currentView = view;
-			addChild(view);
+			_currentView.x = -stage.stageWidth/2;
+			_currentView.y = -stage.stageHeight/2;
+			_scalingContainer.addChild(_currentView);
 		}
 		
 		
 		public function setSize(w:int,h:int):void{
 			log("setSize");
 			addChild(MovieClipUtils.getFilledMC(stage.width,stage.height, 0xFFFFFF));
-			if (_currentView) addChild(_currentView);
+		}
+		
+		private function zoom(value:int=1):void{
+			_scalingContainer.scaleX = _scalingContainer.scaleY = (_scalingContainer.scaleX * 1.25 * value);
+			
+			_currentView.x = -(_currentView.mouseX) + (_scalingContainer.mouseX);
+			_currentView.y = -(_currentView.mouseY) + (_scalingContainer.mouseY);
+
 		}
 		
 		
+		private function onKeyEvent(e:KeyboardEvent):void{
+			if (_keyObject.isDown(flash.ui.Keyboard.SPACE)){
+				log("SPACE isDown");
+			}else{
+				log("SPACE NOT DOWN");
+			}
+		}
 		
 		private function onMouseEvent(e:MouseEvent):Boolean{
 			log("onMouseEvent e.currentTarget: "+e.currentTarget + ", e.type: "+e.type);
 			
 			switch(e.type){
 				case MouseEvent.MOUSE_DOWN:
-					if (viewMode == VIEW_MODE_NAVIGATE){
-						_currentView.startDrag();
-					}
-					break;
-				case MouseEvent.MOUSE_UP:
-					if (viewMode == VIEW_MODE_NAVIGATE){
-						_currentView.stopDrag();
-						log("_currentView loc ("+_currentView.x + ","+_currentView.y+")");
-					}
-					break;
-				case MouseEvent.CLICK:
-					log("clickLoc: ("+_currentView.mouseX + ","+_currentView.mouseY+")");
 					
+					if (_keyObject.isDown(flash.ui.Keyboard.SPACE) && _keyObject.isDown(flash.ui.Keyboard.SHIFT)){
+						if (_keyObject.isDown(flash.ui.Keyboard.ALTERNATE)){
+							zoom(-1);
+						}else{
+							zoom(1);
+						}
+					}
+					
+					if (viewMode == VIEW_MODE_NAVIGATE || _keyObject.isDown(flash.ui.Keyboard.SPACE) ){
+						if (_dragging == false){
+							_dragging = true;
+							_currentView.startDrag();
+						}
+					}
+					return true;
+				case MouseEvent.MOUSE_UP:
+					if (viewMode == VIEW_MODE_NAVIGATE || _dragging == true){
+						if (_dragging == true){
+							_dragging = false;
+							_currentView.stopDrag();
+							log("_currentView loc ("+_currentView.x + ","+_currentView.y+")");
+						}
+					}
+					return true;
+				case MouseEvent.CLICK:					
 					switch(viewMode){
 						case VIEW_MODE_ZOOM_IN:
-							_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX * 1.25);
-							
-							_currentView.x = -(_currentView.mouseX * _currentView.scaleX);
-							_currentView.y = -(_currentView.mouseY * _currentView.scaleY);
+							zoom(1);
 							break;
 						case VIEW_MODE_ZOOM_OUT:
-							_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX / 1.25);
-							
-							_currentView.x = -(_currentView.mouseX * _currentView.scaleX);
-							_currentView.y = -(_currentView.mouseY * _currentView.scaleY);
+							zoom(-1)
 							break;
 					}
 					break;
