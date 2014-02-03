@@ -1,0 +1,2 @@
+package com.inyc.components {	import com.inyc.core.CoreMovieClip;
+		/**	 * @author stevewarren	 */	public class Keyboard extends CoreMovieClip {		public function Keyboard() {			super();			log("Keyboard CONSTRUCTOR");		}	}}

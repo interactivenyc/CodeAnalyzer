@@ -6,20 +6,18 @@ package com.inyc.codeanalyzer
 	import com.inyc.codeanalyzer.view.MenuView;
 	import com.inyc.components.IOSImageView;
 	import com.inyc.components.Toolbar;
-	import com.inyc.core.Config;
 	import com.inyc.core.CoreEventDispatcher;
 	import com.inyc.core.CoreMovieClip;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
-	import com.inyc.events.LoaderUtilsEvent;
 	import com.inyc.utils.FileUtils;
 	import com.inyc.utils.LoaderUtils;
 	import com.inyc.utils.MovieClipUtils;
 	import com.inyc.utils.TextUtil;
 	
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filesystem.File;
-	import flash.net.FileFilter;
 
 	//import flash.filesystem.File;
 	//import flash.net.FileFilter;
@@ -39,6 +37,12 @@ package com.inyc.codeanalyzer
 		
 		public static var SCALE_X:Number = 1;
 		public static var SCALE_Y:Number = 1;
+		
+		private var _viewMode:String;
+		private static var VIEW_MODE_SELECT:String = "VIEW_MODE_SELECT";
+		private static var VIEW_MODE_NAVIGATE:String = "VIEW_MODE_NAVIGATE";
+		private static var VIEW_MODE_ZOOM_IN:String = "VIEW_MODE_ZOOM_IN";
+		private static var VIEW_MODE_ZOOM_OUT:String = "VIEW_MODE_ZOOM_OUT";
 		
 		private var _sourceDir:File;
 		private var _sourceFiles:Vector.<File>;
@@ -156,21 +160,6 @@ package com.inyc.codeanalyzer
 			}
 			
 		}
-
-		
-		
-//		private function fileDataLoaded(e:GenericDataEvent):void {
-//			log("fileDataLoaded");
-//			_loaderUtils.removeEventListener(LoaderUtilsEvent.FILE_LOADED, fileDataLoaded);
-//			var fileData:String = e.data.file;
-//			//log(_fileData);
-//			
-//			var fileArray:Array = fileData.split(/\n/);
-//			createModelAndViews(fileArray);
-//			
-//		}
-		
-		
 		
 		/****************************************************
 		 * @category Create View
@@ -201,9 +190,52 @@ package com.inyc.codeanalyzer
 		
 		private function setupViewContainer():void {
 			log("setupViewContainer: ("+stage.stageWidth+", "+stage.stageHeight+")");
+
 			_viewContainer = new CoreMovieClip();
-			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height, 0x996666));
+			_viewContainer.addChild(MovieClipUtils.getFilledMC(stage.width,stage.height, 0xFFFFFF));
+			
+			//_viewContainer.mouseEnabled = false;
+			//_viewContainer.mouseChildren = false;
+			
+			_viewContainer.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
+			_viewContainer.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
+			_viewContainer.addEventListener(MouseEvent.CLICK, onMouseEvent);
+			
 			addChild(_viewContainer);
+		}
+		
+		private function onMouseEvent(e:MouseEvent):Boolean{
+			//log("receiveEvent e.currentTarget: "+e.currentTarget + ", e.type: "+e.type);
+			
+			switch(e.type){
+				case MouseEvent.MOUSE_DOWN:
+					if (_viewMode == VIEW_MODE_NAVIGATE){
+						_currentView.startDrag();
+					}
+					break;
+				case MouseEvent.MOUSE_UP:
+					if (_viewMode == VIEW_MODE_NAVIGATE){
+						_currentView.stopDrag();
+					}
+					break;
+				case MouseEvent.CLICK:
+					switch(_viewMode){
+						case VIEW_MODE_ZOOM_IN:
+							_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX * 1.25);
+							break;
+						case VIEW_MODE_ZOOM_OUT:
+							_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX / 1.25);
+							break;
+					}
+					break;
+				case MouseEvent.MOUSE_WHEEL:
+					//log(e.currentTarget + " sez 'Wheeeee'");
+					//e.stopPropagation();
+					return false;
+					break;
+			}
+			
+			return true;
 		}
 		
 		
@@ -224,15 +256,17 @@ package com.inyc.codeanalyzer
 					addChild(_toolbar);
 					
 					break;
-				case AppEvents.TOOLBAR_SELECT:					
+				case AppEvents.TOOLBAR_SELECT:		
+					_viewMode = VIEW_MODE_SELECT;
 					break;
-				case AppEvents.TOOLBAR_MOVE:					
+				case AppEvents.TOOLBAR_MOVE:	
+					_viewMode = VIEW_MODE_NAVIGATE;					
 					break;
-				case AppEvents.TOOLBAR_ZOOM_IN:		
-					_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX * 1.25);
+				case AppEvents.TOOLBAR_ZOOM_IN:
+					_viewMode = VIEW_MODE_ZOOM_IN;
 					break;
 				case AppEvents.TOOLBAR_ZOOM_OUT:	
-					_currentView.scaleX = _currentView.scaleY = (_currentView.scaleX / 1.25);
+					_viewMode = VIEW_MODE_ZOOM_OUT
 					break;
 			}
 		}
