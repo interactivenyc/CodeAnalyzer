@@ -114,6 +114,10 @@ package com.inyc.events {
 		public static var IMAGE_GRID_CLICK:String = "IMAGE_GRID_CLICK";
 		public static var BUTTON_CLICK:String = "BUTTON_CLICK";
 		
+		
+		public static var ACCORDION_ITEM_CLICKED:String = "ACCORDION_ITEM_CLICKED";
+		public static var ACCORDION_SECTION_CLICKED:String = "ACCORDION_SECTION_CLICKED";
+		
 		/***************************************************
 		* TOUCH OBJECT EVENTS
 		***************************************************/

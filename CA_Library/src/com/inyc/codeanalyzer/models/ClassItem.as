@@ -13,7 +13,6 @@ package com.inyc.codeanalyzer.models
 	public class ClassItem extends CodeItem{
 		
 		public var classFile:File;
-		public var name:String;
 		public var packagePath:String;
 		public var extendsClass:String;
 		public var implementsClass:String;

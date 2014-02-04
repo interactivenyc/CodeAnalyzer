@@ -1,7 +1,6 @@
 package com.inyc.codeanalyzer.models{
 	
 	public class VariableItem extends CodeItem{		
-		public var name:String;
 		public var access:String;
 		public var isStatic:String;
 		

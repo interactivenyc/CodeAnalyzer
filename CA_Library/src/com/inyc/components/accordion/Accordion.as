@@ -3,6 +3,8 @@ package com.inyc.components.accordion
 	import com.inyc.components.MCButton;
 	import com.inyc.core.CoreModel;
 	import com.inyc.core.CoreMovieClip;
+	import com.inyc.events.AppEvents;
+	import com.inyc.events.GenericDataEvent;
 	
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
@@ -23,6 +25,9 @@ package com.inyc.components.accordion
 			indicator = new MCButton();
 			indicator.addChild(mc.header.indicator);
 			indicator.addEventListener(MouseEvent.CLICK, onMouseEvent);
+			
+			_eventDispatcher.addEventListener(AppEvents.ACCORDION_ITEM_CLICKED, receiveAccordionEvent);
+			_eventDispatcher.addEventListener(AppEvents.ACCORDION_SECTION_CLICKED, receiveAccordionEvent);
 			
 			bg = mc.header.bg as MovieClip;
 			bg.addEventListener(MouseEvent.CLICK, onMouseEvent);
@@ -45,7 +50,9 @@ package com.inyc.components.accordion
 		
 		public function addSection(sectionName:String, sectionItems:Vector.<CoreModel>):void{
 			log("addSection: "+sectionName);
-			var section:AccordionSection = new AccordionSection(sectionName, sectionItems);
+			var section:AccordionSection = new AccordionSection(this, sectionName, sectionItems);			
+			
+			
 			var nextSectionY:int;
 			
 			if (sections.length > 0){
@@ -61,8 +68,7 @@ package com.inyc.components.accordion
 			sections.push(section);
 			addChild(section);
 			
-			mc.bottom.y = section.y + section.height + _cellPadding;
-			mc.bg.height = mc.bottom.y + mc.bottom.height + 4;
+			setBottomMCs();
 		}
 		
 		protected function onMouseEvent(e:MouseEvent):void{
@@ -84,14 +90,54 @@ package com.inyc.components.accordion
 					stopDrag();
 					break;
 			}
-			
-			
 		}
 		
-		protected function itemClicked(e:MouseEvent):void{
-			log(e.target + ", " +e.currentTarget.parent);
-			var ai:Accordion_Item = e.currentTarget.parent as Accordion_Item;
-			log(ai.tf.label.text);
+		protected function receiveAccordionEvent(e:GenericDataEvent):void{
+			//every accordion receives this event from every section
+			//filter to make sure event belongs to this accordion
+			//or consider not using _eventDispatcher for these events
+			var section:AccordionSection = e.data.accordionSection;
+			if(section.accordion != this) return;
+				
+			log("receiveAccordionEvent: "+e.type);
+			
+			switch(e.type){
+				case AppEvents.ACCORDION_ITEM_CLICKED:
+					break;
+				case AppEvents.ACCORDION_SECTION_CLICKED:
+					sectionClicked(section);
+					break;
+			}
+		}
+		
+//		private function itemClicked(e:MouseEvent):void{
+//			log(e.target + ", " +e.currentTarget.parent);
+//			var ai:Accordion_Item = e.currentTarget.parent as Accordion_Item;
+//			log(ai.tf.label.text);
+//		}
+		
+		private function sectionClicked(section:AccordionSection):void{
+			
+			var sectionIndex:int = sections.indexOf(section);
+			
+			log("sectionClicked sectionIndex: "+sectionIndex);
+			section.toggleSection();
+			
+			for (var i:int=sectionIndex + 1; i<sections.length; i++){
+				if (i==0) {
+					sections[i].y = mc.header.height;
+				}else{
+					sections[i].y = sections[i-1].y + sections[i-1].height;
+				}
+			}
+			
+			setBottomMCs();
+		}
+		
+		private function setBottomMCs():void{
+			var section:AccordionSection = sections[sections.length-1];
+			mc.bottom.y = section.y + section.height + _cellPadding;
+			mc.bg.height = mc.bottom.y + mc.bottom.height + 4;
 		}
 		
 		

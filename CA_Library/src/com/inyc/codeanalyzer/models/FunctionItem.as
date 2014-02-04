@@ -1,7 +1,6 @@
 package com.inyc.codeanalyzer.models {
 
 	public class FunctionItem extends CodeItem{		
-		public var name:String;
 		public var access:String;
 		public var isStatic:Boolean;
 	

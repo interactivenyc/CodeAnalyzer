@@ -21,13 +21,10 @@ package com.inyc.codeanalyzer.models {
 			packageArray.pop();
 			importPackage = packageArray.join(".");
 			
+			name = importClass;
+			
 			return importPackage;
 			//log("IMPORT package: "+importPackage+" ::  class: "+importClass);
-		}
-		
-		
-		public function get name():String{
-			return importPackage + "." + importClass;
 		}
 		
 		

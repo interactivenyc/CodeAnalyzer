@@ -6,8 +6,9 @@ package com.inyc.core
 	import flash.events.EventDispatcher;
 	
 
-	public class CoreModel extends EventDispatcher
-	{
+	public class CoreModel extends EventDispatcher{
+		public var name:String;
+		
 		protected var _eventDispatcher:CoreEventDispatcher;
 		protected var _data:Object;
 		protected var _dataString:String;
