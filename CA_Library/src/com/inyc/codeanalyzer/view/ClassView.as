@@ -4,9 +4,6 @@ package com.inyc.codeanalyzer.view
 	import com.inyc.components.accordion.Accordion;
 	import com.inyc.core.CoreMovieClip;
 	
-//	import com.yahoo.astra.fl.controls.Tree;
-//	import com.yahoo.astra.fl.controls.treeClasses.TreeDataProvider;
-	
 	import flash.events.Event;
 	
 	
@@ -39,9 +36,9 @@ package com.inyc.codeanalyzer.view
 			_accordion.headerText = _classItem.name;
 			addChild(_accordion);
 			
-			//_accordion.addSection("imports", _classItem.getImportsArray());
-			_accordion.addSection("variables", _classItem.getVariablesArray());
-			_accordion.addSection("functions", _classItem.getFunctionsArray());
+			//_accordion.addSection("imports", _classItem.imports);
+			_accordion.addSection("variables", _classItem.variables);
+			_accordion.addSection("functions", _classItem.functions);
 
 		}
 		

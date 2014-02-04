@@ -1,6 +1,7 @@
 package com.inyc.components.accordion
 {
 	import com.inyc.components.MCButton;
+	import com.inyc.core.CoreModel;
 	import com.inyc.core.CoreMovieClip;
 	
 	import flash.display.MovieClip;
@@ -8,77 +9,60 @@ package com.inyc.components.accordion
 	
 	public class Accordion extends CoreMovieClip
 	{
-		public var accordion:Accordion_MC;
+		public var mc:Accordion_MC;
 		public var indicator:MCButton;
 		public var bg:MovieClip;
-		private var sections:Array = new Array();
+		private var sections:Vector.<AccordionSection> = new Vector.<AccordionSection>;
 		private var _cellPadding:int = 0;
 		
 		public function Accordion()
 		{
 			super();
-			accordion = new Accordion_MC();
+			mc = new Accordion_MC();
 			
 			indicator = new MCButton();
-			indicator.addChild(accordion.header.indicator);
+			indicator.addChild(mc.header.indicator);
 			indicator.addEventListener(MouseEvent.CLICK, onMouseEvent);
 			
-			bg = accordion.header.bg as MovieClip;
+			bg = mc.header.bg as MovieClip;
 			bg.addEventListener(MouseEvent.CLICK, onMouseEvent);
 			bg.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			bg.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
 			bg.addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			
-			accordion.header.tf.mouseEnabled = false;
-			accordion.header.tf.mouseChildren = false;
+			mc.header.tf.mouseEnabled = false;
+			mc.header.tf.mouseChildren = false;
 			
-			addChild(accordion);
+			addChild(mc);
 			addChild(indicator);
 			
 			cacheAsBitmap = true;
 		}
 		
 		public function set headerText(text:String):void{
-			accordion.header.tf.label.text = text;
+			mc.header.tf.label.text = text;
 		}
 		
-		public function addSection(sectionName:String, sectionItems:Array = null):void{
-			var section:Accordion_Section = new Accordion_Section();
-			section.tf_title.label.text = sectionName;
+		public function addSection(sectionName:String, sectionItems:Vector.<CoreModel>):void{
+			log("addSection: "+sectionName);
+			var section:AccordionSection = new AccordionSection(sectionName, sectionItems);
+			var nextSectionY:int;
 			
-			if (sectionItems && sectionItems.length > 0) {
-				section.tf_count.label.text = String(sectionItems.length);
-			}else{
-				section.tf_count.label.text = "0";
-			}
-			
-			var nextSectionY:int = accordion.header.height -2;
 			if (sections.length > 0){
-				var previousSection:Accordion_Section = sections[sections.length-1];
+				var previousSection:AccordionSection = sections[sections.length-1];
 				nextSectionY = nextSectionY + previousSection.y + previousSection.height;
+			}else{
+				nextSectionY = mc.header.height - 2;
 			}
 			
-			section.x = accordion.header.x;
+			section.x = mc.header.x;
 			section.y = nextSectionY;
-			
-			
-			var sectionBody:MovieClip = new MovieClip();
-			sectionBody.y = bg.y + bg.height;
-			section.addChild(sectionBody);
-			
-			for (var i:int = 0; i < sectionItems.length; i++){
-				var ai:Accordion_Item = new Accordion_Item();
-				ai.tf.label.text = sectionItems[i] || "null";
-				ai.y = i*(ai.height + _cellPadding);
-				ai.indicator.addEventListener(MouseEvent.CLICK, itemClicked);
-				sectionBody.addChild(ai);
-			}
 			
 			sections.push(section);
 			addChild(section);
 			
-			accordion.bottom.y = section.y + section.height + _cellPadding;
-			accordion.bg.height = accordion.bottom.y + accordion.bottom.height + 4;
+			mc.bottom.y = section.y + section.height + _cellPadding;
+			mc.bg.height = mc.bottom.y + mc.bottom.height + 4;
 		}
 		
 		protected function onMouseEvent(e:MouseEvent):void{

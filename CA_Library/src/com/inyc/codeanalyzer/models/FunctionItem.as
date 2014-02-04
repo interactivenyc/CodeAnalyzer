@@ -1,10 +1,6 @@
-package com.inyc.codeanalyzer.models
-{
-	import com.inyc.core.CoreModel;
+package com.inyc.codeanalyzer.models {
 
-	public class FunctionItem extends CoreModel{
-		public var declaration:String;
-		
+	public class FunctionItem extends CodeItem{		
 		public var name:String;
 		public var access:String;
 		public var isStatic:Boolean;
@@ -14,13 +10,12 @@ package com.inyc.codeanalyzer.models
 		}
 		
 		public function processFunction(declaration:String):String{
-			declaration = declaration;
+			_dataString = declaration;
 			
 			if (declaration.indexOf("function") > -1){
 				var varExp:RegExp = new RegExp("(?<=function)(.*)");
 				name = varExp.exec(declaration)[0];
 				name = name.substring(0, name.indexOf("(")) + "()";
-				//name = stripChars(name);
 				name = prefixSymbols(declaration, name);
 				
 				//log("FUNCTION name: "+name);
@@ -29,7 +24,6 @@ package com.inyc.codeanalyzer.models
 			}
 			
 			return name;
-			
 		}
 		
 		public function processCategory(declaration:String):String{
@@ -42,9 +36,7 @@ package com.inyc.codeanalyzer.models
 				
 				//log("FUNCTION name: "+name);
 			}
-			
 			return name;
-			
 		}
 		
 		

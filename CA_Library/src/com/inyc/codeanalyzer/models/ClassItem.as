@@ -1,6 +1,5 @@
 package com.inyc.codeanalyzer.models
 {
-	import com.inyc.core.Config;
 	import com.inyc.core.CoreModel;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
@@ -11,31 +10,32 @@ package com.inyc.codeanalyzer.models
 	
 	import flash.filesystem.File;
 
-	public class ClassItem extends CoreModel{
+	public class ClassItem extends CodeItem{
 		
 		public var classFile:File;
 		public var name:String;
 		public var packagePath:String;
 		public var extendsClass:String;
 		public var implementsClass:String;
-		public var imports:Vector.<ImportItem>;
-		public var variables:Vector.<VariableItem>;
-		public var functions:Vector.<FunctionItem>;
+		public var imports:Vector.<CoreModel>;
+		public var variables:Vector.<CoreModel>;
+		public var functions:Vector.<CoreModel>;
 		
 		public var defObject:Object = new Object();
 		
 		private var _loaderUtils:LoaderUtils;
 		
 		public function ClassItem(){
-			imports = new Vector.<ImportItem>;
-			variables = new Vector.<VariableItem>;
-			functions = new Vector.<FunctionItem>;
+			imports = new Vector.<CoreModel>;
+			variables = new Vector.<CoreModel>;
+			functions = new Vector.<CoreModel>;
 		}
 		
 		public function processClass(file:File):void{
 			log("processClass: "+file.nativePath);
 			
 			classFile = file;
+			_data = file;
 			
 			name = FileUtils.getFilename(file);	
 			//packagePath = FileUtils.getPackage(file);	
@@ -72,13 +72,11 @@ package com.inyc.codeanalyzer.models
 		private function fileDataLoaded(e:GenericDataEvent):void{
 			removeLoadListeners();
 			var fileData:String = e.data.file;
-			var varExp:RegExp = /([private|public|protected]) var/i;
+			var varExp:RegExp = /([private|public|protected]) var/;
 			var funcExp:RegExp = /([private|public|protected]) function/;
 			var categoryExp:RegExp = /@category/i;
-			var packageExp:RegExp = /package/i;
-			var importExp:RegExp = /import/i;
-			
-			
+			var packageExp:RegExp = /package/;
+			var importExp:RegExp = /import/;
 			
 			// HANDLE DIFFERENT KINDS OF LINE BREAKS (NEWLINE, RETURN)			
 			fileData = TextUtil.replaceChars(fileData, "\r", "\n");		
@@ -87,6 +85,8 @@ package com.inyc.codeanalyzer.models
 			var functionItem:FunctionItem;
 			var variableItem:VariableItem;
 			var importItem:ImportItem;
+			
+			var globalVariablesFinished:Boolean = false;
 			
 			log("*******************************************************");
 			log("fileDataLoaded: "+name);
@@ -116,7 +116,7 @@ package com.inyc.codeanalyzer.models
 					defObject.imports[i] = importItem.importClass;
 				}
 					
-				if (varExp.test(lineArray[i]) == true){
+				if (varExp.test(lineArray[i]) == true && globalVariablesFinished == false){
 					variableItem = new VariableItem();
 					variableItem.processVariable(lineArray[i]);
 					variables.push(variableItem);
@@ -125,6 +125,8 @@ package com.inyc.codeanalyzer.models
 				}
 				
 				if (funcExp.test(lineArray[i]) == true){
+					
+					if (!globalVariablesFinished) globalVariablesFinished = true;
 					
 					functionItem = new FunctionItem();
 					functionItem.processFunction(lineArray[i]);
