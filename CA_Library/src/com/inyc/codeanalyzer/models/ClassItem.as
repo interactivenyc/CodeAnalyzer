@@ -71,11 +71,11 @@ package com.inyc.codeanalyzer.models
 		private function fileDataLoaded(e:GenericDataEvent):void{
 			removeLoadListeners();
 			var fileData:String = e.data.file;
-			var varExp:RegExp = /([private|public|protected]) var/;
-			var funcExp:RegExp = /([private|public|protected]) function/;
-			var categoryExp:RegExp = /@category/i;
+			var varExp:RegExp = /([private|public|protected]) var /;
+			var funcExp:RegExp = /([private|public|protected]) function /;
+			var categoryExp:RegExp = /@category(?!.*categoryExp)/i; //(?!.*categoryExp) is so that this exact line will not be matched when reading the codebase that contains this class
 			var packageExp:RegExp = /package/;
-			var importExp:RegExp = /import/;
+			var importExp:RegExp = /import /;
 			
 			// HANDLE DIFFERENT KINDS OF LINE BREAKS (NEWLINE, RETURN)			
 			fileData = TextUtil.replaceChars(fileData, "\r", "\n");		
@@ -85,6 +85,8 @@ package com.inyc.codeanalyzer.models
 			var variableItem:VariableItem;
 			var importItem:ImportItem;
 			
+			//FIND A BETTER WAY TO LIMIT THE SCOPE OF EACH CODE TYPE
+			var importsFinished:Boolean = false;
 			var globalVariablesFinished:Boolean = false;
 			
 			log("*******************************************************");
@@ -107,7 +109,7 @@ package com.inyc.codeanalyzer.models
 					packagePath = packageExp.exec(lineArray[i]);
 				}
 				
-				if (importExp.test(lineArray[i]) == true){
+				if (importExp.test(lineArray[i]) == true && importsFinished == false){
 					importItem = new ImportItem();
 					importItem.processImport(lineArray[i]);
 					imports.push(importItem);
@@ -116,6 +118,9 @@ package com.inyc.codeanalyzer.models
 				}
 					
 				if (varExp.test(lineArray[i]) == true && globalVariablesFinished == false){
+					
+					if (!importsFinished) importsFinished = true;
+					
 					variableItem = new VariableItem();
 					variableItem.processVariable(lineArray[i]);
 					variables.push(variableItem);
