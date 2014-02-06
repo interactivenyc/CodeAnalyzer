@@ -10,6 +10,8 @@ package com.inyc.codeanalyzer.view
 	public class ClassView extends CoreMovieClip
 	{
 		private var _classItem:ClassItem;
+		public function get classItem():ClassItem {return _classItem};
+		
 		private var _accordion:Accordion;
 		
 		public static const WIDTH:int = 180;
@@ -41,6 +43,8 @@ package com.inyc.codeanalyzer.view
 			_accordion.addSection("functions", _classItem.functions);
 
 		}
+		
+		
 		
 	}
 }

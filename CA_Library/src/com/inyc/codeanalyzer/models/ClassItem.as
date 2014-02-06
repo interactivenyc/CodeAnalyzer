@@ -13,7 +13,7 @@ package com.inyc.codeanalyzer.models
 	public class ClassItem extends CodeItem{
 		
 		public var classFile:File;
-		public var packagePath:String;
+		public var packageString:String;
 		public var extendsClass:String;
 		public var implementsClass:String;
 		public var imports:Vector.<CoreModel>;
@@ -37,7 +37,7 @@ package com.inyc.codeanalyzer.models
 			_data = file;
 			
 			name = FileUtils.getFilename(file);	
-			//packagePath = FileUtils.getPackage(file);	
+			//packageString = FileUtils.getPackage(file);	
 				
 			try{
 				_loaderUtils = new LoaderUtils();
@@ -74,7 +74,7 @@ package com.inyc.codeanalyzer.models
 			var varExp:RegExp = /([private|public|protected]) var /;
 			var funcExp:RegExp = /([private|public|protected]) function /;
 			var categoryExp:RegExp = /@category(?!.*categoryExp)/i; //(?!.*categoryExp) is so that this exact line will not be matched when reading the codebase that contains this class
-			var packageExp:RegExp = /package/;
+			var packageExp:RegExp = /package.*/;
 			var importExp:RegExp = /import /;
 			
 			// HANDLE DIFFERENT KINDS OF LINE BREAKS (NEWLINE, RETURN)			
@@ -85,7 +85,8 @@ package com.inyc.codeanalyzer.models
 			var variableItem:VariableItem;
 			var importItem:ImportItem;
 			
-			//FIND A BETTER WAY TO LIMIT THE SCOPE OF EACH CODE TYPE
+			//TODO: FIND A BETTER WAY TO LIMIT THE SCOPE OF EACH CODE TYPE
+			var packageFinished:Boolean = false;
 			var importsFinished:Boolean = false;
 			var globalVariablesFinished:Boolean = false;
 			
@@ -98,15 +99,21 @@ package com.inyc.codeanalyzer.models
 			defObject.variables = new Object();
 			defObject.functions = new Object();
 			
-			
+			//TODO: FIND A BETTER WAY TO PROGRESS LINEARLY THROUGH THE BODY OF THE CLASS - USE STATE?
 			for (var i:int=0; i<lineArray.length; i++){
 				
 				//skip commented lines
 				if (lineArray[i].indexOf("//") > -1) continue;
 				if (lineArray[i].indexOf("/*") > -1) continue;
 				
-				if (packageExp.test(lineArray[i]) == true){
-					packagePath = packageExp.exec(lineArray[i]);
+				if (packageExp.test(lineArray[i]) == true && packageFinished == false){
+					
+					packageFinished = true;
+					
+					packageString = packageExp.exec(lineArray[i]);
+					packageString = packageString.split(" ")[1];
+					packageString = packageString.replace("{", "");
+					log("package: "+packageString);
 				}
 				
 				if (importExp.test(lineArray[i]) == true && importsFinished == false){

@@ -14,16 +14,18 @@ package com.inyc.codeanalyzer.view
 	{
 		private var _appModel:AppModel;
 		
-		private var _classViews:Vector.<ClassView>;
+		//private var _classViews:Vector.<ClassView>;
+		private var _packageContainers:Object = new Object();
+		private var _packageArray:Array = new Array();
 		
-		public function AppView(appModel:AppModel)
-		{
+		public static const CELLPADDING:int = 20;
+		
+		public function AppView(appModel:AppModel){
 			super();
 			log("constructor");
 			
 			_appModel = appModel;
-			_classViews = new Vector.<ClassView>;
-			
+			//_classViews = new Vector.<ClassView>;
 		}
 		
 		
@@ -53,19 +55,40 @@ package com.inyc.codeanalyzer.view
 		private function onItemLoaded(e:GenericDataEvent=null):void{
 			//log("onItemLoaded");
 			
-			var nextX:int = 50;
-			if (_classViews.length > 0){
-				var previousClassView:ClassView = _classViews[_classViews.length-1];
-				nextX = nextX + previousClassView.x + ClassView.WIDTH;
-			}
+			//var nextX:int = 50;
+			var nextY:int = CELLPADDING;
+//			if (_classViews.length > 0){
+//				var previousClassView:ClassView = _classViews[_classViews.length-1];
+//				nextX = nextX + previousClassView.x + ClassView.WIDTH;
+//			}
+			
+			
 			
 			var classView:ClassView = e.data.classView;
 			
-			_classViews.push(classView);
 			
-			addChild(classView);
-			classView.x = nextX;
-			classView.y = 10
+			//TODO: THIS IS A SILLY WAY TO STACK PACKAGE MOVIECLIPS - FIND A BETTER ROUTINE ASAP
+			var packageString:String = classView.classItem.packageString;
+			var packageContainer:PackageView;
+			if (!_packageContainers[packageString]){
+				log("create package container: "+packageString);
+				packageContainer = new PackageView();
+				_packageContainers[packageString] = packageContainer;
+				_packageArray.push(packageString);
+				if (_packageArray.length > 1){
+					var previousPackageContainer:MovieClip = _packageContainers[_packageArray[_packageArray.length-2]];
+					nextY = previousPackageContainer.y + previousPackageContainer.height + CELLPADDING;
+				}
+				packageContainer.x = 50;
+				packageContainer.y = nextY;
+				addChild(packageContainer);
+			}else{
+				packageContainer = _packageContainers[packageString];
+			}
+			
+			//_classViews.push(classView);
+			
+			packageContainer.addClass(classView);
 			
 			//log("classView.x: "+classView.x+", classView.y: "+classView.y);
 			
