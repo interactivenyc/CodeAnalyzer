@@ -9,7 +9,7 @@ package com.inyc.codeanalyzer.models {
 			_dataString = declaration;
 			
 			packageString = _dataString.split("package ")[1];
-			packageString = packageString.replace("{", "");
+			packageString = stripChars(packageString);
 			
 		}
 
