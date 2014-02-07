@@ -17,10 +17,12 @@ package com.inyc.components.accordion
 		private var sections:Vector.<AccordionSection> = new Vector.<AccordionSection>;
 		private var _cellPadding:int = 0;
 		
-		public function Accordion()
-		{
+		public function Accordion(){
 			super();
+			
 			mc = new Accordion_MC();
+			
+			log("new accordion name: "+name);
 			
 			indicator = new MCButton();
 			indicator.addChild(mc.header.indicator);
@@ -81,12 +83,15 @@ package com.inyc.components.accordion
 					}
 					break
 				case MouseEvent.MOUSE_DOWN:
-					startDrag();
+					log("start dragging: MOUSE_DOWN name: "+name);
+					startDrag(false);
 					break;
 				case MouseEvent.MOUSE_UP:
+					log("stop dragging: MOUSE_UP name: "+name);
 					stopDrag();
 					break;
 				case MouseEvent.RELEASE_OUTSIDE:
+					log("stop dragging: RELEASE_OUTSIDE name: "+name);
 					stopDrag();
 					break;
 			}

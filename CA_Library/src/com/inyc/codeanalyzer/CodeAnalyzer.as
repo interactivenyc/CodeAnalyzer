@@ -11,12 +11,10 @@ package com.inyc.codeanalyzer
 	import com.inyc.core.CoreMovieClip;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
-	import com.inyc.utils.FileUtils;
 	import com.inyc.utils.LoaderUtils;
 	import com.inyc.utils.TextUtil;
 	
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.filesystem.File;
 
 	//import flash.filesystem.File;
@@ -110,7 +108,7 @@ package com.inyc.codeanalyzer
 			getFilesFromDirectory(_sourceDir);
 			
 			for (var i:int=0; i<_sourceFiles.length; i++){
-				log("_sourceFiles["+i+"] "+_sourceFiles[i]);
+				//log("_sourceFiles["+i+"] "+_sourceFiles[i]);
 			}
 			
 			createModelAndViews(_sourceFiles);
@@ -118,7 +116,7 @@ package com.inyc.codeanalyzer
 		
 		
 		private function getFilesFromDirectory(file:File):void{
-			log("processDirectory package.name: "+FileUtils.getFilename(file));
+			//log("processDirectory package.name: "+FileUtils.getFilename(file));
 			
 			var processFiles:Array = file.getDirectoryListing();
 			var currentFile:File;
@@ -139,11 +137,11 @@ package com.inyc.codeanalyzer
 				
 				
 				if (currentFile.isDirectory){
-					log("i:"+i+" :: processDirectory: "+currentFile.name);
+					//log("i:"+i+" :: processDirectory: "+currentFile.name);
 					getFilesFromDirectory(currentFile);
 				}else{
 					if (currentFile.name.indexOf(".as") > -1){
-						log("i:"+i+" :: addFile: "+currentFile.name);
+						//log("i:"+i+" :: addFile: "+currentFile.name);
 						_sourceFiles.push(currentFile);
 					}
 				}
@@ -158,11 +156,13 @@ package com.inyc.codeanalyzer
 		
 		
 		private function showMenu():void {
+			log("showMenu");
 			setView(new MenuView());
 		}
 		
 		
 		private function setView(view:DynamicLayoutView):void{
+			log("setView");
 			if(_currentView && _viewContainer.contains(_currentView)){
 				_viewContainer.removeChild(_currentView);
 			}
@@ -191,7 +191,7 @@ package com.inyc.codeanalyzer
 		
 		
 		private function receiveEvent(e:GenericDataEvent):void{
-			log("receiveEvent e.type: "+e.type);
+			//log("receiveEvent e.type: "+e.type);
 			switch(e.type){
 				case CodeAnalyzerEvents.SHOW_FILE_BROWSER:
 					browseForSourceDir();

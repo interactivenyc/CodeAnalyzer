@@ -48,10 +48,10 @@ package com.inyc.codeanalyzer.models
 			
 			var classItem:ClassItem = e.data.file;
 			
-			log("classLoaded: "+classItem.name);
+			//log("classLoaded: "+classItem.name);
 			
 			ArrayUtils.removeValueFromArray(_classItems,classItem);
-			log("classes left to load: "+_classItems.length);
+			//log("classes left to load: "+_classItems.length);
 			
 			_eventDispatcher.dispatchEvent(new GenericDataEvent(AppEvents.FILE_LOADED, {classView:new ClassView(classItem)}));
 			
