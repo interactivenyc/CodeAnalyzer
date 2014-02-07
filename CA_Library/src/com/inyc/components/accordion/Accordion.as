@@ -50,7 +50,7 @@ package com.inyc.components.accordion
 			mc.header.tf.label.text = text;
 		}
 		
-		public function addSection(sectionName:String, sectionItems:Vector.<CoreModel>):void{
+		public function addSection(sectionName:String, sectionItems:Vector.<CoreModel>, expanded:Boolean):void{
 			log("addSection: "+sectionName);
 			var section:AccordionSection = new AccordionSection(this, sectionName, sectionItems);			
 			
@@ -69,6 +69,7 @@ package com.inyc.components.accordion
 			
 			sections.push(section);
 			addChild(section);
+			if (expanded) section.toggleSection();
 			
 			setBottomMCs();
 		}
@@ -143,6 +144,12 @@ package com.inyc.components.accordion
 			var section:AccordionSection = sections[sections.length-1];
 			mc.bottom.y = section.y + section.height + _cellPadding;
 			mc.bg.height = mc.bottom.y + mc.bottom.height + 4;
+		}
+		
+		public function expandSections():void{
+			//INITIAL STATE - EXPAND VARS AND FUNCTIONS
+			sections[1].toggleSection();
+			sections[2].toggleSection();
 		}
 		
 		

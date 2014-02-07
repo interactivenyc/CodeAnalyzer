@@ -30,18 +30,22 @@ package com.inyc.codeanalyzer.view
 			_packageLabel = new TF_10pt_white_MC();
 			_packageLabel.x = 5;
 			_packageLabel.label.text = _packageItem.packageString;
+			_packageLabel.label.width = _packageLabel.label.textWidth + 10;
 			_packageLabel.mouseEnabled = false;
 			_packageLabel.mouseChildren = false;
 			
 			
 			var tfbg:MovieClip = MovieClipUtils.getFilledMC(_packageLabel.label.textWidth + 15, 26, 0x740000);
+			tfbg.mouseEnabled = false;
+			tfbg.mouseChildren = false;
+			
 			addChild(tfbg);
 			tfbg.addChild(_packageLabel);
 			
-			tfbg.addEventListener(MouseEvent.CLICK, onMouseEvent);
-			tfbg.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
-			tfbg.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
-			tfbg.addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
+			bg.addEventListener(MouseEvent.CLICK, onMouseEvent);
+			bg.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
+			bg.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
+			bg.addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseEvent);
 			
 			container = new MovieClip();
 			container.x = AppView.CELLPADDING;
@@ -61,7 +65,6 @@ package com.inyc.codeanalyzer.view
 			}
 			
 			classView.addEventListener(MouseEvent.MOUSE_DOWN, onClassViewClicked);
-			
 			container.addChild(classView);
 			
 			bg.width = container.width + (AppView.CELLPADDING*2);

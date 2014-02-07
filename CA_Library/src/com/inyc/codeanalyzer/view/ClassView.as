@@ -42,10 +42,14 @@ package com.inyc.codeanalyzer.view
 			_accordion.headerText = _classItem.name;
 			addChild(_accordion);
 
-			_accordion.addSection("imports", _classItem.imports);
-			_accordion.addSection("variables", _classItem.variables);
-			_accordion.addSection("functions", _classItem.functions);
-
+			_accordion.addSection("imports", _classItem.imports, false);
+			_accordion.addSection("variables", _classItem.variables, true);
+			_accordion.addSection("functions", _classItem.functions, true);
+			
+		}
+		
+		public function expand():void{
+			_accordion.expandSections();
 		}
 
 
