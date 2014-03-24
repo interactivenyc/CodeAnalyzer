@@ -15,7 +15,9 @@ package com.inyc.codeanalyzer
 	import com.inyc.utils.TextUtil;
 	
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.filesystem.File;
+	import flash.ui.Keyboard;
 
 	//import flash.filesystem.File;
 	//import flash.net.FileFilter;
@@ -39,6 +41,11 @@ package com.inyc.codeanalyzer
 		private var _sourceDir:File;
 		private var _sourceFiles:Vector.<File>;
 		
+		
+		//private var _keyObject:KeyObject;
+		
+		
+		
 		public function CodeAnalyzer(){
 			log("CodeAnalyzer");
 			super();
@@ -61,6 +68,13 @@ package com.inyc.codeanalyzer
 		override protected function onAddedToStage(e:Event):void{
 			log("onAddedToStage stage.stageWidth: "+stage.stageWidth);
 			super.onAddedToStage(e);
+			
+			//_keyObject = new KeyObject(stage);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyEvent);
+			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyEvent);
+			
+			
+			
 			setupViewContainer();
 			
 			//showMenu();
@@ -188,7 +202,20 @@ package com.inyc.codeanalyzer
 			_viewContainer.setSize(stage.width,stage.height);
 		}
 		
+		/****************************************************
+		 * @category Events
+		 **************************************************/
 		
+		private function onKeyEvent(e:KeyboardEvent):void{
+			log("onKeyEvent: "+e.keyCode);
+			
+			if (e.type == KeyboardEvent.KEY_DOWN && e.commandKey){
+				if (e.keyCode == flash.ui.Keyboard.NUMPAD_ADD) _viewContainer.zoom(1);
+				if (e.keyCode == flash.ui.Keyboard.NUMPAD_SUBTRACT) _viewContainer.zoom(-1);
+			}else if (e.type == KeyboardEvent.KEY_DOWN && e.keyCode == flash.ui.Keyboard.SPACE){
+				
+			}
+		}
 		
 		private function receiveEvent(e:GenericDataEvent):void{
 			//log("receiveEvent e.type: "+e.type);

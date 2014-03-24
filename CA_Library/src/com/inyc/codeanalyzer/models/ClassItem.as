@@ -137,12 +137,19 @@ package com.inyc.codeanalyzer.models
 				if (funcExp.test(lineArray[i]) == true){
 
 					if (!globalVariablesFinished) globalVariablesFinished = true;
+					
+					
+					//if (lineArray[i].indexOf("get ") > -1 || lineArray[i].indexOf("set ") > -1 ){
+						//exclude getter/setters
+					//}else{
+						functionItem = new FunctionItem();
+						functionItem.processFunction(lineArray[i]);
+						functions.push(functionItem);
+						
+						defObject.functions[i] = functionItem.name;
+					//}
 
-					functionItem = new FunctionItem();
-					functionItem.processFunction(lineArray[i]);
-					functions.push(functionItem);
-
-					defObject.functions[i] = functionItem.name;
+					
 				}
 
 				if (categoryExp.test(lineArray[i]) == true){

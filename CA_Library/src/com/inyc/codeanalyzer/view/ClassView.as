@@ -14,7 +14,7 @@ package com.inyc.codeanalyzer.view
 
 		private var _accordion:Accordion;
 
-		public static const WIDTH:int = 180;
+		public static const WIDTH:int = 300;
 		public static const HEIGHT:int = 120;
 
 		public function ClassView(classItem:ClassItem){
@@ -43,8 +43,8 @@ package com.inyc.codeanalyzer.view
 			addChild(_accordion);
 
 			_accordion.addSection("imports", _classItem.imports, false);
-			_accordion.addSection("variables", _classItem.variables, false);
-			_accordion.addSection("functions", _classItem.functions, false);
+			_accordion.addSection("variables", _classItem.variables, true);
+			_accordion.addSection("functions", _classItem.functions, true);
 			
 		}
 		

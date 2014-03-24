@@ -47,12 +47,12 @@ package com.inyc.utils {
 		}
 		
 		private function keyPressed(evt:KeyboardEvent):void {
-			//log("keyPressed keyCode:"+evt.keyCode);
+			log("keyPressed keyCode:"+evt.keyCode);
 			keysDown[evt.keyCode] = true;
 		}
 		
 		private function keyReleased(evt:KeyboardEvent):void {
-			//log("keyReleased keyCode:"+evt.keyCode);
+			log("keyReleased keyCode:"+evt.keyCode);
 			delete keysDown[evt.keyCode];
 		}
 		

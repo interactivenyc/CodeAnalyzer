@@ -18,8 +18,9 @@ package com.inyc.codeanalyzer.view
 		//private var _classViews:Vector.<ClassView>;
 		private var _packageContainers:Object = new Object();
 		private var _packageArray:Array = new Array();
-
+		
 		public static const CELLPADDING:int = 20;
+		public static const STARTX:int = 50;
 
 		public function AppView(appModel:AppModel){
 			super();
@@ -73,7 +74,7 @@ package com.inyc.codeanalyzer.view
 					var previousPackageContainer:MovieClip = _packageContainers[_packageArray[_packageArray.length-2]];
 					nextY = previousPackageContainer.y + previousPackageContainer.height + CELLPADDING;
 				}
-				packageContainer.x = 50;
+				packageContainer.x = STARTX;
 				packageContainer.y = nextY;
 				addChild(packageContainer);
 			}else{

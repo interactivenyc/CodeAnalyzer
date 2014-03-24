@@ -19,14 +19,17 @@ package com.inyc.components
 			_buttons.push(btn);
 		}
 		
-		protected function onMouseEvent(e:MouseEvent):void{
-			log("onMouseEvent bbp: "+e.currentTarget.name);
+		public function setButton(btn:BasicButton):void{
+			log("setButton: "+btn.name);
 			for (var i:int=0; i<_buttons.length; i++){
 				_buttons[i].selected = false;
 			}
 			
-			log(e.currentTarget);
-			e.currentTarget.selected = true;
+			btn.selected = true;
+		}
+		
+		protected function onMouseEvent(e:MouseEvent):void{
+			setButton(e.currentTarget as BasicButton);
 		}
 	}
 }

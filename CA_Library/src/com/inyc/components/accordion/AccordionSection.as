@@ -57,7 +57,10 @@ package com.inyc.components.accordion {
 				
 				log("create AccordionItem: "+sectionItems[i].dataString);
 				
-				var ai:AccordionItem = new AccordionItem(accordion, sectionItems[i]);
+				var setBold:Boolean = false;
+				if (sectionItems[i].dataString == "") setBold = true;
+				
+				var ai:AccordionItem = new AccordionItem(accordion, sectionItems[i], setBold);
 				var nextSectionY:int;
 				
 				if (i > 0){

@@ -5,7 +5,11 @@ package com.inyc.components.accordion
 	import com.inyc.core.CoreMovieClip;
 	import com.inyc.events.AppEvents;
 	import com.inyc.events.GenericDataEvent;
+	import com.inyc.utils.MovieClipUtils;
 	
+	import flash.desktop.Clipboard;
+	import flash.desktop.ClipboardFormats;
+	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
@@ -13,7 +17,7 @@ package com.inyc.components.accordion
 	{
 		public var mc:Accordion_MC;
 		public var indicator:MCButton;
-		public var bg:MovieClip;
+		public var bg:Square_MC;
 		private var sections:Vector.<AccordionSection> = new Vector.<AccordionSection>;
 		private var _cellPadding:int = 0;
 		
@@ -31,7 +35,7 @@ package com.inyc.components.accordion
 			_eventDispatcher.addEventListener(AppEvents.ACCORDION_ITEM_CLICKED, receiveAccordionEvent);
 			_eventDispatcher.addEventListener(AppEvents.ACCORDION_SECTION_CLICKED, receiveAccordionEvent);
 			
-			bg = mc.header.bg as MovieClip;
+			bg = mc.header.bg as Square_MC;
 			bg.addEventListener(MouseEvent.CLICK, onMouseEvent);
 			bg.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
 			bg.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
@@ -80,7 +84,9 @@ package com.inyc.components.accordion
 			switch(e.type){
 				case MouseEvent.CLICK:
 					if (e.currentTarget == indicator){
-						log("indicator clicked");
+						log("indicator clicked - COPY Class Diagram to Clipboard");
+						var bmpData:BitmapData = MovieClipUtils.getBitmapDataFromMC(this);
+						Clipboard.generalClipboard.setData(ClipboardFormats.BITMAP_FORMAT, bmpData);
 					}
 					break
 				case MouseEvent.MOUSE_DOWN:
@@ -142,8 +148,10 @@ package com.inyc.components.accordion
 		
 		private function setBottomMCs():void{
 			var section:AccordionSection = sections[sections.length-1];
-			mc.bottom.y = section.y + section.height + _cellPadding;
-			mc.bg.height = mc.bottom.y + mc.bottom.height + 4;
+			mc.bottom.y = section.y + section.height + _cellPadding - 2;
+			mc.bg.height = mc.bottom.y + mc.bottom.height;
+			mc.bottom.visible = false;
+			
 		}
 		
 		public function expandSections():void{

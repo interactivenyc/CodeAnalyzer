@@ -14,6 +14,10 @@ package com.inyc.components
 		public var btn_zoom_in:BasicButton;
 		public var btn_zoom_out:BasicButton;
 		
+		public var selectState:String;
+		public static const STATE_SELECT:String = "STATE_SELECT";
+		public static const STATE_PAN:String = "STATE_PAN";
+		
 		public function Toolbar(){
 			toolbar = new Toolbar_MC;
 			addChild(toolbar);
@@ -44,6 +48,13 @@ package com.inyc.components
 //			classDef.prototype = btn_select;
 //			addChild(btn_select);
 			
+		}
+		
+		public function setSelect():void{
+			setButton(btn_select);
+		}
+		public function setPan():void{
+			setButton(btn_hand);
 		}
 		
 		override protected function onMouseEvent(e:MouseEvent):void{

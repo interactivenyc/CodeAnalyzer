@@ -8,8 +8,18 @@ package com.inyc.codeanalyzer.models {
 			super();
 			_dataString = declaration;
 			
-			packageString = _dataString.split("package ")[1];
-			packageString = stripChars(packageString);
+			try{
+				packageString = _dataString.split("package ")[1];
+				packageString = stripChars(packageString);
+			}catch(e:Error){
+				log("Error: "+e.type);
+				if (declaration.indexOf("package") > -1){
+					packageString = "default package";
+				}else{
+					packageString = "unknown package";
+				}
+			}
+			
 			
 		}
 
